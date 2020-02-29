@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Demo.Core.Application.WebApi\Demo.Core.Application.WebApi.csproj" />
+    <ProjectReference Include="..\Demo.Core.Application\Demo.Core.Application.csproj" />
+    <ProjectReference Include="..\Demo.Core.Domain\Demo.Core.Domain.csproj" />
+    <ProjectReference Include="..\Demo.Core.Infra.CrossCutting\Demo.Core.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\Demo.Core.Infra.Data\Demo.Core.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>

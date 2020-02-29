@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>e04d6c56-e967-4407-af50-8f98f1f63fc6</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Demo.Core.Application.WebApi\Demo.Core.Application.WebApi.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Application\Demo.Core.Application.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Infra.CrossCutting\Demo.Core.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Infra.IoC.WebApi\Demo.Core.Infra.IoC.WebApi.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Infra.IoC\Demo.Core.Infra.IoC.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Service.WebApi\Demo.Core.Service.WebApi.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Service\Demo.Core.Service.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Application.WebApi.MobileApp.ViewModels\Demo.InvoiceImporter.Application.WebApi.MobileApp.ViewModels.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Application.WebApi.MobileApp\Demo.InvoiceImporter.Application.WebApi.MobileApp.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Application.WebApi\Demo.InvoiceImporter.Application.WebApi.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Application\Demo.InvoiceImporter.Application.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.CrossCutting\Demo.InvoiceImporter.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.MobileApp\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.MobileApp.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.Data.IoC\Demo.InvoiceImporter.Infra.Data.IoC.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Service\Demo.InvoiceImporter.Service.csproj" />
+  </ItemGroup>
+
+</Project>

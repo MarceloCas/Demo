@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Demo.Core.Infra.CrossCutting\Demo.Core.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\Demo.Core.Infra.IoC\Demo.Core.Infra.IoC.csproj" />
+    <ProjectReference Include="..\Demo.Core.Service\Demo.Core.Service.csproj" />
+  </ItemGroup>
+
+</Project>

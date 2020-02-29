@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Demo.Core.Application.WebApi\Demo.Core.Application.WebApi.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Application\Demo.Core.Application.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Domain\Demo.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Infra.CrossCutting\Demo.Core.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Infra.Data\Demo.Core.Infra.Data.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Infra.IoC.WebApi\Demo.Core.Infra.IoC.WebApi.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Infra.IoC\Demo.Core.Infra.IoC.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels\Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Application.WebApi.WebApp\Demo.InvoiceImporter.Application.WebApi.WebApp.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Application.WebApi\Demo.InvoiceImporter.Application.WebApi.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Application\Demo.InvoiceImporter.Application.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Domain\Demo.InvoiceImporter.Domain.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.CrossCutting\Demo.InvoiceImporter.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.Data.IoC\Demo.InvoiceImporter.Infra.Data.IoC.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.Data\Demo.InvoiceImporter.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Demo.Core.Infra.CrossCutting\Demo.Core.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\..\Core\Demo.Core.Presentation.ConsoleApp\Demo.Core.Presentation.ConsoleApp.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels\Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.CrossCutting\Demo.InvoiceImporter.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Presentation.ConsoleApp\Demo.InvoiceImporter.Presentation.ConsoleApp.csproj" />
+  </ItemGroup>
+
+</Project>
