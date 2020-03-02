@@ -39,6 +39,11 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         }
 
         // Private Methods
+        private Customer GenerateNewId()
+        {
+            Id = Guid.NewGuid();
+            return this;
+        }
         private Customer SetGovernamentalDocumentNumber(string documentNumber)
         {
             GovernamentalDocumentNumber = documentNumber;
@@ -48,16 +53,9 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         // Public Methods
         public Customer ImportCustomer(string tenantCode, string name, string governamentalNumber, string creationUser)
         {
-            Id = Guid.NewGuid();
+            GenerateNewId();
             SetGovernamentalDocumentNumber(governamentalNumber);
             SetCreationInfo(tenantCode, creationUser);
-
-            return this;
-        }
-        public Customer UpdateGovernamentalDocumentNumber(string governamentalDocumentNumber, string modificationUser)
-        {
-            SetGovernamentalDocumentNumber(governamentalDocumentNumber);
-            SetModificationInfo(modificationUser);
 
             return this;
         }

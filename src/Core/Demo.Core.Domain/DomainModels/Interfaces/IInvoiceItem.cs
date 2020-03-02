@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Demo.Core.Domain.DomainModels.Interfaces
 {
-    public interface ICustomer
+    public interface IInvoiceItem<TProduct>
         : IAuditableDomainModel
+        where TProduct : IProduct
     {
-        string Name { get; }
+        TProduct Product { get; }
     }
 }
