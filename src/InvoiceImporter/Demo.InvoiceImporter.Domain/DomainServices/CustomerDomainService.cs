@@ -1,6 +1,7 @@
 ﻿using Demo.Core.Domain.Repositories.Base;
 using Demo.InvoiceImporter.Domain.DomainModels;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices.Base;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Repositories.Interfaces;
@@ -15,17 +16,27 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
         : DomainServiceBase<Customer>,
         ICustomerDomainService
     {
+        private readonly ICustomerIsValidForImportValidation _customerIsValidForImportValidation;
+
         public CustomerDomainService(
             ICustomerRepository repository,
-            ICustomerFactory factory) 
+            ICustomerFactory factory,
+            ICustomerIsValidForImportValidation customerIsValidForImportValidation
+            ) 
             : base(repository, factory)
         {
-
+            _customerIsValidForImportValidation = customerIsValidForImportValidation;
         }
 
         public async Task<Customer> ImportCustomerAsync(string tenantCode, string creationUser, Customer customerToImport)
         {
-            // Validation
+            var validationResult = await _customerIsValidForImportValidation.Validate(customerToImport);
+            if (!validationResult.IsValid)
+            {
+                // Send DomainNotification
+
+                return customerToImport;
+            }
 
             var importedCustomer = Factory.Create().ImportCustomer(
                 tenantCode,

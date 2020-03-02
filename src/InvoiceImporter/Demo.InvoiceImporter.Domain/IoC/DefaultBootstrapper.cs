@@ -1,4 +1,8 @@
 ﻿using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,10 +20,21 @@ namespace Demo.InvoiceImporter.Domain.IoC
     {
         public void RegisterServices(IServiceCollection services)
         {
+            RegisterDomainModelsSpecifications(services);
+            RegisterDomainModelsValidations(services);
             RegisterFactories(services);
             RegisterDomainServices(services);
         }
 
+        private void RegisterDomainModelsSpecifications(IServiceCollection services)
+        {
+            services.AddScoped<ICustomerMustHaveNameSpecification, CustomerMustHaveNameSpecification>();
+            services.AddScoped<ICustomerMustHaveNameWithValidLengthSpecification, CustomerMustHaveNameWithValidLengthSpecification>();
+        }
+        private void RegisterDomainModelsValidations(IServiceCollection services)
+        {
+            services.AddScoped<ICustomerIsValidForImportValidation, CustomerIsValidForImportValidation>();
+        }
         private void RegisterFactories(IServiceCollection services)
         {
             services.AddScoped<ICustomerFactory, CustomerFactory>();
