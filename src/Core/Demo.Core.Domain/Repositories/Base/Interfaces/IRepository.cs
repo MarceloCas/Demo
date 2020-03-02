@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Demo.Core.Domain.Repositories.Base
+namespace Demo.Core.Domain.Repositories.Base.Interfaces
 {
     public interface IRepository<TDomainModel>
         : IDisposable
         where TDomainModel : IDomainModel
     {
+
     }
 }

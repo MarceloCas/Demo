@@ -2,6 +2,7 @@
 using Demo.Core.Domain.DomainModels.Base.Interfaces;
 using Demo.Core.Domain.DomainServices.Base.Interfaces;
 using Demo.Core.Domain.Repositories.Base;
+using Demo.Core.Domain.Repositories.Base.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
