@@ -12,7 +12,7 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
         : SpecificationBase<Customer>,
         ICustomerMustHaveNameSpecification
     {
-        public override async Task<bool> IsSatisfiedBy(Customer entity, CultureInfo culture)
+        public override async Task<bool> IsSatisfiedBy(Customer entity)
         {
             return await Task.FromResult(!string.IsNullOrEmpty(entity?.Name));
         }

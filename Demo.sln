@@ -57,43 +57,45 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Core.Presentation.Cons
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Core.Infra.IoC", "src\Core\Demo.Core.Infra.IoC\Demo.Core.Infra.IoC.csproj", "{4FFF015C-225F-4D4A-9AAD-A8B065B9CEA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Core.Infra.IoC.WebApi", "src\Core\Demo.Core.Infra.IoC.WebApi\Demo.Core.Infra.IoC.WebApi.csproj", "{80BF2AAA-A640-47C3-9148-CAD1C87F99CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Core.Infra.IoC.WebApi", "src\Core\Demo.Core.Infra.IoC.WebApi\Demo.Core.Infra.IoC.WebApi.csproj", "{80BF2AAA-A640-47C3-9148-CAD1C87F99CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Infra.CrossCutting", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.CrossCutting\Demo.InvoiceImporter.Infra.CrossCutting.csproj", "{A2E5AE6C-0FD1-4964-88D5-F5E6BC64B68E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Infra.CrossCutting", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.CrossCutting\Demo.InvoiceImporter.Infra.CrossCutting.csproj", "{A2E5AE6C-0FD1-4964-88D5-F5E6BC64B68E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Domain", "src\InvoiceImporter\Demo.InvoiceImporter.Domain\Demo.InvoiceImporter.Domain.csproj", "{3EB9DBB1-4831-4BFB-B663-416D9A5435CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Domain", "src\InvoiceImporter\Demo.InvoiceImporter.Domain\Demo.InvoiceImporter.Domain.csproj", "{3EB9DBB1-4831-4BFB-B663-416D9A5435CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Infra.Data", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.Data\Demo.InvoiceImporter.Infra.Data.csproj", "{B6B11225-CBD5-4C19-AA2C-B7B033B77A8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Infra.Data", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.Data\Demo.InvoiceImporter.Infra.Data.csproj", "{B6B11225-CBD5-4C19-AA2C-B7B033B77A8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Application", "src\InvoiceImporter\Demo.InvoiceImporter.Application\Demo.InvoiceImporter.Application.csproj", "{00646239-ACD7-4742-90C6-7161336EDE60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Application", "src\InvoiceImporter\Demo.InvoiceImporter.Application\Demo.InvoiceImporter.Application.csproj", "{00646239-ACD7-4742-90C6-7161336EDE60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Application.WebApi", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi\Demo.InvoiceImporter.Application.WebApi.csproj", "{8C6F5287-07FC-4298-A292-9F3565696862}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Application.WebApi", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi\Demo.InvoiceImporter.Application.WebApi.csproj", "{8C6F5287-07FC-4298-A292-9F3565696862}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Service", "src\InvoiceImporter\Demo.InvoiceImporter.Service\Demo.InvoiceImporter.Service.csproj", "{212852AB-934D-40DC-9526-63AA4A34CC0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Service", "src\InvoiceImporter\Demo.InvoiceImporter.Service\Demo.InvoiceImporter.Service.csproj", "{212852AB-934D-40DC-9526-63AA4A34CC0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Infra.Data.IoC", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.Data.IoC\Demo.InvoiceImporter.Infra.Data.IoC.csproj", "{856CBF08-C171-43E0-BEFF-2F4495C1010C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Infra.Data.IoC", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.Data.IoC\Demo.InvoiceImporter.Infra.Data.IoC.csproj", "{856CBF08-C171-43E0-BEFF-2F4495C1010C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Infra.Data.IoC.WebApi.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.WebApp\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.WebApp.csproj", "{FDF3E13F-EE06-4F88-91B0-BDFFCDF2519C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Infra.Data.IoC.WebApi.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.WebApp\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.WebApp.csproj", "{FDF3E13F-EE06-4F88-91B0-BDFFCDF2519C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Infra.Data.IoC.WebApi.MobileApp", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.MobileApp\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.MobileApp.csproj", "{CAA9E3D4-44D4-4673-9548-DBE382B7D3E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Infra.Data.IoC.WebApi.MobileApp", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.MobileApp\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.MobileApp.csproj", "{CAA9E3D4-44D4-4673-9548-DBE382B7D3E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Application.WebApi.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi.WebApp\Demo.InvoiceImporter.Application.WebApi.WebApp.csproj", "{D6F2D30F-13C5-43B5-B12B-28B60CFC07E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Application.WebApi.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi.WebApp\Demo.InvoiceImporter.Application.WebApi.WebApp.csproj", "{D6F2D30F-13C5-43B5-B12B-28B60CFC07E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Application.WebApi.MobileApp", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi.MobileApp\Demo.InvoiceImporter.Application.WebApi.MobileApp.csproj", "{FED72140-5C4D-48A2-8402-3D2843548FC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Application.WebApi.MobileApp", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi.MobileApp\Demo.InvoiceImporter.Application.WebApi.MobileApp.csproj", "{FED72140-5C4D-48A2-8402-3D2843548FC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Application.WebApi.MobileApp.ViewModels", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi.MobileApp.ViewModels\Demo.InvoiceImporter.Application.WebApi.MobileApp.ViewModels.csproj", "{40F36251-4FEE-4AB3-B803-E4E3C5ED2C4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Application.WebApi.MobileApp.ViewModels", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi.MobileApp.ViewModels\Demo.InvoiceImporter.Application.WebApi.MobileApp.ViewModels.csproj", "{40F36251-4FEE-4AB3-B803-E4E3C5ED2C4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels\Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.csproj", "{92EAA5A1-8876-4ECA-BE8F-A2A74D0D9D12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels", "src\InvoiceImporter\Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels\Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.csproj", "{92EAA5A1-8876-4ECA-BE8F-A2A74D0D9D12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Service.WebApi.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Service.WebApi.WebApp\Demo.InvoiceImporter.Service.WebApi.WebApp.csproj", "{493FB418-3689-4010-9D74-1582DB289892}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Service.WebApi.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Service.WebApi.WebApp\Demo.InvoiceImporter.Service.WebApi.WebApp.csproj", "{493FB418-3689-4010-9D74-1582DB289892}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Service.WebApi.MobileApp", "src\InvoiceImporter\Demo.InvoiceImporter.Service.WebApi.MobileApp\Demo.InvoiceImporter.Service.WebApi.MobileApp.csproj", "{533DB6F1-51B2-4B6D-923B-BFD512EDF8A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Service.WebApi.MobileApp", "src\InvoiceImporter\Demo.InvoiceImporter.Service.WebApi.MobileApp\Demo.InvoiceImporter.Service.WebApi.MobileApp.csproj", "{533DB6F1-51B2-4B6D-923B-BFD512EDF8A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Presentation.ConsoleApp", "src\InvoiceImporter\Demo.InvoiceImporter.Presentation.ConsoleApp\Demo.InvoiceImporter.Presentation.ConsoleApp.csproj", "{D8159087-C782-4269-BD58-8D656EA791A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Presentation.ConsoleApp", "src\InvoiceImporter\Demo.InvoiceImporter.Presentation.ConsoleApp\Demo.InvoiceImporter.Presentation.ConsoleApp.csproj", "{D8159087-C782-4269-BD58-8D656EA791A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Presentation.ConsoleApp.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Presentation.ConsoleApp.WebApp\Demo.InvoiceImporter.Presentation.ConsoleApp.WebApp.csproj", "{9F8C9F47-710B-4CF0-87EA-48421FD36F91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Presentation.ConsoleApp.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Presentation.ConsoleApp.WebApp\Demo.InvoiceImporter.Presentation.ConsoleApp.WebApp.csproj", "{9F8C9F47-710B-4CF0-87EA-48421FD36F91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Presentation.ConsoleApp.MobileApp", "src\InvoiceImporter\Demo.InvoiceImporter.Presentation.ConsoleApp.MobileApp\Demo.InvoiceImporter.Presentation.ConsoleApp.MobileApp.csproj", "{D695F7B3-BD4D-4107-BA2F-8A5CA89AFB56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Presentation.ConsoleApp.MobileApp", "src\InvoiceImporter\Demo.InvoiceImporter.Presentation.ConsoleApp.MobileApp\Demo.InvoiceImporter.Presentation.ConsoleApp.MobileApp.csproj", "{D695F7B3-BD4D-4107-BA2F-8A5CA89AFB56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Core.Infra.CrossCutting.Tests", "tst\Core\Demo.Core.Infra.CrossCutting.Tests\Demo.Core.Infra.CrossCutting.Tests.csproj", "{D05C0E9F-9AC7-47E9-B1B7-B0C5B1071FAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -213,6 +215,10 @@ Global
 		{D695F7B3-BD4D-4107-BA2F-8A5CA89AFB56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D695F7B3-BD4D-4107-BA2F-8A5CA89AFB56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D695F7B3-BD4D-4107-BA2F-8A5CA89AFB56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D05C0E9F-9AC7-47E9-B1B7-B0C5B1071FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D05C0E9F-9AC7-47E9-B1B7-B0C5B1071FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D05C0E9F-9AC7-47E9-B1B7-B0C5B1071FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D05C0E9F-9AC7-47E9-B1B7-B0C5B1071FAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -262,6 +268,7 @@ Global
 		{D8159087-C782-4269-BD58-8D656EA791A5} = {FBE1BA08-5C21-4622-BA34-7BA169F343D4}
 		{9F8C9F47-710B-4CF0-87EA-48421FD36F91} = {FBE1BA08-5C21-4622-BA34-7BA169F343D4}
 		{D695F7B3-BD4D-4107-BA2F-8A5CA89AFB56} = {FBE1BA08-5C21-4622-BA34-7BA169F343D4}
+		{D05C0E9F-9AC7-47E9-B1B7-B0C5B1071FAE} = {C520874A-B04B-40EF-BEC5-A978C62F47BC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FDA9F813-C3B3-4C0A-90DF-A2015176C880}

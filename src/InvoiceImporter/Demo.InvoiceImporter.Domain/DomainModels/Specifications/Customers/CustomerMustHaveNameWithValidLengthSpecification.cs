@@ -12,7 +12,7 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
         : SpecificationBase<Customer>,
         ICustomerMustHaveNameWithValidLengthSpecification
     {
-        public override async Task<bool> IsSatisfiedBy(Customer entity, CultureInfo culture)
+        public override async Task<bool> IsSatisfiedBy(Customer entity)
         {
             var length = (entity?.Name?.Length ?? 0);
 
