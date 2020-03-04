@@ -7,6 +7,7 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Models
 {
     public class TestTelemetry
     {
+        public bool IsSuccess { get; set; }
         public TestTelemetryResult TestTelemetryResult { get; set; }
 
         public void StartTelemetry()

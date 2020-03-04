@@ -54,15 +54,18 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Base
         protected abstract void ConfigureServices(IServiceCollection services);
         protected abstract void ServiceProviderGenerated(IServiceProvider serviceProvider);
 
-        protected async Task<List<TestTelemetry>> RunWithTelemetry(Func<Task<bool>> executionFunction, int totalOfExecutions = 1)
+        protected async Task<List<TestTelemetry>> RunWithTelemetry(
+            Func<Task<bool>> executionFunction, 
+            int totalOfExecutions = 1,
+            Func<List<TestTelemetry>, bool> acceptCriteriaFunction = null)
         {
             var telemetryResultCollection = new List<TestTelemetry>();
-            var testResultCollection = new List<bool>();
 
             for (int i = 0; i < totalOfExecutions; i++)
             {
                 var telemetry = CreateAndStartTelemetry();
-                testResultCollection.Add(await executionFunction.Invoke());
+                var testExecutionResult = await executionFunction.Invoke();
+                telemetry.IsSuccess = testExecutionResult;
                 StopTelemetry(telemetry);
 
                 telemetryResultCollection.Add(telemetry);
@@ -90,7 +93,10 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Base
             foreach (var telemetryResult in telemetryResultCollection)
                 WriteTelemetry(telemetryResult);
 
-            Assert.True(!testResultCollection.Any(q => !q));
+            if (acceptCriteriaFunction != null)
+                Assert.True(acceptCriteriaFunction(telemetryResultCollection));
+            else
+                Assert.True(!telemetryResultCollection.Any(q => !q.IsSuccess));
 
             return await Task.FromResult(telemetryResultCollection);
         }

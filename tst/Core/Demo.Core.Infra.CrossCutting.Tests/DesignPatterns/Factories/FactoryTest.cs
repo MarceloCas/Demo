@@ -30,8 +30,8 @@ namespace Demo.Core.Infra.CrossCutting.Tests.DesignPatterns.Factories
         {
             await RunWithTelemetry(async () => {
                 return await Task.FromResult(true);
-            }, 10);
+            }, 
+            10);
         }
-
     }
 }
