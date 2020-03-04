@@ -6,10 +6,10 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Models
 {
     public class GarbageCollectorInfo
     {
-        public int Gen0 { get; private set; }
-        public int Gen1 { get; private set; }
-        public int Gen2 { get; private set; }
-        public long TotalBytesOfMemory { get; private set; }
+        public int Gen0 { get; set; }
+        public int Gen1 { get; set; }
+        public int Gen2 { get; set; }
+        public long TotalBytesOfMemory { get; set; }
 
         public GarbageCollectorInfo()
         {

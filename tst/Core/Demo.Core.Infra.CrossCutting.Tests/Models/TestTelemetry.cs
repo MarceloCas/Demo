@@ -7,7 +7,7 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Models
 {
     public class TestTelemetry
     {
-        public TestTelemetryResult TestTelemetryResult { get; private set; }
+        public TestTelemetryResult TestTelemetryResult { get; set; }
 
         public void StartTelemetry()
         {
@@ -20,13 +20,16 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Models
             return TestTelemetryResult;
         }
 
-        public string GetTelemetryReport()
+        public string GetTelemetryReport(bool writeHeader = true)
         {
             var reportStringBuilder = new StringBuilder();
 
-            reportStringBuilder.AppendLine(new string('-', 50));
-            reportStringBuilder.AppendLine("TELEMETRY RESULT");
-            reportStringBuilder.AppendLine(new string('-', 50));
+            if (writeHeader)
+            {
+                reportStringBuilder.AppendLine(new string('-', 50));
+                reportStringBuilder.AppendLine("TELEMETRY RESULT");
+                reportStringBuilder.AppendLine(new string('-', 50));
+            }
 
             reportStringBuilder.AppendLine($"Elapsed Time - {TestTelemetryResult.TestDuration}");
             reportStringBuilder.AppendLine($"GEN 0 - {TestTelemetryResult.GCInfoResult.Gen0}");

@@ -6,8 +6,8 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Models
 {
     public class TestTelemetryResult
     {
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public TimeSpan TestDuration
         {
             get
@@ -16,9 +16,9 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Models
             }
         }
 
-        public GarbageCollectorInfo StartGCInfo { get; private set; }
-        public GarbageCollectorInfo EndGCInfo { get; private set; }
-        public GarbageCollectorInfo GCInfoResult { get; private set; }
+        public GarbageCollectorInfo StartGCInfo { get; set; }
+        public GarbageCollectorInfo EndGCInfo { get; set; }
+        public GarbageCollectorInfo GCInfoResult { get; set; }
 
         public void Start()
         {

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -34,23 +35,64 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Base
 
             return testTelemetry;
         }
-        private void StopAndWriteTelemetry(TestTelemetry testTelemetry)
+        private void StopTelemetry(TestTelemetry testTelemetry)
         {
             testTelemetry.StopTelemetry();
+        }
+        private void WriteHeadTelemetry(TestTelemetry testTelemetry)
+        {
+            Output.WriteLine(new string('*', 100));
+            Output.WriteLine("AVERAGE RESULT");
+            Output.WriteLine(new string('*', 100));
+            Output.WriteLine(testTelemetry.GetTelemetryReport(false));
+        }
+        private void WriteTelemetry(TestTelemetry testTelemetry)
+        {
             Output.WriteLine(testTelemetry.GetTelemetryReport());
         }
 
         protected abstract void ConfigureServices(IServiceCollection services);
         protected abstract void ServiceProviderGenerated(IServiceProvider serviceProvider);
 
-        protected async Task<bool> RunWithTelemetry(Func<Task<bool>> executionFunction)
+        protected async Task<List<TestTelemetry>> RunWithTelemetry(Func<Task<bool>> executionFunction, int totalOfExecutions = 1)
         {
-            var telemetry = CreateAndStartTelemetry();
-            var testResult = await executionFunction.Invoke();
-            StopAndWriteTelemetry(telemetry);
+            var telemetryResultCollection = new List<TestTelemetry>();
+            var testResultCollection = new List<bool>();
 
-            Assert.True(testResult);
-            return await Task.FromResult(true);
+            for (int i = 0; i < totalOfExecutions; i++)
+            {
+                var telemetry = CreateAndStartTelemetry();
+                testResultCollection.Add(await executionFunction.Invoke());
+                StopTelemetry(telemetry);
+
+                telemetryResultCollection.Add(telemetry);
+            }
+
+            WriteHeadTelemetry(new TestTelemetry { 
+                TestTelemetryResult = new TestTelemetryResult
+                {
+                    StartDate = telemetryResultCollection.Select(q => q.TestTelemetryResult.StartDate).Min(),
+                    EndDate = telemetryResultCollection.Select(q => q.TestTelemetryResult.EndDate).Max(),
+                    GCInfoResult = new GarbageCollectorInfo
+                    {
+                        Gen0 = (int) telemetryResultCollection.Select(q => q.TestTelemetryResult.GCInfoResult.Gen0).Average(),
+                        Gen1 = (int) telemetryResultCollection.Select(q => q.TestTelemetryResult.GCInfoResult.Gen1).Average(),
+                        Gen2 = (int) telemetryResultCollection.Select(q => q.TestTelemetryResult.GCInfoResult.Gen2).Average(),
+                        TotalBytesOfMemory = (long) telemetryResultCollection.Select(q => q.TestTelemetryResult.GCInfoResult.TotalBytesOfMemory).Average()
+                    }
+                }
+            });
+
+            Output.WriteLine(new string('*', 100));
+            Output.WriteLine("SINGLE RESULT OF EACH EXECUTION");
+            Output.WriteLine(new string('*', 100));
+
+            foreach (var telemetryResult in telemetryResultCollection)
+                WriteTelemetry(telemetryResult);
+
+            Assert.True(!testResultCollection.Any(q => !q));
+
+            return await Task.FromResult(telemetryResultCollection);
         }
 
 
