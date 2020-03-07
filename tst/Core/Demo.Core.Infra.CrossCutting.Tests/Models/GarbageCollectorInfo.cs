@@ -6,26 +6,10 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Models
 {
     public class GarbageCollectorInfo
     {
-        public int Gen0 { get; set; }
-        public int Gen1 { get; set; }
-        public int Gen2 { get; set; }
-        public long TotalBytesOfMemory { get; set; }
-
-        public GarbageCollectorInfo()
-        {
-
-        }
-        public GarbageCollectorInfo(
-            int gen0,
-            int gen1,
-            int gen2,
-            long totalBytesOfMemory)
-        {
-            Gen0 = gen0;
-            Gen1 = gen1;
-            Gen2 = gen2;
-            TotalBytesOfMemory = totalBytesOfMemory;
-        }
+        public int Gen0 { get; private set; }
+        public int Gen1 { get; private set; }
+        public int Gen2 { get; private set; }
+        public long TotalBytesOfMemory { get; private set; }
 
         public void Collect()
         {
