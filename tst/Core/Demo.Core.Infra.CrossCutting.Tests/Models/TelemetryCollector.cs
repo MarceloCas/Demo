@@ -46,7 +46,7 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Models
                 TotalGen0 = EndGCInfo.Gen0 - StartGCInfo.Gen0,
                 TotalGen1 = EndGCInfo.Gen1 - StartGCInfo.Gen1,
                 TotalGen2 = EndGCInfo.Gen2 - StartGCInfo.Gen2,
-                TotalBytesOfMemory = EndGCInfo.TotalBytesOfMemory - StartGCInfo.TotalBytesOfMemory
+                TotalKiloBytesOfMemory = EndGCInfo.TotalBytesOfMemory - StartGCInfo.TotalBytesOfMemory
             };
         }
     }

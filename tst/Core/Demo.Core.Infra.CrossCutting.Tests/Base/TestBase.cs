@@ -94,19 +94,19 @@ Have Custom Validator: {2}
                     minGen0 = telemetryCollection.Min(q => q.TelemetryCollector.GCInfoResult.TotalGen0);
                     minGen1 = telemetryCollection.Min(q => q.TelemetryCollector.GCInfoResult.TotalGen1);
                     minGen2 = telemetryCollection.Min(q => q.TelemetryCollector.GCInfoResult.TotalGen2);
-                    minTotalMemory = telemetryCollection.Min(q => q.TelemetryCollector.GCInfoResult.TotalBytesOfMemory);
+                    minTotalMemory = telemetryCollection.Min(q => q.TelemetryCollector.GCInfoResult.TotalKiloBytesOfMemory);
                     minElapsedTime = telemetryCollection.Min(q => q.TelemetryCollector.TestDuration);
 
                     maxGen0 = telemetryCollection.Max(q => q.TelemetryCollector.GCInfoResult.TotalGen0);
                     maxGen1 = telemetryCollection.Max(q => q.TelemetryCollector.GCInfoResult.TotalGen1);
                     maxGen2 = telemetryCollection.Max(q => q.TelemetryCollector.GCInfoResult.TotalGen2);
-                    maxTotalMemory = telemetryCollection.Max(q => q.TelemetryCollector.GCInfoResult.TotalBytesOfMemory);
+                    maxTotalMemory = telemetryCollection.Max(q => q.TelemetryCollector.GCInfoResult.TotalKiloBytesOfMemory);
                     maxElapsedTime = telemetryCollection.Max(q => q.TelemetryCollector.TestDuration);
 
                     medianGen0 = (int) getMedianFunction(telemetryCollection.Select(q => Convert.ToInt64(q.TelemetryCollector.GCInfoResult.TotalGen0)).ToArray());
                     medianGen1 = (int)getMedianFunction(telemetryCollection.Select(q => Convert.ToInt64(q.TelemetryCollector.GCInfoResult.TotalGen1)).ToArray());
                     medianGen2 = (int)getMedianFunction(telemetryCollection.Select(q => Convert.ToInt64(q.TelemetryCollector.GCInfoResult.TotalGen2)).ToArray());
-                    medianTotalMemory = getMedianFunction(telemetryCollection.Select(q => q.TelemetryCollector.GCInfoResult.TotalBytesOfMemory).ToArray());
+                    medianTotalMemory = getMedianFunction(telemetryCollection.Select(q => q.TelemetryCollector.GCInfoResult.TotalKiloBytesOfMemory).ToArray());
                     medianElapsedTime = TimeSpan.FromTicks(getMedianFunction(telemetryCollection.Select(q => q.TelemetryCollector.TestDuration.Ticks).ToArray()));
 
                     return
@@ -160,7 +160,7 @@ Execution {0}:
                             telemetry.TelemetryCollector.GCInfoResult.TotalGen0,
                             telemetry.TelemetryCollector.GCInfoResult.TotalGen1,
                             telemetry.TelemetryCollector.GCInfoResult.TotalGen2,
-                            telemetry.TelemetryCollector.GCInfoResult.TotalBytesOfMemory / 1024.0,
+                            telemetry.TelemetryCollector.GCInfoResult.TotalKiloBytesOfMemory / 1024.0,
                             telemetry.TelemetryCollector.TestDuration
                             ));
 
