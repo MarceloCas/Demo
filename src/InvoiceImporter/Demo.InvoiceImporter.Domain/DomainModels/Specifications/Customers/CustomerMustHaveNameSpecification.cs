@@ -1,4 +1,5 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Base;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Base;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,11 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
         : SpecificationBase<Customer>,
         ICustomerMustHaveNameSpecification
     {
+        public CustomerMustHaveNameSpecification(IGlobalizationConfig globalizationConfig) 
+            : base(globalizationConfig)
+        {
+        }
+
         public override async Task<bool> IsSatisfiedBy(Customer entity)
         {
             return await Task.FromResult(!string.IsNullOrEmpty(entity?.Name));
