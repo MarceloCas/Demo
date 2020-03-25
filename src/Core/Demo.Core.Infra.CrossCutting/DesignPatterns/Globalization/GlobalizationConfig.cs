@@ -14,10 +14,10 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization
         public LocalizationsEnum Localization { get; protected set; }
 
         public GlobalizationConfig(
-            string cultureCode, 
+            string cultureName, 
             LocalizationsEnum localization) 
         {
-            CultureInfo = new CultureInfo(cultureCode);
+            CultureInfo = new CultureInfo(cultureName);
             Localization = localization;
         }
 

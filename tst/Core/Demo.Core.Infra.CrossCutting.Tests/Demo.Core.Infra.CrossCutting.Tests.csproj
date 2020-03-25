@@ -20,4 +20,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Core\Demo.Core.Infra.CrossCutting\Demo.Core.Infra.CrossCutting.csproj" />
+  </ItemGroup>
+
 </Project>

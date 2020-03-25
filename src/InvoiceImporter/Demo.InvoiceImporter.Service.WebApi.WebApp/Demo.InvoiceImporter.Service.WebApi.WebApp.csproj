@@ -24,8 +24,8 @@
     <ProjectReference Include="..\Demo.InvoiceImporter.Application.WebApi\Demo.InvoiceImporter.Application.WebApi.csproj" />
     <ProjectReference Include="..\Demo.InvoiceImporter.Application\Demo.InvoiceImporter.Application.csproj" />
     <ProjectReference Include="..\Demo.InvoiceImporter.Infra.CrossCutting\Demo.InvoiceImporter.Infra.CrossCutting.csproj" />
-    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.WebApp\Demo.InvoiceImporter.Infra.Data.IoC.WebApi.WebApp.csproj" />
-    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.Data.IoC\Demo.InvoiceImporter.Infra.Data.IoC.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.IoC.WebApi.WebApp\Demo.InvoiceImporter.Infra.IoC.WebApi.WebApp.csproj" />
+    <ProjectReference Include="..\Demo.InvoiceImporter.Infra.IoC\Demo.InvoiceImporter.Infra.IoC.csproj" />
     <ProjectReference Include="..\Demo.InvoiceImporter.Service\Demo.InvoiceImporter.Service.csproj" />
   </ItemGroup>
 

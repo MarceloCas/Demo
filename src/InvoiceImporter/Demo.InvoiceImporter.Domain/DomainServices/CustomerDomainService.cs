@@ -44,7 +44,7 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
                 customerToImport.GovernamentalDocumentNumber,
                 creationUser);
 
-            importedCustomer = await Repository.AddAsync(importedCustomer);
+            //importedCustomer = await Repository.AddAsync(importedCustomer);
 
             return importedCustomer;
         }

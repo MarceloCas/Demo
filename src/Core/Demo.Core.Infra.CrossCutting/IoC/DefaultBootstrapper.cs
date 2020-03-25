@@ -13,12 +13,12 @@ namespace Demo.Core.Infra.CrossCutting.IoC
     {
         public void RegisterServices(
             IServiceCollection services, 
-            string cultureCode,
+            string cultureName,
             LocalizationsEnum localization)
         {
             services.AddScoped<IGlobalizationConfig>(serviceProvider => 
             {
-                return new GlobalizationConfig(cultureCode, localization); 
+                return new GlobalizationConfig(cultureName, localization); 
             });
         }
     }

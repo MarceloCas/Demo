@@ -1,4 +1,5 @@
-﻿using Demo.Core.Infra.CrossCutting.Tests.Models;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums;
+using Demo.Core.Infra.CrossCutting.Tests.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections;
@@ -17,29 +18,27 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Base
         private readonly ITestOutputHelper _output;
 
         protected string Tenant { get; }
-        protected CultureInfo CultureInfo { get; }
+        protected string CreationUser { get; }
+        protected LocalizationsEnum Localization { get; set; }
+        protected string CultureName { get; }
         protected IServiceProvider ServiceProvider { get; }
 
         protected TestBase(
             ITestOutputHelper output,
             string tenant = "dev",
+            string creationUser = "unitTest",
+            LocalizationsEnum localization = LocalizationsEnum.Default,
             string cultureName = "en-US")
         {
             _output = output;
-
-            /*
-             * CultureInfo must be initialized before IoC
-             * cause IoC process can be influenced by culture
-             */
-            CultureInfo = new CultureInfo(cultureName);
+            Tenant = tenant;
+            CreationUser = creationUser;
+            Localization = localization;
+            CultureName = cultureName;
 
             var service = new ServiceCollection();
             ConfigureServices(service);
             ServiceProvider = service.BuildServiceProvider();
-
-            /*
-             * 
-             */
         }
 
         private void WriteTelemetryExecutionReport(
