@@ -14,7 +14,7 @@ namespace Demo.InvoiceImporter.Domain.Tests.Base
             ITestOutputHelper output, 
             string tenant = "dev", 
             string creationUser = "unitTest", 
-            LocalizationsEnum localization = LocalizationsEnum.Default,
+            LocalizationsEnum localization = LocalizationsEnum.UnitedStates,
             string cultureName = "en-US") 
             : base(output, tenant, creationUser, localization, cultureName)
         {
@@ -23,7 +23,7 @@ namespace Demo.InvoiceImporter.Domain.Tests.Base
 
         protected override void ConfigureServices(IServiceCollection services)
         {
-            new Infra.IoC.Tests.DefaultBootstrapper().RegisterServices(services, CultureName, Localization);
+            new Infra.IoC.Tests.DefaultBootstrapper().RegisterServices(services, Tenant, CultureName, Localization);
         }
     }
 }

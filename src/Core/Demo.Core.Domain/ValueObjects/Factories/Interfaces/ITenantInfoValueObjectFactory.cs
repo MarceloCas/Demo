@@ -6,7 +6,7 @@ using System.Text;
 namespace Demo.Core.Domain.ValueObjects.Factories.Interfaces
 {
     public interface ITenantInfoValueObjectFactory
-        : IFactoryWithParameters<TenantInfoValueObject, string>
+        : IFactory<TenantInfoValueObject>
     {
 
     }

@@ -29,20 +29,22 @@ namespace Demo.Core.Domain.ValueObjects
             : FactoryBase<TenantInfoValueObject>,
             ITenantInfoValueObjectFactory
         {
-            public TenantInfoValueObjectFactory(IGlobalizationConfig globalizationConfig) 
+            private readonly string _tenantCode;
+
+            public TenantInfoValueObjectFactory(
+                IGlobalizationConfig globalizationConfig,
+                string tenantCode) 
                 : base(globalizationConfig)
             {
+                _tenantCode = tenantCode;
             }
 
             public override TenantInfoValueObject Create()
             {
-                return new TenantInfoValueObject();
-            }
+                var tenantInfo = new TenantInfoValueObject();
+                tenantInfo.SetTenantCode(_tenantCode);
 
-            public TenantInfoValueObject Create(string tenantCode)
-            {
-                return Create()
-                    .SetTenantCode(tenantCode);
+                return tenantInfo;
             }
         }
         #endregion

@@ -87,12 +87,13 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
 
             public override Customer Create()
             {
+
                 switch (GlobalizationConfig.Localization)
                 {
-                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.Default:
+                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.UnitedStates:
                         return RegisterBaseTypes(new Customer(_governamentalDocumentNumberValueObjectFactory.Create()));
-                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.Brazilian:
-                        return _brazilianCustomerFactory.Create();
+                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.Brazil:
+                        return RegisterBaseTypes(_brazilianCustomerFactory.Create());
                     default:
                         return RegisterBaseTypes(new Customer(_governamentalDocumentNumberValueObjectFactory.Create()));
                 }

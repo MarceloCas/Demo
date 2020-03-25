@@ -27,7 +27,7 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Base
             ITestOutputHelper output,
             string tenant = "dev",
             string creationUser = "unitTest",
-            LocalizationsEnum localization = LocalizationsEnum.Default,
+            LocalizationsEnum localization = LocalizationsEnum.UnitedStates,
             string cultureName = "en-US")
         {
             _output = output;

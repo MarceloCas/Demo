@@ -20,7 +20,7 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
             ITestOutputHelper output,
             string tenant = "dev",
             string creationUser = "unitTest",
-            LocalizationsEnum localization = LocalizationsEnum.Default,
+            LocalizationsEnum localization = LocalizationsEnum.Brazil,
             string cultureName = "en-US") 
             : base(output, tenant, creationUser, localization, cultureName)
         {
@@ -41,7 +41,8 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
                 await customerDomainService.ImportCustomerAsync(Tenant, CreationUser, customerToImport);
 
                 return true;
-            });
+            },
+            1);
         }
     }
 }
