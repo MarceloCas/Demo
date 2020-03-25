@@ -3,16 +3,16 @@ using Demo.Core.Domain.ValueObjects;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Demo.Core.Domain.DomainModels.Base
 {
     public abstract class DomainModelBase
         : IAuditableDomainModel
     {
+        // Attributes
         private TenantInfoValueObject _tenantInfo;
 
+        // Properties
         public Guid Id { get; protected set; }
         public string TenantCode
         {
@@ -30,13 +30,13 @@ namespace Demo.Core.Domain.DomainModels.Base
         public string ModificationUser { get; protected set; }
         public DateTime ModificationDate { get; protected set; }
 
-        public TenantInfoValueObject TenantInfo { get; protected set; }
-
+        // Constructors
         protected DomainModelBase()
         {
 
         }
 
+        // Public Methods
         protected void SetModificationInfo(
             string modificationUser)
         {
@@ -54,7 +54,6 @@ namespace Demo.Core.Domain.DomainModels.Base
             if (!string.IsNullOrWhiteSpace(modificationUser))
                 SetModificationInfo(modificationUser);
         }
-        
 
         public void Dispose()
         {
