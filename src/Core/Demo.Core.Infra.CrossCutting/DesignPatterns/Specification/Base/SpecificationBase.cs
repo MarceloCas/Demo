@@ -13,6 +13,14 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Base
         public string ErrorCode { get; set; }
         public string ErrorDefaultDescription { get; set; }
 
+        protected IGlobalizationConfig GlobalizationConfig
+        {
+            get
+            {
+                return _globalizationConfig;
+            }
+        }
+
         protected SpecificationBase(
             IGlobalizationConfig globalizationConfig)
         {

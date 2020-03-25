@@ -38,7 +38,7 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
                 return customerToImport;
             }
 
-            var importedCustomer = Factory.Create().ImportCustomer(
+            var importedCustomer = Factory.Create().ImportCustomer<Customer>(
                 tenantCode,
                 customerToImport.Name,
                 customerToImport.GovernamentalDocumentNumber,

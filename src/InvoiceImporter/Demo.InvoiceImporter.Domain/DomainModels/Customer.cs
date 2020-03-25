@@ -1,81 +1,101 @@
-﻿using Demo.Core.Domain.DomainModels.Base;
-using Demo.Core.Domain.DomainModels.Interfaces;
-using Demo.Core.Domain.ValueObjects;
+﻿using Demo.Core.Domain.ValueObjects.CNPJs;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
+using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers;
+using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Base;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static Demo.InvoiceImporter.Domain.DomainModels.Customer;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels
 {
     public class Customer
-        : DomainModelBase,
-        ICustomer
+        : CustomerBase
     {
-        // Attributes
-        private GovernamentalDocumentNumberValueObject _governamentalDocumentoNumber;
-
-        // Properties
-        public string Name { get; protected set; }
-        public string GovernamentalDocumentNumber 
+        protected Customer(GovernamentalDocumentNumberValueObject governamentalDocumentNumberValueObject) 
+            : base(governamentalDocumentNumberValueObject)
         {
-            get
-            {
-                return _governamentalDocumentoNumber.DocumentNumber;
-            }
-            protected set
-            {
-                _governamentalDocumentoNumber.SetDocumentNumber(value);
-            }
-        }
-
-        // Constructors
-        protected Customer() 
-        {
-            _governamentalDocumentoNumber = new GovernamentalDocumentNumberValueObject();
-        }
-
-        // Private Methods
-        private Customer GenerateNewId()
-        {
-            Id = Guid.NewGuid();
-            return this;
-        }
-        private Customer SetGovernamentalDocumentNumber(string documentNumber)
-        {
-            GovernamentalDocumentNumber = documentNumber;
-            return this;
         }
 
         // Public Methods
-        public Customer ImportCustomer(string tenantCode, string name, string governamentalNumber, string creationUser)
+        public override Customer ImportCustomer<Customer>(string tenantCode, string name, string governamentalNumber, string creationUser)
         {
-            GenerateNewId();
-            SetGovernamentalDocumentNumber(governamentalNumber);
-            SetCreationInfo(tenantCode, creationUser);
-
-            return this;
+            return base.ImportCustomer<Customer>(tenantCode, name, governamentalNumber, creationUser);
         }
+
+        #region Localizations
+        public class BrazilianCustomer
+            : Customer
+        {
+            protected BrazilianCustomer(CNPJValueObject cnpjValueObject)
+                : base(cnpjValueObject)
+            {
+
+            }
+
+            // Public Methods
+            public override BrazilianCustomer ImportCustomer<BrazilianCustomer>(string tenantCode, string name, string governamentalNumber, string creationUser)
+            {
+                return base.ImportCustomer<BrazilianCustomer>(tenantCode, name, governamentalNumber, creationUser);
+            }
+
+            #region Factories
+            public class BrazilianCustomerFactory
+                : DomainModelBaseFactory<BrazilianCustomer>,
+                IBrazilianCustomerFactory
+            {
+                private readonly ICNPJValueObjectFactory _cnpjValueObjectFactory;
+
+                public BrazilianCustomerFactory(
+                    ICNPJValueObjectFactory cnpjValueObjectFactory,
+                    ITenantInfoValueObjectFactory tenantInfoValueObjectFactory, 
+                    IGlobalizationConfig globalizationConfig) 
+                    : base(tenantInfoValueObjectFactory, globalizationConfig)
+                {
+                    _cnpjValueObjectFactory = cnpjValueObjectFactory;
+                }
+
+                public override BrazilianCustomer Create()
+                {
+                    return new BrazilianCustomer(_cnpjValueObjectFactory.Create());
+                }
+            }
+            #endregion
+        }
+        #endregion
 
         #region Factories
         public class CustomerFactory
             : DomainModelBaseFactory<Customer>,
             ICustomerFactory
         {
+            private readonly IBrazilianCustomerFactory _brazilianCustomerFactory;
+            private readonly IGovernamentalDocumentNumberValueObjectFactory _governamentalDocumentNumberValueObjectFactory;
+
             public CustomerFactory(
+                IBrazilianCustomerFactory brazilianCustomerFactory,
+                IGovernamentalDocumentNumberValueObjectFactory governamentalDocumentNumberValueObjectFactory,
                 ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
-                IGlobalizationConfig globalizationConfig) 
+                IGlobalizationConfig globalizationConfig)
                 : base(tenantInfoValueObjectFactory, globalizationConfig)
             {
+                _governamentalDocumentNumberValueObjectFactory = governamentalDocumentNumberValueObjectFactory;
+                _brazilianCustomerFactory = brazilianCustomerFactory;
             }
 
             public override Customer Create()
             {
-                return RegisterBaseTypes(new Customer());
+                switch (GlobalizationConfig.Localization)
+                {
+                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.Default:
+                        return RegisterBaseTypes(new Customer(_governamentalDocumentNumberValueObjectFactory.Create()));
+                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.Brazilian:
+                        return _brazilianCustomerFactory.Create();
+                    default:
+                        return RegisterBaseTypes(new Customer(_governamentalDocumentNumberValueObjectFactory.Create()));
+                }
             }
         }
         #endregion

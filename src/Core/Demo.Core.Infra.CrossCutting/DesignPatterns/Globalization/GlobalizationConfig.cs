@@ -1,4 +1,5 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,10 +11,14 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization
         : IGlobalizationConfig
     {
         public CultureInfo CultureInfo { get; protected set; }
+        public LocalizationsEnum Localization { get; protected set; }
 
-        public GlobalizationConfig(string cultureCode) 
+        public GlobalizationConfig(
+            string cultureCode, 
+            LocalizationsEnum localization) 
         {
             CultureInfo = new CultureInfo(cultureCode);
+            Localization = localization;
         }
 
         public void Dispose()

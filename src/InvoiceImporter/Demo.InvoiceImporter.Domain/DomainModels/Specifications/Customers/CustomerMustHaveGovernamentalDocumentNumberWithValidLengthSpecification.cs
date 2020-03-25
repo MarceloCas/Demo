@@ -4,24 +4,23 @@ using Demo.Core.Infra.CrossCutting.ExtensionMethods;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
 {
-    public class CustomerMustHaveNameWithValidLengthSpecification
+    public class CustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification
         : SpecificationBase<Customer>,
-        ICustomerMustHaveNameWithValidLengthSpecification
+        ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification
     {
-        public CustomerMustHaveNameWithValidLengthSpecification(IGlobalizationConfig globalizationConfig) 
+        public CustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification(IGlobalizationConfig globalizationConfig) 
             : base(globalizationConfig)
         {
         }
 
         public async override Task<bool> IsSatisfiedBy(Customer entity)
         {
-            return await Task.FromResult(entity?.Name?.LengthIsBetween(1, 150) == true);
+            return await Task.FromResult(entity?.GovernamentalDocumentNumber?.LengthIsBetween(1, 50) == true);
         }
     }
 }

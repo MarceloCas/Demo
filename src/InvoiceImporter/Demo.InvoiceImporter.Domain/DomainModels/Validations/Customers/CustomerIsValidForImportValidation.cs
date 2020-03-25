@@ -12,9 +12,13 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers
         ICustomerIsValidForImportValidation
     {
         public CustomerIsValidForImportValidation(
+            ICustomerMustHaveGovernamentalDocumentNumberSpecification customerMustHaveGovernamentalDocumentNumberSpecification,
+            ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification customerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification,
             ICustomerMustHaveNameSpecification customerMustHaveNameSpecification,
             ICustomerMustHaveNameWithValidLengthSpecification customerMustHaveNameWithValidLengthSpecification)
         {
+            AddSpecification(customerMustHaveGovernamentalDocumentNumberSpecification);
+            AddSpecification(customerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification);
             AddSpecification(customerMustHaveNameSpecification);
             AddSpecification(customerMustHaveNameWithValidLengthSpecification);
         }

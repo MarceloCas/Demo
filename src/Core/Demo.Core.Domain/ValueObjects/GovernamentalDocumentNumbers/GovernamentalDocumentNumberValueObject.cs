@@ -1,22 +1,26 @@
 ﻿using Demo.Core.Domain.ValueObjects.Base;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
+using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Demo.Core.Domain.ValueObjects
+namespace Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers
 {
     public class GovernamentalDocumentNumberValueObject
         : ValueObjectBase
     {
         public string DocumentNumber { get; protected set; }
 
-        public virtual GovernamentalDocumentNumberValueObject SetDocumentNumber(string documentNumber)
+        protected GovernamentalDocumentNumberValueObject() { }
+
+        public virtual TDocumentNumber SetDocumentNumber<TDocumentNumber>(string documentNumber)
+            where TDocumentNumber : GovernamentalDocumentNumberValueObject
         {
             DocumentNumber = documentNumber;
-            return this;
+            return (TDocumentNumber) this;
         }
 
         #region Factories
@@ -36,7 +40,7 @@ namespace Demo.Core.Domain.ValueObjects
             public GovernamentalDocumentNumberValueObject Create(string documentNumber)
             {
                 return Create()
-                    .SetDocumentNumber(documentNumber);
+                    .SetDocumentNumber<GovernamentalDocumentNumberValueObject>(documentNumber);
             }
         }
         #endregion
