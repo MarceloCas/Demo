@@ -7,9 +7,9 @@ namespace Demo.Core.Domain.DomainModels.Base.Interfaces
     public interface IAuditableDomainModel
         : IDomainModel
     {
-        public string CreationUser { get; }
-        public DateTime CreationDate { get; }
-        public string ModificationUser { get; }
-        public DateTime ModificationDate { get; }
+        string CreationUser { get; }
+        DateTime CreationDate { get; }
+        string ModificationUser { get; }
+        DateTime ModificationDate { get; }
     }
 }

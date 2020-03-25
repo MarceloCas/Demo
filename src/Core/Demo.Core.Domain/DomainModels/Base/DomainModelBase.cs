@@ -30,7 +30,7 @@ namespace Demo.Core.Domain.DomainModels.Base
         public string ModificationUser { get; protected set; }
         public DateTime ModificationDate { get; protected set; }
 
-        public TenantInfoValueObject TenantInfo2 { get; protected set; }
+        public TenantInfoValueObject TenantInfo { get; protected set; }
 
         protected DomainModelBase()
         {
