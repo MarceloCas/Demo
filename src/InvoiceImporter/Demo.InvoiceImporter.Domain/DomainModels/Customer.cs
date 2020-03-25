@@ -90,7 +90,7 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
 
                 switch (GlobalizationConfig.Localization)
                 {
-                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.UnitedStates:
+                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.Default:
                         return RegisterBaseTypes(new Customer(_governamentalDocumentNumberValueObjectFactory.Create()));
                     case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.Brazil:
                         return RegisterBaseTypes(_brazilianCustomerFactory.Create());

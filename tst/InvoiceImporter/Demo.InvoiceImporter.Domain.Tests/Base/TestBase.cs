@@ -14,7 +14,7 @@ namespace Demo.InvoiceImporter.Domain.Tests.Base
             ITestOutputHelper output, 
             string tenant = "dev", 
             string creationUser = "unitTest", 
-            LocalizationsEnum localization = LocalizationsEnum.UnitedStates,
+            LocalizationsEnum localization = LocalizationsEnum.Default,
             string cultureName = "en-US") 
             : base(output, tenant, creationUser, localization, cultureName)
         {

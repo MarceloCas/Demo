@@ -25,7 +25,7 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
 
             var isValid = GlobalizationConfig.Localization switch
             {
-                LocalizationsEnum.UnitedStates => await ValidateGovernamentalDocumentNumber(entity),
+                LocalizationsEnum.Default => await ValidateGovernamentalDocumentNumber(entity),
                 LocalizationsEnum.Brazil => await ValidateCNPJ(entity),
                 _ => false,
             };

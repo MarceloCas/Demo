@@ -6,7 +6,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums
 {
     public enum LocalizationsEnum
     {
-        UnitedStates = 1,
+        Default = 1,
         Brazil = 2
     }
 }
