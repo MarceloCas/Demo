@@ -1,4 +1,8 @@
-﻿namespace Demo.Core.Infra.CrossCutting.Tests.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Demo.Core.Infra.CrossCutting.Tests.Models
 {
     public class GarbageCollectorResult
     {

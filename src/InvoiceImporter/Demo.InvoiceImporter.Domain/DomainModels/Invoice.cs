@@ -1,10 +1,13 @@
 ﻿using Demo.Core.Domain.DomainModels.Base;
 using Demo.Core.Domain.DomainModels.Interfaces;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels
 {
@@ -86,8 +89,10 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         {
             private readonly ICustomerFactory _customerFactory;
 
-            public InvoiceFactory(ITenantInfoValueObjectFactory tenantInfoValueObjectFactory) 
-                : base(tenantInfoValueObjectFactory)
+            public InvoiceFactory(
+                ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
+                IGlobalizationConfig globalizationConfig) 
+                : base(tenantInfoValueObjectFactory, globalizationConfig)
             {
             }
 

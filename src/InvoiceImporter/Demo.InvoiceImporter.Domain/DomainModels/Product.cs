@@ -1,8 +1,12 @@
 ﻿using Demo.Core.Domain.DomainModels.Base;
 using Demo.Core.Domain.DomainModels.Interfaces;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels
 {
@@ -50,8 +54,10 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             : DomainModelBaseFactory<Product>,
             IProductFactory
         {
-            public ProductFactory(ITenantInfoValueObjectFactory tenantInfoValueObjectFactory) 
-                : base(tenantInfoValueObjectFactory)
+            public ProductFactory(
+                ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
+                IGlobalizationConfig globalizationConfig) 
+                : base(tenantInfoValueObjectFactory, globalizationConfig)
             {
 
             }

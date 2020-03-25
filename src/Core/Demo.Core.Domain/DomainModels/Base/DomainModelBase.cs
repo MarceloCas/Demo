@@ -2,7 +2,10 @@
 using Demo.Core.Domain.ValueObjects;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Demo.Core.Domain.DomainModels.Base
 {
@@ -67,7 +70,10 @@ namespace Demo.Core.Domain.DomainModels.Base
         {
             private readonly ITenantInfoValueObjectFactory _tenantInfoValueObjectFactory;
 
-            protected DomainModelBaseFactory(ITenantInfoValueObjectFactory tenantInfoValueObjectFactory)
+            protected DomainModelBaseFactory(
+                ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
+                IGlobalizationConfig globalizationConfig)
+                : base(globalizationConfig)
             {
                 _tenantInfoValueObjectFactory = tenantInfoValueObjectFactory;
             }

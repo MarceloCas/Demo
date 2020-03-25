@@ -1,6 +1,10 @@
 ﻿using Demo.Core.Domain.ValueObjects.Base;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Demo.Core.Domain.ValueObjects
 {
@@ -20,6 +24,11 @@ namespace Demo.Core.Domain.ValueObjects
             : FactoryBase<GovernamentalDocumentNumberValueObject>,
             IGovernamentalDocumentNumberValueObjectFactory
         {
+            public GovernamentalDocumentNumberValueObjectFactory(IGlobalizationConfig globalizationConfig) 
+                : base(globalizationConfig)
+            {
+            }
+
             public override GovernamentalDocumentNumberValueObject Create()
             {
                 return new GovernamentalDocumentNumberValueObject();

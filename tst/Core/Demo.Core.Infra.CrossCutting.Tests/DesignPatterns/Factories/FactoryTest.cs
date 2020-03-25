@@ -1,7 +1,10 @@
 ﻿using Demo.Core.Infra.CrossCutting.Tests.Base;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;

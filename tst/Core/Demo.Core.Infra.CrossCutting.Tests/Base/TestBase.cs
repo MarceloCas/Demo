@@ -1,6 +1,7 @@
 ﻿using Demo.Core.Infra.CrossCutting.Tests.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;

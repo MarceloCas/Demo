@@ -1,4 +1,7 @@
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
