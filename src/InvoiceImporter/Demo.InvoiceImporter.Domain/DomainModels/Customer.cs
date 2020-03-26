@@ -2,7 +2,7 @@
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers;
 using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers.Factories.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Base;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using System;
@@ -90,9 +90,9 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
 
                 switch (GlobalizationConfig.Localization)
                 {
-                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.Default:
+                    case Core.Infra.CrossCutting.Globalization.Enums.LocalizationsEnum.Default:
                         return RegisterBaseTypes(new Customer(_governamentalDocumentNumberValueObjectFactory.Create()));
-                    case Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums.LocalizationsEnum.Brazil:
+                    case Core.Infra.CrossCutting.Globalization.Enums.LocalizationsEnum.Brazil:
                         return RegisterBaseTypes(_brazilianCustomerFactory.Create());
                     default:
                         return RegisterBaseTypes(new Customer(_governamentalDocumentNumberValueObjectFactory.Create()));

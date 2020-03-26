@@ -1,6 +1,6 @@
 ﻿using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers.Factories.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

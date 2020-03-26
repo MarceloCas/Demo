@@ -1,10 +1,10 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums;
+﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces
+namespace Demo.Core.Infra.CrossCutting.Globalization.Interfaces
 {
     public interface IGlobalizationConfig
         : IDisposable

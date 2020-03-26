@@ -1,4 +1,4 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums;
+﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
@@ -41,7 +41,7 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
 
                 return true;
             },
-            1000);
+            10_000);
         }
     }
 }

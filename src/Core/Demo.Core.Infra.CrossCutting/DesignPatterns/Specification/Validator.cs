@@ -20,6 +20,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
                     validationResult.Add(new ValidationMessage(rule.Code, rule.DefaultDescription));
                 }
             }
+
             return await Task.FromResult(validationResult);
         }
 

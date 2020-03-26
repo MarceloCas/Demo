@@ -1,5 +1,5 @@
 ﻿using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;

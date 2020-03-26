@@ -1,4 +1,4 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums;
+﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

@@ -11,21 +11,9 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
         private readonly List<ValidationMessage> _validationMessages = new List<ValidationMessage>();
 
         public string SummaryMessage { get; set; }
-        public bool IsValid
-        {
-            get
-            {
-                return !ValidationMessageErrors.Any();
-            }
-        }
+        public bool IsValid { get { return !ValidationMessageErrors.Any(); } }
 
-        public IEnumerable<ValidationMessage> Messages
-        {
-            get
-            {
-                return _validationMessages;
-            }
-        }
+        public IEnumerable<ValidationMessage> Messages { get { return _validationMessages; } }
         public IEnumerable<ValidationMessage> ValidationMessageErrors
         {
             get

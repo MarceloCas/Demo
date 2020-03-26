@@ -1,5 +1,5 @@
 ﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;

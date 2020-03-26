@@ -5,14 +5,8 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Interfaces
 {
     public interface IRule<in TEntity>
     {
-        string Code
-        {
-            get;
-        }
-        string DefaultDescription
-        {
-            get;
-        }
+        string Code { get; }
+        string DefaultDescription { get; }
 
         Task<bool> Validate(TEntity entity);
     }

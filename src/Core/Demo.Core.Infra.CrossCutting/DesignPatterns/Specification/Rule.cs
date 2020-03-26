@@ -8,16 +8,8 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
     {
         private readonly ISpecification<TEntity> _specificationSpec;
 
-        public string Code
-        {
-            get;
-            private set;
-        }
-        public string DefaultDescription
-        {
-            get;
-            private set;
-        }
+        public string Code { get; private set; }
+        public string DefaultDescription { get; private set; }
 
         public Rule(ISpecification<TEntity> spec, string code, string defaultDescription)
         {

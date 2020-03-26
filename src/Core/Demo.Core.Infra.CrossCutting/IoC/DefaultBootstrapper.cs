@@ -1,6 +1,6 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+﻿using Demo.Core.Infra.CrossCutting.Globalization;
+using Demo.Core.Infra.CrossCutting.Globalization.Enums;
+using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

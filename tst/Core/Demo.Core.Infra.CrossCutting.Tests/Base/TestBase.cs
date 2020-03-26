@@ -1,4 +1,4 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums;
+﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.Tests.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -185,19 +186,25 @@ Execution {0}:
             Func<List<Telemetry>, bool> customAcceptanceCriteriaFunction = null)
         {
             var telemetryCollection = new List<Telemetry>();
+            var threadCollection = new List<Task>();
 
             var hasCustomAcceptanceCriteriaFunction = customAcceptanceCriteriaFunction != null;
 
             for (int i = 0; i < totalOfExecutions; i++)
             {
-                var telemetry = new Telemetry();
+                threadCollection.Add(Task.Run(async () =>
+                {
+                    var telemetry = new Telemetry();
 
-                telemetry.StartTelemetry();
-                telemetry.TestExecutionSuccess = await testFunction.Invoke();
-                telemetry.StopTelemetry();
+                    telemetry.StartTelemetry();
+                    telemetry.TestExecutionSuccess = await testFunction.Invoke();
+                    telemetry.StopTelemetry();
 
-                telemetryCollection.Add(telemetry);
+                    telemetryCollection.Add(telemetry);
+                }));
             }
+
+            Task.WaitAll(threadCollection.ToArray());
 
             if (!hasCustomAcceptanceCriteriaFunction)
                 Assert.True(telemetryCollection.All(q => q.TestExecutionSuccess));

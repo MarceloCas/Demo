@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Enums
+namespace Demo.Core.Infra.CrossCutting.Globalization.Enums
 {
     public enum LocalizationsEnum
     {

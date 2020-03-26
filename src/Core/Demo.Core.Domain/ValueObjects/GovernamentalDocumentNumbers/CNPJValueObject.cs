@@ -1,7 +1,7 @@
 ﻿using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers;
 using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Globalization.Interfaces;
+using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
