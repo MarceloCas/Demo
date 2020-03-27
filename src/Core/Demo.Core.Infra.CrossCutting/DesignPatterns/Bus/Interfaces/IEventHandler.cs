@@ -10,6 +10,6 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces
         : IHandler<TEvent>
         where TEvent : Event
     {
-        Task<bool> Handle(TEvent @event);
+        Task<bool> HandleAsync(TEvent @event);
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Demo.InvoiceImporter.Infra.IoC.Tests
+namespace Demo.InvoiceImporter.Infra.IoC.WebApi.WebApp
 {
     public class DefaultBootstrapper
         : IoC.DefaultBootstrapper

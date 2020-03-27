@@ -23,27 +23,23 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
             IBus bus,
             ICustomerFactory factory,
             ICustomerIsValidForImportValidation customerIsValidForImportValidation
-            ) 
-            : base(bus, factory)
+            ) : base(bus, factory)
         {
             _customerIsValidForImportValidation = customerIsValidForImportValidation;
         }
 
         public async Task<Customer> ImportCustomerAsync(string tenantCode, string creationUser, Customer customerToImport)
         {
-            var validationResult = await _customerIsValidForImportValidation.Validate(customerToImport);
-            if (!validationResult.IsValid)
-            {
-                // Send DomainNotification
-
+            if (await Validate(customerToImport, _customerIsValidForImportValidation) == false)
                 return customerToImport;
-            }
 
             var importedCustomer = Factory.Create().ImportCustomer<Customer>(
                 tenantCode,
                 customerToImport.Name,
                 customerToImport.GovernamentalDocumentNumber,
                 creationUser);
+
+            await Bus.SendDomainNotification(null);
 
             //importedCustomer = await Repository.AddAsync(importedCustomer);
 

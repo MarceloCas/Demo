@@ -13,7 +13,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handle
     {
         ICollection<DomainNotification> DomainNotificationsCollection { get; }
 
-        Task<bool> Handle(DomainNotification domainNotification);
+        Task<bool> HandleAsync(DomainNotification domainNotification);
 
         void AddDomainNotification(DomainNotificationTypeEnum type, string code, string defaultDescription);
         void AddDomainNotification(DomainNotification domainNotification);

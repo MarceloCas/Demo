@@ -25,8 +25,9 @@ namespace Demo.Core.Infra.CrossCutting.IoC
                 return new GlobalizationConfig(cultureName, localization); 
             });
 
-            services.AddScoped<IBus, InMemoryBus>();
-            services.AddScoped<IDomainNotificationHandler, DefaultDomainNotificationHandler>();
+            services.AddScoped<IBus>(serviceProvider => {
+                return new InMemoryBus(serviceProvider);
+            });
         }
     }
 }

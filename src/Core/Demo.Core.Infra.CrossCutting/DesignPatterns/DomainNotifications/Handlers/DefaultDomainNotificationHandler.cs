@@ -44,7 +44,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handle
         }
         public void AddDomainNotificationFromValidationResult(ValidationResult validationResult)
         {
-            foreach (var message in validationResult.Messages)
+            foreach (var message in validationResult.ValidationMessagesCollection)
             {
                 var domainNotificationType = message.ValidationMessageType switch
                 {
@@ -60,7 +60,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handle
                     message.DefaultDescription);
             }
         }
-        public async Task<bool> Handle(DomainNotification domainNotification)
+        public async Task<bool> HandleAsync(DomainNotification domainNotification)
         {
             DomainNotificationsCollection.Add(domainNotification);
 

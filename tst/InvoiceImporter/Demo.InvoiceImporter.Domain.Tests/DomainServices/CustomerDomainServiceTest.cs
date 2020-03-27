@@ -1,4 +1,7 @@
-﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
+using Demo.Core.Infra.CrossCutting.Globalization.Enums;
+using Demo.InvoiceImporter.Domain.Commands.Invoices;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
@@ -27,21 +30,41 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
 
         }
 
+
         [Fact]
         [Trait(nameof(CustomerDomainService), "ImportCustomer_Success")]
         public async Task ImportCustomer_Success()
         {
             await RunWithTelemetry(async () =>
             {
-                var customerDomainService = ServiceProvider.GetService<ICustomerDomainService>();
-                var customerFactory = ServiceProvider.GetService<ICustomerFactory>();
+                var bus = ServiceProvider.GetService<IBus>();
+                
+                await bus.SendCommand(new ImportInvoiceCommand());
 
-                var customerToImport = customerFactory.Create();
-                var importedCustomer = await customerDomainService.ImportCustomerAsync(Tenant, CreationUser, customerToImport);
+                var domainNotificationHandler = ServiceProvider.GetService<IDomainNotificationHandler>();
+                foreach (var domainNotification in domainNotificationHandler.DomainNotificationsCollection)
+                {
+                    WriteLog($"Id: {domainNotification.Id}, MessageType: {domainNotification.MessageType}, TimeStamp: {domainNotification.TimeStamp}, Type: {domainNotification.Type}, Code: {domainNotification.Code}, Description: {domainNotification.DefaultDescription}");
+                }
 
                 return true;
             },
-            10_000);
+            1);
+
+            //await RunWithTelemetry(async () =>
+            //{
+            //    var customerDomainService = ServiceProvider.GetService<ICustomerDomainService>();
+            //    var customerFactory = ServiceProvider.GetService<ICustomerFactory>();
+
+            //    var customerToImport = customerFactory.Create();
+            //    var importedCustomer = await customerDomainService.ImportCustomerAsync(Tenant, CreationUser, customerToImport);
+
+            //    var domainNotificationHandler = ServiceProvider.GetService<IDomainNotificationHandler>();
+            //    _ = domainNotificationHandler.DomainNotificationsCollection;
+
+            //    return true;
+            //},
+            //1);
         }
     }
 }

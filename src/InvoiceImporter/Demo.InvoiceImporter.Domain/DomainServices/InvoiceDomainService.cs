@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.Repositories.Base;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices.Base;
@@ -16,9 +17,9 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
         IInvoiceDomainService
     {
         public InvoiceDomainService(
-            IInvoiceRepository repository,
+            IBus bus,
             IInvoiceFactory invoiceFactory) 
-            : base(repository, invoiceFactory)
+            : base(bus, invoiceFactory)
         {
         }
 
@@ -33,8 +34,6 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
                 invoiceToImport.Customer,
                 invoiceToImport.InvoiceItemCollection,
                 creationUser);
-
-            importedInvoice = await Bus.AddAsync(importedInvoice);
 
             return importedInvoice;
         }

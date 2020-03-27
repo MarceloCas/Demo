@@ -1,4 +1,5 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Models;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,6 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces
         : IHandler<TCommand>
         where TCommand : Command
     {
-        Task<bool> Handle(TCommand command);
+        Task<bool> HandleAsync(TCommand command);
     }
 }

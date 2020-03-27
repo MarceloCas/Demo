@@ -7,6 +7,8 @@ using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
+using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
+using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,7 @@ namespace Demo.InvoiceImporter.Domain.IoC
             RegisterDomainModelsValidations(services);
             RegisterFactories(services);
             RegisterDomainServices(services);
+            RegisterCommands(services);
         }
 
         private void RegisterDomainModelsSpecifications(IServiceCollection services)
@@ -54,6 +57,11 @@ namespace Demo.InvoiceImporter.Domain.IoC
             services.AddScoped<ICustomerDomainService, CustomerDomainService>();
             services.AddScoped<IInvoiceDomainService, InvoiceDomainService>();
             services.AddScoped<IProductDomainService, ProductDomainService>();
+        }
+        private void RegisterCommands(IServiceCollection services)
+        {
+            services.AddScoped<IImportInvoiceCommandHandler, ImportInvoiceCommandHandler1>();
+            services.AddScoped<IImportInvoiceCommandHandler, ImportInvoiceCommandHandler2>();
         }
     }
 }
