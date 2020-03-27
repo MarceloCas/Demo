@@ -1,4 +1,4 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.Repositories.Base;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
@@ -19,11 +20,11 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
         private readonly ICustomerIsValidForImportValidation _customerIsValidForImportValidation;
 
         public CustomerDomainService(
-            ICustomerRepository repository,
+            IBus bus,
             ICustomerFactory factory,
             ICustomerIsValidForImportValidation customerIsValidForImportValidation
             ) 
-            : base(repository, factory)
+            : base(bus, factory)
         {
             _customerIsValidForImportValidation = customerIsValidForImportValidation;
         }

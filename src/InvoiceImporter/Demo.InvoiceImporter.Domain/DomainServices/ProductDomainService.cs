@@ -32,7 +32,7 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
                 productToImport.Code,
                 creationUser);
 
-            importedProduct = await Repository.AddAsync(importedProduct);
+            importedProduct = await Bus.AddAsync(importedProduct);
 
             return importedProduct;
         }

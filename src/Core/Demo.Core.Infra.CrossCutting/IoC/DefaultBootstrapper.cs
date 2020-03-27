@@ -1,4 +1,8 @@
-﻿using Demo.Core.Infra.CrossCutting.Globalization;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
+using Demo.Core.Infra.CrossCutting.Globalization;
 using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +24,9 @@ namespace Demo.Core.Infra.CrossCutting.IoC
             {
                 return new GlobalizationConfig(cultureName, localization); 
             });
+
+            services.AddScoped<IBus, InMemoryBus>();
+            services.AddScoped<IDomainNotificationHandler, DefaultDomainNotificationHandler>();
         }
     }
 }

@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS
+namespace Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS.Base
 {
-    public class Command
+    public abstract class QueryBase
         : Message
     {
-
     }
 }

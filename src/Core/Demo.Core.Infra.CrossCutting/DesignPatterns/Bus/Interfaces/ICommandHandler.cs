@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces
 {
@@ -9,6 +10,6 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces
         : IHandler<TCommand>
         where TCommand : Command
     {
-
+        Task<bool> Handle(TCommand command);
     }
 }

@@ -34,7 +34,7 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
                 invoiceToImport.InvoiceItemCollection,
                 creationUser);
 
-            importedInvoice = await Repository.AddAsync(importedInvoice);
+            importedInvoice = await Bus.AddAsync(importedInvoice);
 
             return importedInvoice;
         }
