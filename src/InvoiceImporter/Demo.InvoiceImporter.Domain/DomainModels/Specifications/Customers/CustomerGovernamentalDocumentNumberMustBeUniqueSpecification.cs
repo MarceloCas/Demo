@@ -2,6 +2,7 @@
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Base;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
+using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,16 +14,23 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
         : SpecificationBase<Customer>,
         ICustomerGovernamentalDocumentNumberMustBeUniqueSpecification
     {
+        private readonly IGetCustomerByGovernamentalDocumentNumberQueryAdapter _getCustomerByGovernamentalDocumentNumberQueryAdapter;
+
         public CustomerGovernamentalDocumentNumberMustBeUniqueSpecification(
             IBus bus, 
-            IGlobalizationConfig globalizationConfig
+            IGlobalizationConfig globalizationConfig,
+            IGetCustomerByGovernamentalDocumentNumberQueryAdapter getCustomerByGovernamentalDocumentNumberQueryAdapter
             ) : base(bus, globalizationConfig)
         {
+            _getCustomerByGovernamentalDocumentNumberQueryAdapter = getCustomerByGovernamentalDocumentNumberQueryAdapter;
         }
 
-        public override Task<bool> IsSatisfiedByAsync(Customer entity)
+        public override async Task<bool> IsSatisfiedByAsync(Customer entity)
         {
-            throw new NotImplementedException();
+            var query = await _getCustomerByGovernamentalDocumentNumberQueryAdapter.AdapteeAsync(entity);
+            await Bus.SendQueryAsync(query);
+
+            return (query.QueryReturn?.Id ?? Guid.Empty) == Guid.Empty;
         }
     }
 }

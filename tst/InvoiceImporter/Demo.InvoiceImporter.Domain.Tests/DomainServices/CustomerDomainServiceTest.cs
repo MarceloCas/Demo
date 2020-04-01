@@ -36,32 +36,32 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
         [Trait(nameof(CustomerDomainService), "ImportCustomer_Success")]
         public async Task ImportCustomer_Success()
         {
+            //await RunWithTelemetry(async () =>
+            //{
+            //    var bus = ServiceProvider.GetService<IBus>();
+
+            //    await bus.SendCommandAsync(new ImportInvoiceCommand());
+
+            //    bus.Dispose();
+
+            //    return true;
+            //},
+            //10_000);
+
             await RunWithTelemetry(async () =>
             {
-                var bus = ServiceProvider.GetService<IBus>();
+                var customerDomainService = ServiceProvider.GetService<ICustomerDomainService>();
+                var customerFactory = ServiceProvider.GetService<ICustomerFactory>();
+                var domainNotificationHandler = ServiceProvider.GetService<IDomainNotificationHandler>();
 
-                await bus.SendCommandAsync(new ImportInvoiceCommand());
+                var customerToImport = await customerFactory.CreateAsync();
+                var importedCustomer = await customerDomainService.ImportCustomerAsync(Tenant, CreationUser, customerToImport);
 
-                bus.Dispose();
+                _ = domainNotificationHandler.DomainNotificationsCollection;
 
                 return true;
             },
             10_000);
-
-            //await RunWithTelemetry(async () =>
-            //{
-            //    var customerDomainService = ServiceProvider.GetService<ICustomerDomainService>();
-            //    var customerFactory = ServiceProvider.GetService<ICustomerFactory>();
-
-            //    var customerToImport = customerFactory.Create();
-            //    var importedCustomer = await customerDomainService.ImportCustomerAsync(Tenant, CreationUser, customerToImport);
-
-            //    var domainNotificationHandler = ServiceProvider.GetService<IDomainNotificationHandler>();
-            //    _ = domainNotificationHandler.DomainNotificationsCollection;
-
-            //    return true;
-            //},
-            //1);
         }
     }
 }
