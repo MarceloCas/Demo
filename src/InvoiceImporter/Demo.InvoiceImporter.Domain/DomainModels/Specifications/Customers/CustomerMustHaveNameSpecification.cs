@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
 {
@@ -13,8 +14,10 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
         : SpecificationBase<Customer>,
         ICustomerMustHaveNameSpecification
     {
-        public CustomerMustHaveNameSpecification(IGlobalizationConfig globalizationConfig) 
-            : base(globalizationConfig)
+        public CustomerMustHaveNameSpecification(
+            IBus bus,
+            IGlobalizationConfig globalizationConfig) 
+            : base(bus, globalizationConfig)
         {
         }
 
