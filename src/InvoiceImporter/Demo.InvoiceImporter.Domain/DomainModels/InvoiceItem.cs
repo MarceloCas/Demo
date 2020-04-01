@@ -7,6 +7,7 @@ using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels
 {
@@ -84,11 +85,11 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
                 _productFactory = productFactory;
             }
 
-            public override InvoiceItem Create()
+            public override async Task<InvoiceItem> CreateAsync()
             {
-                return RegisterBaseTypes(new InvoiceItem
+                return await RegisterBaseTypesAsync(new InvoiceItem
                 {
-                    Product = _productFactory.Create()
+                    Product = await _productFactory.CreateAsync()
                 });
             }
         }

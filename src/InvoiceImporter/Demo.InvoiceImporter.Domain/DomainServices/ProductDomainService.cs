@@ -27,7 +27,7 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
         {
             // Validation
 
-            var importedProduct = Factory.Create().ImportProduct(
+            var importedProduct = (await Factory.CreateAsync()).ImportProduct(
                 tenantCode,
                 productToImport.Name,
                 productToImport.Code,

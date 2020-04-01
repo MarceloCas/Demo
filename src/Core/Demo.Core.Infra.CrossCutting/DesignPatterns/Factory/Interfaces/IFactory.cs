@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Interfaces
 {
     public interface IFactory<TReturn>
     {
-        TReturn Create();
+        Task<TReturn> CreateAsync();
     }
 }

@@ -6,6 +6,7 @@ using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.Core.Domain.DomainModels.Base
 {
@@ -78,9 +79,9 @@ namespace Demo.Core.Domain.DomainModels.Base
                 _tenantInfoValueObjectFactory = tenantInfoValueObjectFactory;
             }
 
-            protected TDomainModelBase RegisterBaseTypes(TDomainModelBase domainModelBase)
+            protected async Task<TDomainModelBase> RegisterBaseTypesAsync(TDomainModelBase domainModelBase)
             {
-                domainModelBase._tenantInfo = _tenantInfoValueObjectFactory.Create();
+                domainModelBase._tenantInfo = await _tenantInfoValueObjectFactory.CreateAsync();
                 return domainModelBase;
             }
         }

@@ -5,6 +5,7 @@ using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.Core.Domain.ValueObjects
 {
@@ -39,12 +40,12 @@ namespace Demo.Core.Domain.ValueObjects
                 _tenantCode = tenantCode;
             }
 
-            public override TenantInfoValueObject Create()
+            public override async Task<TenantInfoValueObject> CreateAsync()
             {
                 var tenantInfo = new TenantInfoValueObject();
                 tenantInfo.SetTenantCode(_tenantCode);
 
-                return tenantInfo;
+                return await Task.FromResult(tenantInfo);
             }
         }
         #endregion

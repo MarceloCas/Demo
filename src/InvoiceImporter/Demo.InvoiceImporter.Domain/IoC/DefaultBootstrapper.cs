@@ -9,6 +9,9 @@ using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice.Interfaces;
+using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters;
+using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
+using Demo.InvoiceImporter.Domain.Queries.Customers.Factories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,6 +21,8 @@ using static Demo.InvoiceImporter.Domain.DomainModels.Customer.BrazilianCustomer
 using static Demo.InvoiceImporter.Domain.DomainModels.Invoice;
 using static Demo.InvoiceImporter.Domain.DomainModels.InvoiceItem;
 using static Demo.InvoiceImporter.Domain.DomainModels.Product;
+using static Demo.InvoiceImporter.Domain.Queries.Customers.GetCustomerByGovernamentalDocumentNumberQuery;
+using static Demo.InvoiceImporter.Domain.Queries.Customers.GetCustomerByIdQuery;
 
 namespace Demo.InvoiceImporter.Domain.IoC
 {
@@ -27,6 +32,7 @@ namespace Demo.InvoiceImporter.Domain.IoC
         {
             RegisterDomainModelsSpecifications(services);
             RegisterDomainModelsValidations(services);
+            RegisterAdapters(services);
             RegisterFactories(services);
             RegisterDomainServices(services);
             RegisterCommands(services);
@@ -47,13 +53,23 @@ namespace Demo.InvoiceImporter.Domain.IoC
         {
             services.AddScoped<ICustomerIsValidForImportValidation, CustomerIsValidForImportValidation>();
         }
+        private void RegisterAdapters(IServiceCollection services)
+        {
+            services.AddScoped<IGetCustomerByIdQueryAdapter, GetCustomerByIdQueryAdapter>();
+            services.AddScoped<IGetCustomerByGovernamentalDocumentNumberQueryAdapter, GetCustomerByGovernamentalDocumentNumberQueryAdapter>();
+        }
         private void RegisterFactories(IServiceCollection services)
         {
+            // DomainModels
             services.AddScoped<ICustomerFactory, CustomerFactory>();
             services.AddScoped<IBrazilianCustomerFactory, BrazilianCustomerFactory>();
             services.AddScoped<IProductFactory, ProductFactory>();
             services.AddScoped<IInvoicetItemFactory, InvoicetItemFactory>();
             services.AddScoped<IInvoiceFactory, InvoiceFactory>();
+
+            // Queries
+            services.AddScoped<IGetCustomerByIdQueryFactory, GetCustomerByIdQueryFactory>();
+            services.AddScoped<IGetCustomerByGovernamentalDocumentNumberQueryFactory, GetCustomerByGovernamentalDocumentNumberQueryFactory>();
         }
         private void RegisterDomainServices(IServiceCollection services)
         {

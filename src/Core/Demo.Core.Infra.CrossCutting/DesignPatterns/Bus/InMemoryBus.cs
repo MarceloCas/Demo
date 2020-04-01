@@ -29,20 +29,20 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
 
         }
         // Public Methods
-        public async Task<bool> SendDomainNotificationAsync(DomainNotification domainNotification)
+        public async Task<bool> SendDomainNotificationAsync<TDomainNotification>(TDomainNotification domainNotification) where TDomainNotification : DomainNotification
         {
             var registeredTypesCollection = _serviceProvider.GetServices(typeof(IDomainNotificationHandler));
             if (registeredTypesCollection?.Any() == false)
-                return false;
-            
+                return await Task.FromResult(false);
+
             var handlerRegistrationsCollection = _handlerRegistrationManager.DomainNotificationHandlerRegistrationsCollection.Where(registration =>
                 registration.MessageType == typeof(DomainNotification)).ToList();
             if (handlerRegistrationsCollection.Any() == false)
-                return false;
+                return await Task.FromResult(false);
 
             foreach (var registration in handlerRegistrationsCollection)
             {
-                var handler = (IDomainNotificationHandler) registeredTypesCollection.FirstOrDefault(q => q.GetType() == registration.HandlerType);
+                var handler = (IDomainNotificationHandler)registeredTypesCollection.FirstOrDefault(q => q.GetType() == registration.HandlerType);
                 await handler.HandleAsync(domainNotification);
             }
 
@@ -94,11 +94,14 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
             }
             return await Task.FromResult(processResult);
         }
+        public Task<TQuery> SendQueryAsync<TQuery>(TQuery query) where TQuery : QueryBase
+        {
+            throw new NotImplementedException();
+        }
 
         public void Dispose()
         {
             GC.SuppressFinalize(this);
         }
-
     }
 }

@@ -8,6 +8,7 @@ using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels
 {
@@ -57,9 +58,11 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
                     _cnpjValueObjectFactory = cnpjValueObjectFactory;
                 }
 
-                public override BrazilianCustomer Create()
+                public override async Task<BrazilianCustomer> CreateAsync()
                 {
-                    return new BrazilianCustomer(_cnpjValueObjectFactory.Create());
+                    return await Task.FromResult(
+                        new BrazilianCustomer(await _cnpjValueObjectFactory.CreateAsync())
+                        );
                 }
             }
             #endregion
@@ -85,18 +88,14 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
                 _brazilianCustomerFactory = brazilianCustomerFactory;
             }
 
-            public override Customer Create()
+            public override async Task<Customer> CreateAsync()
             {
-
-                switch (GlobalizationConfig.Localization)
+                return GlobalizationConfig.Localization switch
                 {
-                    case Core.Infra.CrossCutting.Globalization.Enums.LocalizationsEnum.Default:
-                        return RegisterBaseTypes(new Customer(_governamentalDocumentNumberValueObjectFactory.Create()));
-                    case Core.Infra.CrossCutting.Globalization.Enums.LocalizationsEnum.Brazil:
-                        return RegisterBaseTypes(_brazilianCustomerFactory.Create());
-                    default:
-                        return RegisterBaseTypes(new Customer(_governamentalDocumentNumberValueObjectFactory.Create()));
-                }
+                    Core.Infra.CrossCutting.Globalization.Enums.LocalizationsEnum.Default => await RegisterBaseTypesAsync(new Customer(await _governamentalDocumentNumberValueObjectFactory.CreateAsync())),
+                    Core.Infra.CrossCutting.Globalization.Enums.LocalizationsEnum.Brazil => await RegisterBaseTypesAsync(await _brazilianCustomerFactory.CreateAsync()),
+                    _ => await RegisterBaseTypesAsync(new Customer(await _governamentalDocumentNumberValueObjectFactory.CreateAsync())),
+                };
             }
         }
         #endregion

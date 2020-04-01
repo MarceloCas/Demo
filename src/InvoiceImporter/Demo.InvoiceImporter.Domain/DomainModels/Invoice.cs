@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels
 {
@@ -96,11 +97,11 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             {
             }
 
-            public override Invoice Create()
+            public override async Task<Invoice> CreateAsync()
             {
-                return RegisterBaseTypes(new Invoice
+                return await RegisterBaseTypesAsync(new Invoice
                 {
-                    Customer = _customerFactory.Create(),
+                    Customer = await _customerFactory.CreateAsync(),
                     InvoiceItemCollection = new List<InvoiceItem>()
                 });
             }

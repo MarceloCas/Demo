@@ -3,6 +3,7 @@ using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base
 {
@@ -28,6 +29,10 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base
         }
 
         // Public Methods
-        public abstract TReturn Create();
+        public abstract Task<TReturn> CreateAsync();
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
     }
 }

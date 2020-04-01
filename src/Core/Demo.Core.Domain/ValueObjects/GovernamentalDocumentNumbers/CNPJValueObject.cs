@@ -5,6 +5,7 @@ using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.Core.Domain.ValueObjects.CNPJs
 {
@@ -23,13 +24,13 @@ namespace Demo.Core.Domain.ValueObjects.CNPJs
             {
             }
 
-            public override CNPJValueObject Create()
+            public override async Task<CNPJValueObject> CreateAsync()
             {
-                return new CNPJValueObject();
+                return await Task.FromResult(new CNPJValueObject());
             }
-            public CNPJValueObject Create(string documentNumber)
+            public async Task<CNPJValueObject> CreateAsync(string documentNumber)
             {
-                return Create()
+                return (await CreateAsync())
                     .SetDocumentNumber<CNPJValueObject>(documentNumber);
             }
         }

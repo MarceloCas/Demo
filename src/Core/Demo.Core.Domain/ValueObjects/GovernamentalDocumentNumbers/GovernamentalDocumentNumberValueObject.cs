@@ -6,6 +6,7 @@ using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers
 {
@@ -33,13 +34,13 @@ namespace Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers
             {
             }
 
-            public override GovernamentalDocumentNumberValueObject Create()
+            public override async Task<GovernamentalDocumentNumberValueObject> CreateAsync()
             {
-                return new GovernamentalDocumentNumberValueObject();
+                return await Task.FromResult(new GovernamentalDocumentNumberValueObject());
             }
-            public GovernamentalDocumentNumberValueObject Create(string documentNumber)
+            public async Task<GovernamentalDocumentNumberValueObject> CreateAsync(string documentNumber)
             {
-                return Create()
+                return (await CreateAsync())
                     .SetDocumentNumber<GovernamentalDocumentNumberValueObject>(documentNumber);
             }
         }
