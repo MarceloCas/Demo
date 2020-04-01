@@ -34,11 +34,14 @@ namespace Demo.InvoiceImporter.Domain.IoC
 
         private void RegisterDomainModelsSpecifications(IServiceCollection services)
         {
+            services.AddScoped<ICustomerGovernamentalDocumentNumberMustBeUniqueSpecification, CustomerGovernamentalDocumentNumberMustBeUniqueSpecification>();
+            services.AddScoped<ICustomerMustExistsSpecification, CustomerMustExistsSpecification>();
             services.AddScoped<ICustomerMustHaveNameSpecification, CustomerMustHaveNameSpecification>();
             services.AddScoped<ICustomerMustHaveNameWithValidLengthSpecification, CustomerMustHaveNameWithValidLengthSpecification>();
             services.AddScoped<ICustomerMustHaveGovernamentalDocumentNumberSpecification, CustomerMustHaveGovernamentalDocumentNumberSpecification>();
             services.AddScoped<ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification, CustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification>();
             services.AddScoped<ICustomerMustHaveValidGovernamentalDocumentNumberSpecification, CustomerMustHaveValidGovernamentalDocumentNumberSpecification>();
+            services.AddScoped<ICustomerMustNotExistsSpecification, CustomerMustNotExistsSpecification>();
         }
         private void RegisterDomainModelsValidations(IServiceCollection services)
         {
