@@ -19,7 +19,6 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
         // Attributes
         private readonly IServiceProvider _serviceProvider;
         private readonly IHandlerRegistrationManager _handlerRegistrationManager;
-        private readonly IEnumerable<object> _domainNotificationHandlerRegisteredTypesCollection;
 
         // Constructors
         public InMemoryBus(IServiceProvider serviceProvider)
@@ -31,22 +30,48 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
         // Public Methods
         public async Task<bool> SendDomainNotificationAsync<TDomainNotification>(TDomainNotification domainNotification) where TDomainNotification : DomainNotification
         {
-            var registeredTypesCollection = _serviceProvider.GetServices(typeof(IDomainNotificationHandler));
-            if (registeredTypesCollection?.Any() == false)
-                return await Task.FromResult(false);
+            var processResult = true;
 
-            var handlerRegistrationsCollection = _handlerRegistrationManager.DomainNotificationHandlerRegistrationsCollection.Where(registration =>
-                registration.MessageType == typeof(DomainNotification)).ToList();
-            if (handlerRegistrationsCollection.Any() == false)
-                return await Task.FromResult(false);
+            var registeredTypesCollection = new List<object>();
 
-            foreach (var registration in handlerRegistrationsCollection)
+            var handlerRegistrationsCollection = _handlerRegistrationManager?.DomainNotificationHandlerRegistrationsCollection.Where(registration =>
+                registration.MessageType == typeof(TDomainNotification))
+                .ToList();
+            if (handlerRegistrationsCollection?.Any() == false)
+                return false;
+
+            var registrationsCollection = new List<(HandlerRegistration handleRegistration, IDomainNotificationHandler<TDomainNotification> handle)>();
+
+            foreach (var handlerRegistration in handlerRegistrationsCollection)
+                if (handlerRegistration.HandlerType.GetInterfaces()
+                    .Any(q => q == typeof(IDomainNotificationHandler<TDomainNotification>)))
+                    foreach (var interfaceType in handlerRegistration.HandlerType.GetInterfaces())
+                        foreach (IDomainNotificationHandler<TDomainNotification> domainNotificationHandler in _serviceProvider.GetServices(interfaceType)
+                            .Where(q => q.GetType() == handlerRegistration.HandlerType))
+                            if (!registrationsCollection.Any(q => q.handle.GetType() == domainNotificationHandler.GetType()))
+                                registrationsCollection.Add(
+                                    (handlerRegistration, domainNotificationHandler));
+
+            foreach (var (handleRegistration, handle) in registrationsCollection.OrderBy(q => q.handleRegistration.Order))
             {
-                var handler = (IDomainNotificationHandler)registeredTypesCollection.FirstOrDefault(q => q.GetType() == registration.HandlerType);
-                await handler.HandleAsync(domainNotification);
+                if (handleRegistration.IsAsync)
+                {
+                    _ = Task.Run(async () => {
+                        await handle.HandleAsync(domainNotification);
+                    });
+                }
+                else
+                {
+                    var commandReturn = await handle.HandleAsync(domainNotification);
+                    if (!commandReturn && handleRegistration.StopOnError)
+                    {
+                        processResult = false;
+                        break;
+                    }
+                }
             }
 
-            return await Task.FromResult(true);
+            return await Task.FromResult(processResult);
         }
         public async Task<bool> SendCommandAsync<TCommand>(TCommand command) where TCommand : Command
         {
@@ -94,9 +119,48 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
             }
             return await Task.FromResult(processResult);
         }
-        public Task<TQuery> SendQueryAsync<TQuery>(TQuery query) where TQuery : QueryBase
+        public async Task<TQuery> SendQueryAsync<TQuery>(TQuery query) where TQuery : QueryBase
         {
-            throw new NotImplementedException();
+            var registeredTypesCollection = new List<object>();
+
+            var handlerRegistrationsCollection = _handlerRegistrationManager?.QueryHandlerRegistrationsCollection.Where(registration =>
+                registration.MessageType == typeof(TQuery))
+                .ToList();
+            if (handlerRegistrationsCollection?.Any() == false)
+                return query;
+
+            var registrationsCollection = new List<(HandlerRegistration handleRegistration, IQueryHandler<TQuery> handle)>();
+
+            foreach (var handlerRegistration in handlerRegistrationsCollection)
+                if (handlerRegistration.HandlerType.GetInterfaces()
+                    .Any(q => q == typeof(IQueryHandler<TQuery>)))
+                    foreach (var interfaceType in handlerRegistration.HandlerType.GetInterfaces())
+                        foreach (IQueryHandler<TQuery> queryHandler in _serviceProvider.GetServices(interfaceType)
+                            .Where(q => q.GetType() == handlerRegistration.HandlerType))
+                            if (!registrationsCollection.Any(q => q.handle.GetType() == queryHandler.GetType()))
+                                registrationsCollection.Add(
+                                    (handlerRegistration, queryHandler));
+
+            foreach (var (handleRegistration, handle) in registrationsCollection.OrderBy(q => q.handleRegistration.Order))
+            {
+                if (handleRegistration.IsAsync)
+                {
+                    _ = Task.Run(async () => {
+                        await handle.HandleAsync(query);
+                    });
+                }
+                else
+                {
+                    var commandReturn = await handle.HandleAsync(query);
+                    if (!commandReturn && handleRegistration.StopOnError)
+                    {
+                        break;
+                    }
+                }
+
+
+            }
+            return await Task.FromResult(query);
         }
 
         public void Dispose()

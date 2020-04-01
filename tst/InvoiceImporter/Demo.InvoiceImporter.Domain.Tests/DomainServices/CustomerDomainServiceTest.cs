@@ -52,7 +52,7 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
             {
                 var customerDomainService = ServiceProvider.GetService<ICustomerDomainService>();
                 var customerFactory = ServiceProvider.GetService<ICustomerFactory>();
-                var domainNotificationHandler = ServiceProvider.GetService<IDomainNotificationHandler>();
+                var domainNotificationHandler = ServiceProvider.GetService<IInMemoryDefaultDomainNotificationHandler>();
 
                 var customerToImport = await customerFactory.CreateAsync();
                 var importedCustomer = await customerDomainService.ImportCustomerAsync(Tenant, CreationUser, customerToImport);
@@ -61,7 +61,7 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
 
                 return true;
             },
-            10_000);
+            1);
         }
     }
 }

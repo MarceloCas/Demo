@@ -39,7 +39,7 @@ namespace Demo.InvoiceImporter.Domain.Queries.Customers
 
             public override async Task<GetCustomerByGovernamentalDocumentNumberQuery> CreateAsync()
             {
-                throw new NotImplementedException();
+                return await Task.FromResult(new GetCustomerByGovernamentalDocumentNumberQuery());
             }
         }
     }

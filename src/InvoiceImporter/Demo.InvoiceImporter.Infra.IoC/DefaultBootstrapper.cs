@@ -25,7 +25,6 @@ namespace Demo.InvoiceImporter.Infra.IoC
 
         protected void RegisterHandlerRegistration(IServiceCollection services)
         {
-            services.AddScoped<IDomainNotificationHandler, DefaultDomainNotificationHandler>();
             ConfigureRegistrationPipeline(services);
         }
 
@@ -35,8 +34,7 @@ namespace Demo.InvoiceImporter.Infra.IoC
             {
                 var registrationManager = new HandlerRegistrationManager();
 
-                registrationManager.RegisterDomainNotificationHandler(typeof(DomainNotification), typeof(DefaultDomainNotificationHandler), 1, false);
-                
+                registrationManager.RegisterDomainNotificationHandler(typeof(DomainNotification), typeof(InMemoryDefaultDomainNotificationHandler), 1, false);
                 registrationManager.RegisterCommandHandler(typeof(ImportInvoiceCommand), typeof(ImportInvoiceCommandHandler), 1, false, false);
 
                 return registrationManager;

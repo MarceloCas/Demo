@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers
 {
-    public class DefaultDomainNotificationHandler
-        : IDomainNotificationHandler
+    public class InMemoryDefaultDomainNotificationHandler
+        : IInMemoryDefaultDomainNotificationHandler
     {
         // Attributes
         private readonly List<DomainNotification> _domainNotificationsCollection;
@@ -24,7 +24,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handle
         }
 
         // Constructors
-        public DefaultDomainNotificationHandler()
+        public InMemoryDefaultDomainNotificationHandler()
         {
             _domainNotificationsCollection = new List<DomainNotification>();
         }

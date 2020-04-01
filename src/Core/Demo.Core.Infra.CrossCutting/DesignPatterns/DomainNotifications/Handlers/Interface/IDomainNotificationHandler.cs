@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface
 {
-    public interface IDomainNotificationHandler
-        : IHandler<DomainNotification>
+    public interface IDomainNotificationHandler<TDomainNotification>
+        : IHandler<TDomainNotification>
+        where TDomainNotification : DomainNotification
     {
-        ICollection<DomainNotification> DomainNotificationsCollection { get; }
+        ICollection<TDomainNotification> DomainNotificationsCollection { get; }
 
-        Task<bool> HandleAsync(DomainNotification domainNotification);
+        Task<bool> HandleAsync(TDomainNotification domainNotification);
 
         void AddDomainNotification(DomainNotificationTypeEnum type, string code, string defaultDescription);
-        void AddDomainNotification(DomainNotification domainNotification);
+        void AddDomainNotification(TDomainNotification domainNotification);
         void AddDomainNotificationFromValidationResult(ValidationResult validationResult);
     }
 }

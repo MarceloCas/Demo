@@ -200,7 +200,16 @@ Execution {0}:
                     var telemetry = new Telemetry();
 
                     telemetry.StartTelemetry();
-                    telemetry.TestExecutionSuccess = await testFunction.Invoke();
+
+                    try
+                    {
+                        telemetry.TestExecutionSuccess = await testFunction.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        WriteLog($"ERROR --> {ex}");
+                    }
+
                     telemetry.StopTelemetry();
 
                     telemetryCollection.Add(telemetry);
