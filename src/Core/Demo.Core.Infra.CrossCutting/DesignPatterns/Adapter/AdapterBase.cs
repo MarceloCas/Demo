@@ -5,11 +5,9 @@ using System.Text;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Adapter
 {
-    public abstract class AdapterBase<TTo, TFrom>
-        : IAdapter<TTo, TFrom>
+    public abstract class AdapterBase
+        : IDisposable
     {
-        public abstract TTo Adaptee(TFrom source);
-
         public void Dispose()
         {
             GC.SuppressFinalize(this);
