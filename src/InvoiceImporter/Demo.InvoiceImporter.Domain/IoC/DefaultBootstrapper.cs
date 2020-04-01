@@ -60,8 +60,7 @@ namespace Demo.InvoiceImporter.Domain.IoC
         }
         private void RegisterCommands(IServiceCollection services)
         {
-            services.AddScoped<IImportInvoiceCommandHandler, ImportInvoiceCommandHandler1>();
-            services.AddScoped<IImportInvoiceCommandHandler, ImportInvoiceCommandHandler2>();
+            services.AddScoped<IImportInvoiceCommandHandler, ImportInvoiceCommandHandler>();
         }
     }
 }
