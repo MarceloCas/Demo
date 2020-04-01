@@ -18,9 +18,9 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
             DefaultDescription = defaultDescription;
         }
 
-        public async Task<bool> Validate(TEntity entity)
+        public async Task<bool> ValidateAsync(TEntity entity)
         {
-            return await _specificationSpec.IsSatisfiedBy(entity);
+            return await _specificationSpec.IsSatisfiedByAsync(entity);
         }
     }
 }

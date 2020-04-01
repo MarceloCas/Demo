@@ -36,7 +36,8 @@ namespace Demo.InvoiceImporter.Infra.IoC
                 var registrationManager = new HandlerRegistrationManager();
 
                 registrationManager.RegisterDomainNotificationHandler(typeof(DomainNotification), typeof(DefaultDomainNotificationHandler), 1, false);
-                registrationManager.RegisterCommandHandler(typeof(ImportInvoiceCommand), typeof(ImportInvoiceCommandHandler2), 1, true, false);
+                
+                registrationManager.RegisterCommandHandler(typeof(ImportInvoiceCommand), typeof(ImportInvoiceCommandHandler2), 1, false, false);
                 registrationManager.RegisterCommandHandler(typeof(ImportInvoiceCommand), typeof(ImportInvoiceCommandHandler1), 2, false, false);
 
                 return registrationManager;

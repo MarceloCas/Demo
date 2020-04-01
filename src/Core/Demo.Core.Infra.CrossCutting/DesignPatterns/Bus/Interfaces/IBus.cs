@@ -12,8 +12,8 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces
     public interface IBus
         : IDisposable
     {
-        Task<bool> SendDomainNotification(DomainNotification domainNotification);
-        Task<bool> SendCommand<TCommand>(TCommand domainNotification)
+        Task<bool> SendDomainNotificationAsync(DomainNotification domainNotification);
+        Task<bool> SendCommandAsync<TCommand>(TCommand domainNotification)
             where TCommand : Command;
     }
 }

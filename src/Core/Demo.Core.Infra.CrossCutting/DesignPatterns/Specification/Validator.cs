@@ -9,13 +9,13 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
     {
         private readonly Dictionary<string, IRule<TEntity>> _validations = new Dictionary<string, IRule<TEntity>>();
 
-        public virtual async Task<ValidationResult> Validate(TEntity entity)
+        public virtual async Task<ValidationResult> ValidateAsync(TEntity entity)
         {
             var validationResult = new ValidationResult();
             foreach (var key in _validations.Keys)
             {
                 var rule = _validations[key];
-                if (await rule.Validate(entity) == false)
+                if (await rule.ValidateAsync(entity) == false)
                 {
                     validationResult.Add(new ValidationMessage(rule.Code, rule.DefaultDescription));
                 }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -23,11 +24,11 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
             ITestOutputHelper output,
             string tenant = "dev",
             string creationUser = "unitTest",
-            LocalizationsEnum localization = LocalizationsEnum.Default,
+            LocalizationsEnum localization = LocalizationsEnum.Brazil,
             string cultureName = "en-US") 
             : base(output, tenant, creationUser, localization, cultureName)
         {
-
+            
         }
 
 
@@ -38,18 +39,14 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
             await RunWithTelemetry(async () =>
             {
                 var bus = ServiceProvider.GetService<IBus>();
-                
-                await bus.SendCommand(new ImportInvoiceCommand());
 
-                var domainNotificationHandler = ServiceProvider.GetService<IDomainNotificationHandler>();
-                foreach (var domainNotification in domainNotificationHandler.DomainNotificationsCollection)
-                {
-                    WriteLog($"Id: {domainNotification.Id}, MessageType: {domainNotification.MessageType}, TimeStamp: {domainNotification.TimeStamp}, Type: {domainNotification.Type}, Code: {domainNotification.Code}, Description: {domainNotification.DefaultDescription}");
-                }
+                await bus.SendCommandAsync(new ImportInvoiceCommand());
+
+                bus.Dispose();
 
                 return true;
             },
-            1);
+            10_000);
 
             //await RunWithTelemetry(async () =>
             //{

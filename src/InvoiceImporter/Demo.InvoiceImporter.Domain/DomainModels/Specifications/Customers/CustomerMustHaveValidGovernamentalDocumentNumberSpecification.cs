@@ -18,26 +18,26 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
         {
         }
 
-        public async override Task<bool> IsSatisfiedBy(Customer entity)
+        public async override Task<bool> IsSatisfiedByAsync(Customer entity)
         {
             if (string.IsNullOrWhiteSpace(entity?.GovernamentalDocumentNumber))
                 return false;
 
             var isValid = GlobalizationConfig.Localization switch
             {
-                LocalizationsEnum.Default => await ValidateGovernamentalDocumentNumber(entity),
-                LocalizationsEnum.Brazil => await ValidateCNPJ(entity),
+                LocalizationsEnum.Default => await ValidateGovernamentalDocumentNumberAsync(entity),
+                LocalizationsEnum.Brazil => await ValidateCNPJAsync(entity),
                 _ => false,
             };
 
             return isValid;
         }
 
-        private async Task<bool> ValidateGovernamentalDocumentNumber(Customer entity)
+        private async Task<bool> ValidateGovernamentalDocumentNumberAsync(Customer entity)
         {
             return await Task.FromResult(true);
         }
-        private async Task<bool> ValidateCNPJ(Customer entity)
+        private async Task<bool> ValidateCNPJAsync(Customer entity)
         {
             return await Task.FromResult(true);
         }

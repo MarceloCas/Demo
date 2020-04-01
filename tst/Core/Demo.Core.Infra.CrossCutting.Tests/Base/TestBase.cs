@@ -190,7 +190,10 @@ Execution {0}:
 
             var hasCustomAcceptanceCriteriaFunction = customAcceptanceCriteriaFunction != null;
 
-            for (int i = 0; i < totalOfExecutions; i++)
+            var startIndex =
+                totalOfExecutions > 50 ? totalOfExecutions - 50 : 0;
+
+            for (int i = startIndex; i < totalOfExecutions; i++)
             {
                 threadCollection.Add(Task.Run(async () =>
                 {

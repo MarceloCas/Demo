@@ -9,5 +9,6 @@ namespace Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice.Interfaces
     public interface IImportInvoiceCommandHandler
         : ICommandHandler<ImportInvoiceCommand>
     {
+
     }
 }

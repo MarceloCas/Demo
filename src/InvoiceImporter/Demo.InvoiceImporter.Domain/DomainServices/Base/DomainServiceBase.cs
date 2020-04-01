@@ -28,14 +28,14 @@ namespace Demo.InvoiceImporter.Domain.DomainServices.Base
         }
 
         // Protected Methods
-        protected async Task<bool> Validate<T>(T entity, IValidator<T> validator)
+        protected async Task<bool> ValidateAsync<T>(T entity, IValidator<T> validator)
         {
-            var validationResult = await validator.Validate(entity);
+            var validationResult = await validator.ValidateAsync(entity);
             if (!validationResult.IsValid)
             {
                 foreach (var validationMessage in validationResult.ValidationMessagesCollection)
                 {
-                    await Bus.SendDomainNotification(new DomainNotification()
+                    await Bus.SendDomainNotificationAsync(new DomainNotification()
                     {
                         Code = validationMessage.Code,
                         DefaultDescription = validationMessage.DefaultDescription,

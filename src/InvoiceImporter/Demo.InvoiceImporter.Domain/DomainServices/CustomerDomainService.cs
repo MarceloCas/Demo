@@ -30,7 +30,7 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
 
         public async Task<Customer> ImportCustomerAsync(string tenantCode, string creationUser, Customer customerToImport)
         {
-            if (await Validate(customerToImport, _customerIsValidForImportValidation) == false)
+            if (await ValidateAsync(customerToImport, _customerIsValidForImportValidation) == false)
                 return customerToImport;
 
             var importedCustomer = Factory.Create().ImportCustomer<Customer>(
@@ -39,7 +39,7 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
                 customerToImport.GovernamentalDocumentNumber,
                 creationUser);
 
-            await Bus.SendDomainNotification(null);
+            await Bus.SendDomainNotificationAsync(null);
 
             //importedCustomer = await Repository.AddAsync(importedCustomer);
 

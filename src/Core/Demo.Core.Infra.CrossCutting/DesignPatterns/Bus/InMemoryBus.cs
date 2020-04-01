@@ -29,7 +29,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
 
         }
         // Public Methods
-        public async Task<bool> SendDomainNotification(DomainNotification domainNotification)
+        public async Task<bool> SendDomainNotificationAsync(DomainNotification domainNotification)
         {
             var registeredTypesCollection = _serviceProvider.GetServices(typeof(IDomainNotificationHandler));
             if (registeredTypesCollection?.Any() == false)
@@ -48,21 +48,20 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
 
             return await Task.FromResult(true);
         }
-        public async Task<bool> SendCommand<TCommand>(TCommand command) where TCommand : Command
+        public async Task<bool> SendCommandAsync<TCommand>(TCommand command) where TCommand : Command
         {
             var processResult = true;
 
             var registeredTypesCollection = new List<object>();
 
-            var handlerRegistrationsCollection = _handlerRegistrationManager.CommandHandlerRegistrationsCollection.Where(registration =>
+            var handlerRegistrationsCollection = _handlerRegistrationManager?.CommandHandlerRegistrationsCollection.Where(registration =>
                 registration.MessageType == typeof(TCommand))
                 .ToList();
-            if (handlerRegistrationsCollection.Any() == false)
+            if (handlerRegistrationsCollection?.Any() == false)
                 return false;
 
             var registrationsCollection = new List<(HandlerRegistration handleRegistration, ICommandHandler<TCommand> handle)>();
             
-            // get handlers
             foreach (var handlerRegistration in handlerRegistrationsCollection)
                 if (handlerRegistration.HandlerType.GetInterfaces()
                     .Any(q => q == typeof(ICommandHandler<TCommand>)))

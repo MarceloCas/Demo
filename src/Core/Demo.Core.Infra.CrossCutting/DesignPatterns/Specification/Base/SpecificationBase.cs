@@ -28,6 +28,6 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Base
             ErrorCode = ErrorDefaultDescription = this.GetType().Name;
         }
 
-        public abstract Task<bool> IsSatisfiedBy(T entity);
+        public abstract Task<bool> IsSatisfiedByAsync(T entity);
     }
 }

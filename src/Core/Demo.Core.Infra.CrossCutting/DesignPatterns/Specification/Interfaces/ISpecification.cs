@@ -8,7 +8,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Interfaces
         string ErrorCode { get; }
         string ErrorDefaultDescription { get; }
 
-        Task<bool> IsSatisfiedBy(T entity);
+        Task<bool> IsSatisfiedByAsync(T entity);
     }
 }
 

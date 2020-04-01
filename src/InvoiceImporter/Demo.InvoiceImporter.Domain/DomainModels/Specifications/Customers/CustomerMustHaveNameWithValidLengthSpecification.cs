@@ -19,7 +19,7 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers
         {
         }
 
-        public async override Task<bool> IsSatisfiedBy(Customer entity)
+        public async override Task<bool> IsSatisfiedByAsync(Customer entity)
         {
             return await Task.FromResult(entity?.Name?.LengthIsBetween(1, 150) == true);
         }

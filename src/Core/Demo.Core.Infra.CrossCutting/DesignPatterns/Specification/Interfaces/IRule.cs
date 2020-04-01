@@ -8,7 +8,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Interfaces
         string Code { get; }
         string DefaultDescription { get; }
 
-        Task<bool> Validate(TEntity entity);
+        Task<bool> ValidateAsync(TEntity entity);
     }
 }
 
