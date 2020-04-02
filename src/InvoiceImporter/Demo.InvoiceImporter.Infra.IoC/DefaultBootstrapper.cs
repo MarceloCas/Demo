@@ -1,4 +1,5 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus;
+﻿using Demo.Core.Domain.DomainModels.Base;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers;
