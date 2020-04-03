@@ -17,14 +17,16 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers
     {
         public CustomerIsValidForImportValidation(
             IDomainModelMustHaveIdSpecification domainModelMustHaveIdSpecification,
+            IDomainModelMustExistsSpecification domainModelMustExistsSpecification,
             ICustomerGovernamentalDocumentNumberMustBeUniqueSpecification customerGovernamentalDocumentNumberMustBeUniqueSpecification,
             ICustomerMustHaveGovernamentalDocumentNumberSpecification customerMustHaveGovernamentalDocumentNumberSpecification,
             ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification customerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification,
             ICustomerMustHaveNameSpecification customerMustHaveNameSpecification,
             ICustomerMustHaveNameWithValidLengthSpecification customerMustHaveNameWithValidLengthSpecification)
-            : base(domainModelMustHaveIdSpecification)
+            : base(domainModelMustHaveIdSpecification, domainModelMustExistsSpecification)
         {
             AddMustHaveIdSpecification();
+            AddMustExistsSpecification();
 
             AddSpecification(customerGovernamentalDocumentNumberMustBeUniqueSpecification);
             AddSpecification(customerMustHaveGovernamentalDocumentNumberSpecification);

@@ -9,6 +9,8 @@ using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice.Interfaces;
+using Demo.InvoiceImporter.Domain.Handlers.Queries.Customers;
+using Demo.InvoiceImporter.Domain.Handlers.Queries.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Factories.Interfaces;
@@ -35,19 +37,18 @@ namespace Demo.InvoiceImporter.Domain.IoC
             RegisterAdapters(services);
             RegisterFactories(services);
             RegisterDomainServices(services);
-            RegisterCommands(services);
+            RegisterCommandHandlers(services);
+            RegisterQueryHandlers(services);
         }
 
         private void RegisterDomainModelsSpecifications(IServiceCollection services)
         {
             services.AddScoped<ICustomerGovernamentalDocumentNumberMustBeUniqueSpecification, CustomerGovernamentalDocumentNumberMustBeUniqueSpecification>();
-            services.AddScoped<ICustomerMustExistsSpecification, CustomerMustExistsSpecification>();
             services.AddScoped<ICustomerMustHaveNameSpecification, CustomerMustHaveNameSpecification>();
             services.AddScoped<ICustomerMustHaveNameWithValidLengthSpecification, CustomerMustHaveNameWithValidLengthSpecification>();
             services.AddScoped<ICustomerMustHaveGovernamentalDocumentNumberSpecification, CustomerMustHaveGovernamentalDocumentNumberSpecification>();
             services.AddScoped<ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification, CustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification>();
             services.AddScoped<ICustomerMustHaveValidGovernamentalDocumentNumberSpecification, CustomerMustHaveValidGovernamentalDocumentNumberSpecification>();
-            services.AddScoped<ICustomerMustNotExistsSpecification, CustomerMustNotExistsSpecification>();
         }
         private void RegisterDomainModelsValidations(IServiceCollection services)
         {
@@ -77,9 +78,14 @@ namespace Demo.InvoiceImporter.Domain.IoC
             services.AddScoped<IInvoiceDomainService, InvoiceDomainService>();
             services.AddScoped<IProductDomainService, ProductDomainService>();
         }
-        private void RegisterCommands(IServiceCollection services)
+
+        private void RegisterCommandHandlers(IServiceCollection services)
         {
             services.AddScoped<IImportInvoiceCommandHandler, ImportInvoiceCommandHandler>();
+        }
+        private void RegisterQueryHandlers(IServiceCollection services)
+        {
+            services.AddScoped<IGetDomainModelByIdQueryHandler, GetDomainModelByIdQueryHandler>();
         }
     }
 }

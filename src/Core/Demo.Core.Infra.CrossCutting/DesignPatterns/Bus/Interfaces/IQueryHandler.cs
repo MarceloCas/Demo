@@ -11,6 +11,6 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces
         : IHandler<TQuery>
         where TQuery : QueryBase
     {
-        Task<bool> HandleAsync(TQuery command);
+        Task<bool> HandleAsync(TQuery query);
     }
 }

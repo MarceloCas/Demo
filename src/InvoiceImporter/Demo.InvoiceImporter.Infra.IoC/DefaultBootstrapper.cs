@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.DomainModels.Base;
+using Demo.Core.Domain.Queries.DomainModelsBase;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications;
@@ -6,6 +7,7 @@ using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
 using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.InvoiceImporter.Domain.Commands.Invoices;
+using Demo.InvoiceImporter.Domain.DomainModels;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -35,8 +37,14 @@ namespace Demo.InvoiceImporter.Infra.IoC
             {
                 var registrationManager = new HandlerRegistrationManager();
 
+                // Domain Notification Handlers
                 registrationManager.RegisterDomainNotificationHandler(typeof(DomainNotification), typeof(InMemoryDefaultDomainNotificationHandler), 1, false);
+
+                // Command Handlers
                 registrationManager.RegisterCommandHandler(typeof(ImportInvoiceCommand), typeof(ImportInvoiceCommandHandler), 1, false, false);
+
+                // Query Handlers
+                registrationManager.RegisterQueryHandler(typeof(GetDomainModelByIdQuery<Customer>), typeof(Domain.Handlers.Queries.Customers.GetDomainModelByIdQueryHandler), 1, false, false);
 
                 return registrationManager;
             });

@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels.Interfaces;
+using Demo.Core.Domain.Queries.DomainModelsBase;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,15 @@ namespace Demo.Core.Domain.DomainModels.Base.Validations.Base
         where TDomainModel : DomainModelBase
     {
         private readonly IDomainModelMustHaveIdSpecification _domainModelMustHaveIdSpecification;
+        private readonly IDomainModelMustExistsSpecification _domainModelMustExistsSpecification;
 
         protected DomainModelValidationBase(
-            IDomainModelMustHaveIdSpecification domainModelMustHaveIdSpecification
+            IDomainModelMustHaveIdSpecification domainModelMustHaveIdSpecification,
+            IDomainModelMustExistsSpecification domainModelMustExistsSpecification
             )
         {
             _domainModelMustHaveIdSpecification = domainModelMustHaveIdSpecification;
+            _domainModelMustExistsSpecification = domainModelMustExistsSpecification;
         }
 
         protected void AddMustHaveIdSpecification()
@@ -24,6 +28,14 @@ namespace Demo.Core.Domain.DomainModels.Base.Validations.Base
             var code = $"{typeof(TDomainModel).Name}MustHaveIdSpecification";
 
             Add(code, new Rule<TDomainModel>(_domainModelMustHaveIdSpecification, code, code));
+        }
+        protected void AddMustExistsSpecification()
+        {
+            _domainModelMustExistsSpecification.SetGetDomainModelByIdQuery(new GetDomainModelByIdQuery<TDomainModel>());
+
+            var code = $"{typeof(TDomainModel).Name}MustExistsSpecification";
+
+            Add(code, new Rule<TDomainModel>(_domainModelMustExistsSpecification, code, code));
         }
     }
 }

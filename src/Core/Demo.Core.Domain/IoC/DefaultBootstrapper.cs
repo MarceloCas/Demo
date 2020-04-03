@@ -40,6 +40,7 @@ namespace Demo.Core.Domain.IoC
         private void RegisterDomainModelSpecifications(IServiceCollection services, string tenantCode)
         {
             services.AddScoped<IDomainModelMustHaveIdSpecification, DomainModelMustHaveIdSpecification>();
+            services.AddScoped<IDomainModelMustExistsSpecification, DomainModelMustExistsSpecification>();
         }
     }
 }
