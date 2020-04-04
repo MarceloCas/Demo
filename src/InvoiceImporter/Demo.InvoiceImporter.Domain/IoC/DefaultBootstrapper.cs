@@ -9,8 +9,6 @@ using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice.Interfaces;
-using Demo.InvoiceImporter.Domain.Handlers.Queries.Customers;
-using Demo.InvoiceImporter.Domain.Handlers.Queries.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Factories.Interfaces;
@@ -24,7 +22,6 @@ using static Demo.InvoiceImporter.Domain.DomainModels.Invoice;
 using static Demo.InvoiceImporter.Domain.DomainModels.InvoiceItem;
 using static Demo.InvoiceImporter.Domain.DomainModels.Product;
 using static Demo.InvoiceImporter.Domain.Queries.Customers.GetCustomerByGovernamentalDocumentNumberQuery;
-using static Demo.InvoiceImporter.Domain.Queries.Customers.GetCustomerByIdQuery;
 
 namespace Demo.InvoiceImporter.Domain.IoC
 {
@@ -56,7 +53,6 @@ namespace Demo.InvoiceImporter.Domain.IoC
         }
         private void RegisterAdapters(IServiceCollection services)
         {
-            services.AddScoped<IGetCustomerByIdQueryAdapter, GetCustomerByIdQueryAdapter>();
             services.AddScoped<IGetCustomerByGovernamentalDocumentNumberQueryAdapter, GetCustomerByGovernamentalDocumentNumberQueryAdapter>();
         }
         private void RegisterFactories(IServiceCollection services)
@@ -69,7 +65,6 @@ namespace Demo.InvoiceImporter.Domain.IoC
             services.AddScoped<IInvoiceFactory, InvoiceFactory>();
 
             // Queries
-            services.AddScoped<IGetCustomerByIdQueryFactory, GetCustomerByIdQueryFactory>();
             services.AddScoped<IGetCustomerByGovernamentalDocumentNumberQueryFactory, GetCustomerByGovernamentalDocumentNumberQueryFactory>();
         }
         private void RegisterDomainServices(IServiceCollection services)
@@ -85,7 +80,12 @@ namespace Demo.InvoiceImporter.Domain.IoC
         }
         private void RegisterQueryHandlers(IServiceCollection services)
         {
-            services.AddScoped<IGetDomainModelByIdQueryHandler, GetDomainModelByIdQueryHandler>();
+            // Customers
+            services.AddScoped<Handlers.Queries.Customers.Interfaces.IGetCustomerByGovernamentalDocumentNumberQueryHandler, Handlers.Queries.Customers.GetCustomerByGovernamentalDocumentNumberQueryHandler>();
+            services.AddScoped<Handlers.Queries.Customers.Interfaces.IGetDomainModelByIdQueryHandler, Handlers.Queries.Customers.GetDomainModelByIdQueryHandler>();
+
+            // Invoices
+            services.AddScoped<Handlers.Queries.Invoices.Interfaces.IGetDomainModelByIdQueryHandler, Handlers.Queries.Invoices.GetDomainModelByIdQueryHandler>();
         }
     }
 }

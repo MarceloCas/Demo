@@ -56,7 +56,8 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
             {
                 if (handleRegistration.IsAsync)
                 {
-                    _ = Task.Run(async () => {
+                    _ = Task.Run(async () =>
+                    {
                         await handle.HandleAsync(domainNotification);
                     });
                 }
@@ -86,14 +87,14 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
                 return false;
 
             var registrationsCollection = new List<(HandlerRegistration handleRegistration, ICommandHandler<TCommand> handle)>();
-            
+
             foreach (var handlerRegistration in handlerRegistrationsCollection)
                 if (handlerRegistration.HandlerType.GetInterfaces()
                     .Any(q => q == typeof(ICommandHandler<TCommand>)))
                     foreach (var interfaceType in handlerRegistration.HandlerType.GetInterfaces())
                         foreach (ICommandHandler<TCommand> commandHandler in _serviceProvider.GetServices(interfaceType)
                             .Where(q => q.GetType() == handlerRegistration.HandlerType))
-                            if(!registrationsCollection.Any(q => q.handle.GetType() == commandHandler.GetType()))
+                            if (!registrationsCollection.Any(q => q.handle.GetType() == commandHandler.GetType()))
                                 registrationsCollection.Add(
                                     (handlerRegistration, commandHandler));
 
@@ -101,7 +102,8 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
             {
                 if (handleRegistration.IsAsync)
                 {
-                    _ = Task.Run(async () => {
+                    _ = Task.Run(async () =>
+                    {
                         await handle.HandleAsync(command);
                     });
                 }
@@ -114,26 +116,29 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
                         break;
                     }
                 }
-
-                
             }
             return await Task.FromResult(processResult);
         }
         public async Task<TQuery> SendQueryAsync<TQuery>(TQuery query) where TQuery : QueryBase
         {
+            var processResult = query;
+            var queryType = query.GetType();
+
             var registeredTypesCollection = new List<object>();
 
             var handlerRegistrationsCollection = _handlerRegistrationManager?.QueryHandlerRegistrationsCollection.Where(registration =>
-                registration.MessageType == typeof(TQuery))
+                registration.MessageType == queryType)
                 .ToList();
             if (handlerRegistrationsCollection?.Any() == false)
-                return query;
+                return processResult;
 
             var registrationsCollection = new List<(HandlerRegistration handleRegistration, IQueryHandler<TQuery> handle)>();
 
             foreach (var handlerRegistration in handlerRegistrationsCollection)
                 if (handlerRegistration.HandlerType.GetInterfaces()
-                    .Any(q => q == typeof(IQueryHandler<TQuery>)))
+                    .Any(q => q.IsGenericType == true
+                        && q.GetGenericTypeDefinition() == typeof(IQueryHandler<>)
+                        && q.GetGenericArguments().Any(q1 => q1 == queryType)))
                     foreach (var interfaceType in handlerRegistration.HandlerType.GetInterfaces())
                         foreach (IQueryHandler<TQuery> queryHandler in _serviceProvider.GetServices(interfaceType)
                             .Where(q => q.GetType() == handlerRegistration.HandlerType))
@@ -145,22 +150,19 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
             {
                 if (handleRegistration.IsAsync)
                 {
-                    _ = Task.Run(async () => {
+                    _ = Task.Run(async () =>
+                    {
                         await handle.HandleAsync(query);
                     });
                 }
                 else
                 {
-                    var commandReturn = await handle.HandleAsync(query);
-                    if (!commandReturn && handleRegistration.StopOnError)
-                    {
+                    var queryReturn = await handle.HandleAsync(query);
+                    if (!queryReturn && handleRegistration.StopOnError)
                         break;
-                    }
                 }
-
-
             }
-            return await Task.FromResult(query);
+            return query;
         }
 
         public void Dispose()

@@ -9,6 +9,7 @@ using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.InvoiceImporter.Domain.Commands.Invoices;
 using Demo.InvoiceImporter.Domain.DomainModels;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
+using Demo.InvoiceImporter.Domain.Queries.Customers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -44,7 +45,9 @@ namespace Demo.InvoiceImporter.Infra.IoC
                 registrationManager.RegisterCommandHandler(typeof(ImportInvoiceCommand), typeof(ImportInvoiceCommandHandler), 1, false, false);
 
                 // Query Handlers
+                registrationManager.RegisterQueryHandler(typeof(GetCustomerByGovernamentalDocumentNumberQuery), typeof(Domain.Handlers.Queries.Customers.GetCustomerByGovernamentalDocumentNumberQueryHandler), 1, false, false);
                 registrationManager.RegisterQueryHandler(typeof(GetDomainModelByIdQuery<Customer>), typeof(Domain.Handlers.Queries.Customers.GetDomainModelByIdQueryHandler), 1, false, false);
+                registrationManager.RegisterQueryHandler(typeof(GetDomainModelByIdQuery<Invoice>), typeof(Domain.Handlers.Queries.Invoices.GetDomainModelByIdQueryHandler), 1, false, false);
 
                 return registrationManager;
             });
