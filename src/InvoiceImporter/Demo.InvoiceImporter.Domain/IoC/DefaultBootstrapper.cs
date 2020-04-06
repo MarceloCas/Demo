@@ -1,5 +1,8 @@
 ﻿using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
+using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
+using Demo.Core.Infra.CrossCutting.IoC;
+using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
@@ -26,66 +29,96 @@ using static Demo.InvoiceImporter.Domain.Queries.Customers.GetCustomerByGovernam
 namespace Demo.InvoiceImporter.Domain.IoC
 {
     public class DefaultBootstrapper
+        : BootstrapperBase
     {
-        public void RegisterServices(IServiceCollection services)
+        // Constructors
+        public DefaultBootstrapper(
+            IServiceCollection services, 
+            string tenantCode, 
+            string cultureName, 
+            LocalizationsEnum localization
+            ) 
+            : base(services, tenantCode, cultureName, localization)
         {
-            RegisterDomainModelsSpecifications(services);
-            RegisterDomainModelsValidations(services);
-            RegisterAdapters(services);
-            RegisterFactories(services);
-            RegisterDomainServices(services);
-            RegisterCommandHandlers(services);
-            RegisterQueryHandlers(services);
         }
 
-        private void RegisterDomainModelsSpecifications(IServiceCollection services)
+        // Private Methods
+        private TypeRegistration[] RegisterDomainModelsSpecifications()
         {
-            services.AddScoped<ICustomerGovernamentalDocumentNumberMustBeUniqueSpecification, CustomerGovernamentalDocumentNumberMustBeUniqueSpecification>();
-            services.AddScoped<ICustomerMustHaveNameSpecification, CustomerMustHaveNameSpecification>();
-            services.AddScoped<ICustomerMustHaveNameWithValidLengthSpecification, CustomerMustHaveNameWithValidLengthSpecification>();
-            services.AddScoped<ICustomerMustHaveGovernamentalDocumentNumberSpecification, CustomerMustHaveGovernamentalDocumentNumberSpecification>();
-            services.AddScoped<ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification, CustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification>();
-            services.AddScoped<ICustomerMustHaveValidGovernamentalDocumentNumberSpecification, CustomerMustHaveValidGovernamentalDocumentNumberSpecification>();
+            return new[] {
+                new TypeRegistration(typeof(ICustomerGovernamentalDocumentNumberMustBeUniqueSpecification), typeof(CustomerGovernamentalDocumentNumberMustBeUniqueSpecification)),
+                new TypeRegistration(typeof(ICustomerMustHaveNameSpecification), typeof(CustomerMustHaveNameSpecification)),
+                new TypeRegistration(typeof(ICustomerMustHaveNameWithValidLengthSpecification), typeof(CustomerMustHaveNameWithValidLengthSpecification)),
+                new TypeRegistration(typeof(ICustomerMustHaveGovernamentalDocumentNumberSpecification), typeof(CustomerMustHaveGovernamentalDocumentNumberSpecification)),
+                new TypeRegistration(typeof(ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification), typeof(CustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification)),
+                new TypeRegistration(typeof(ICustomerMustHaveValidGovernamentalDocumentNumberSpecification), typeof(CustomerMustHaveValidGovernamentalDocumentNumberSpecification))
+            };
         }
-        private void RegisterDomainModelsValidations(IServiceCollection services)
+        private TypeRegistration[] RegisterDomainModelsValidations()
         {
-            services.AddScoped<ICustomerIsValidForImportValidation, CustomerIsValidForImportValidation>();
+            return new[] {
+                new TypeRegistration(typeof(ICustomerIsValidForImportValidation), typeof(CustomerIsValidForImportValidation))
+            };
         }
-        private void RegisterAdapters(IServiceCollection services)
+        private TypeRegistration[] RegisterAdapters()
         {
-            services.AddScoped<IGetCustomerByGovernamentalDocumentNumberQueryAdapter, GetCustomerByGovernamentalDocumentNumberQueryAdapter>();
+            return new[] {
+                new TypeRegistration(typeof(IGetCustomerByGovernamentalDocumentNumberQueryAdapter), typeof(GetCustomerByGovernamentalDocumentNumberQueryAdapter))
+            };
         }
-        private void RegisterFactories(IServiceCollection services)
+        private TypeRegistration[] RegisterFactories()
         {
-            // DomainModels
-            services.AddScoped<ICustomerFactory, CustomerFactory>();
-            services.AddScoped<IBrazilianCustomerFactory, BrazilianCustomerFactory>();
-            services.AddScoped<IProductFactory, ProductFactory>();
-            services.AddScoped<IInvoicetItemFactory, InvoicetItemFactory>();
-            services.AddScoped<IInvoiceFactory, InvoiceFactory>();
+            return new[] {
+                // DomainModels
+                new TypeRegistration(typeof(ICustomerFactory), typeof(CustomerFactory)),
+                new TypeRegistration(typeof(IBrazilianCustomerFactory), typeof(BrazilianCustomerFactory)),
+                new TypeRegistration(typeof(IProductFactory), typeof(ProductFactory)),
+                new TypeRegistration(typeof(IInvoicetItemFactory), typeof(InvoicetItemFactory)),
+                new TypeRegistration(typeof(IInvoiceFactory), typeof(InvoiceFactory)),
+                // Queries
+                new TypeRegistration(typeof(IGetCustomerByGovernamentalDocumentNumberQueryFactory), typeof(GetCustomerByGovernamentalDocumentNumberQueryFactory))
+            };
+        }
+        private TypeRegistration[] RegisterDomainServices()
+        {
+            return new[] {
+                new TypeRegistration(typeof(ICustomerDomainService), typeof(CustomerDomainService)),
+                new TypeRegistration(typeof(IInvoiceDomainService), typeof(InvoiceDomainService)),
+                new TypeRegistration(typeof(IProductDomainService), typeof(ProductDomainService))
+            };
+        }
+        private TypeRegistration[] RegisterCommandHandlers()
+        {
+            return new[] {
+                new TypeRegistration(typeof(ImportInvoiceCommandHandler))
+            };
+        }
+        private TypeRegistration[] RegisterQueryHandlers()
+        {
+            return new[] {
+                // Customers
+                new TypeRegistration(typeof(Handlers.Queries.Customers.GetCustomerByGovernamentalDocumentNumberQueryHandler)),
+                new TypeRegistration(typeof(Handlers.Queries.Customers.GetDomainModelByIdQueryHandler)),
+                // Invoices
+                new TypeRegistration(typeof(Handlers.Queries.Invoices.GetDomainModelByIdQueryHandler))
+            };
+        }
 
-            // Queries
-            services.AddScoped<IGetCustomerByGovernamentalDocumentNumberQueryFactory, GetCustomerByGovernamentalDocumentNumberQueryFactory>();
-        }
-        private void RegisterDomainServices(IServiceCollection services)
+        // Public Methods
+        public override TypeRegistration[] GetTypeRegistrationCollection()
         {
-            services.AddScoped<ICustomerDomainService, CustomerDomainService>();
-            services.AddScoped<IInvoiceDomainService, InvoiceDomainService>();
-            services.AddScoped<IProductDomainService, ProductDomainService>();
-        }
+            var typeRegistrationCollection = new List<TypeRegistration>();
 
-        private void RegisterCommandHandlers(IServiceCollection services)
-        {
-            services.AddScoped<IImportInvoiceCommandHandler, ImportInvoiceCommandHandler>();
-        }
-        private void RegisterQueryHandlers(IServiceCollection services)
-        {
-            // Customers
-            services.AddScoped<Handlers.Queries.Customers.Interfaces.IGetCustomerByGovernamentalDocumentNumberQueryHandler, Handlers.Queries.Customers.GetCustomerByGovernamentalDocumentNumberQueryHandler>();
-            services.AddScoped<Handlers.Queries.Customers.Interfaces.IGetDomainModelByIdQueryHandler, Handlers.Queries.Customers.GetDomainModelByIdQueryHandler>();
+            typeRegistrationCollection.AddRange(RegisterDomainModelsSpecifications());
+            typeRegistrationCollection.AddRange(RegisterDomainModelsValidations());
+            typeRegistrationCollection.AddRange(RegisterAdapters());
+            typeRegistrationCollection.AddRange(RegisterFactories());
+            typeRegistrationCollection.AddRange(RegisterDomainServices());
 
-            // Invoices
-            services.AddScoped<Handlers.Queries.Invoices.Interfaces.IGetDomainModelByIdQueryHandler, Handlers.Queries.Invoices.GetDomainModelByIdQueryHandler>();
+            typeRegistrationCollection.AddRange(RegisterCommandHandlers());
+            typeRegistrationCollection.AddRange(RegisterQueryHandlers());
+
+            return typeRegistrationCollection.ToArray();
         }
     }
 }

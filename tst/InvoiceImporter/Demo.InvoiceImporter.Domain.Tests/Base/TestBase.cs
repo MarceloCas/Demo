@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
+using Demo.Core.Infra.CrossCutting.IoC;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,18 @@ namespace Demo.InvoiceImporter.Domain.Tests.Base
     {
         protected TestBase(
             ITestOutputHelper output, 
-            string tenant = "dev", 
+            string tenantCode = "dev", 
             string creationUser = "unitTest", 
             LocalizationsEnum localization = LocalizationsEnum.Default,
             string cultureName = "en-US") 
-            : base(output, tenant, creationUser, localization, cultureName)
+            : base(output, tenantCode, creationUser, localization, cultureName)
         {
 
         }
 
-        protected override void ConfigureServices(IServiceCollection services)
+        protected override BootstrapperBase GetBootstrapper(IServiceCollection services)
         {
-            new Infra.IoC.Tests.DefaultBootstrapper().RegisterServices(services, Tenant, CultureName, Localization);
+            return new Infra.IoC.Tests.DefaultBootstrapper(services, TenantCode, CultureName, Localization);
         }
     }
 }

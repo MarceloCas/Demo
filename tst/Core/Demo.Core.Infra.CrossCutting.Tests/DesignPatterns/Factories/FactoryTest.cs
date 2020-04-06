@@ -1,4 +1,6 @@
-﻿using Demo.Core.Infra.CrossCutting.Tests.Base;
+﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
+using Demo.Core.Infra.CrossCutting.IoC;
+using Demo.Core.Infra.CrossCutting.Tests.Base;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,13 +16,19 @@ namespace Demo.Core.Infra.CrossCutting.Tests.DesignPatterns.Factories
     public class FactoryTest
         : TestBase<FactoryTest>
     {
-        public FactoryTest(ITestOutputHelper output, string cultureName = "en-US") 
-            : base(output, cultureName)
+        public FactoryTest(
+            ITestOutputHelper output,
+            string tenantCode = "dev",
+            string creationUser = "unitTest",
+            LocalizationsEnum localization = LocalizationsEnum.Default,
+            string cultureName = "en-US"
+            ) : base(output, tenantCode, creationUser, localization, cultureName)
         {
         }
 
-        protected override void ConfigureServices(IServiceCollection services)
+        protected override BootstrapperBase GetBootstrapper(IServiceCollection services)
         {
+            throw new NotImplementedException();
         }
     }
 }

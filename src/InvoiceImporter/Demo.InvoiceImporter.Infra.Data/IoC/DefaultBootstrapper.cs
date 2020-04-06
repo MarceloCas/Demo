@@ -1,5 +1,8 @@
 ﻿using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
+using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
+using Demo.Core.Infra.CrossCutting.IoC;
+using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
@@ -22,10 +25,20 @@ using static Demo.InvoiceImporter.Domain.DomainModels.Product;
 namespace Demo.InvoiceImporter.Infra.Data.IoC
 {
     public class DefaultBootstrapper
+        : BootstrapperBase
     {
-        public void RegisterServices(IServiceCollection services)
+        public DefaultBootstrapper(
+            IServiceCollection services,
+            string tenantCode,
+            string cultureName,
+            LocalizationsEnum localization
+            ) : base(services, tenantCode, cultureName, localization)
         {
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
+        }
+
+        public override TypeRegistration[] GetTypeRegistrationCollection()
+        {
+            return new List<TypeRegistration>().ToArray();
         }
     }
 }

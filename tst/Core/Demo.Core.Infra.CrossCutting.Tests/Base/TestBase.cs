@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
+using Demo.Core.Infra.CrossCutting.IoC;
 using Demo.Core.Infra.CrossCutting.Tests.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -18,28 +19,27 @@ namespace Demo.Core.Infra.CrossCutting.Tests.Base
     {
         private readonly ITestOutputHelper _output;
 
-        protected string Tenant { get; }
+        protected BootstrapperBase Bootstrapper { get; }
+        protected string TenantCode { get; }
         protected string CreationUser { get; }
         protected LocalizationsEnum Localization { get; set; }
         protected string CultureName { get; }
-        protected IServiceProvider ServiceProvider { get; }
 
         protected TestBase(
             ITestOutputHelper output,
-            string tenant = "dev",
+            string tenantCode = "dev",
             string creationUser = "unitTest",
             LocalizationsEnum localization = LocalizationsEnum.Default,
             string cultureName = "en-US")
         {
             _output = output;
-            Tenant = tenant;
+            TenantCode = tenantCode;
             CreationUser = creationUser;
             Localization = localization;
             CultureName = cultureName;
 
             var service = new ServiceCollection();
-            ConfigureServices(service);
-            ServiceProvider = service.BuildServiceProvider();
+            Bootstrapper = GetBootstrapper(service);
         }
 
         private void WriteTelemetryExecutionReport(
@@ -178,7 +178,7 @@ Execution {0}:
         {
             _output.WriteLine($"{DateTime.UtcNow} - {message}");
         }
-        protected abstract void ConfigureServices(IServiceCollection services);
+        protected abstract BootstrapperBase GetBootstrapper(IServiceCollection services);
 
         protected async Task<List<Telemetry>> RunWithTelemetry(
             Func<Task<bool>> testFunction,
@@ -228,7 +228,7 @@ Execution {0}:
                 totalOfExecutions, 
                 hasCustomAcceptanceCriteriaFunction);
 
-            return telemetryCollection;
+            return await Task.FromResult(telemetryCollection);
         }
     }
 }

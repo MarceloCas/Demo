@@ -1,6 +1,7 @@
 ﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
 using Demo.Core.Infra.CrossCutting.Globalization.Enums;
+using Demo.Core.Infra.CrossCutting.IoC;
 using Demo.InvoiceImporter.Domain.Commands.Invoices;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices;
@@ -31,7 +32,6 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
             
         }
 
-
         [Fact]
         [Trait(nameof(CustomerDomainService), "ImportCustomer_Success")]
         public async Task ImportCustomer_Success()
@@ -50,12 +50,12 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
 
             await RunWithTelemetry(async () =>
             {
-                var customerDomainService = ServiceProvider.GetService<ICustomerDomainService>();
-                var customerFactory = ServiceProvider.GetService<ICustomerFactory>();
-                var domainNotificationHandler = ServiceProvider.GetService<IInMemoryDefaultDomainNotificationHandler>();
+                var customerDomainService = Bootstrapper.GetService<ICustomerDomainService>();
+                var customerFactory = Bootstrapper.GetService<ICustomerFactory>();
+                var domainNotificationHandler = Bootstrapper.GetService<IInMemoryDefaultDomainNotificationHandler>();
 
                 var customerToImport = await customerFactory.CreateAsync();
-                var importedCustomer = await customerDomainService.ImportCustomerAsync(Tenant, CreationUser, customerToImport);
+                var importedCustomer = await customerDomainService.ImportCustomerAsync(TenantCode, CreationUser, customerToImport);
 
                 _ = domainNotificationHandler.DomainNotificationsCollection;
 
@@ -63,5 +63,6 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
             },
             1);
         }
+
     }
 }
