@@ -15,10 +15,12 @@ namespace Demo.InvoiceImporter.Domain.Handlers.Queries.Customers
         IGetDomainModelByIdQueryHandler
 
     {
-        public override async Task<bool> HandleAsync(GetDomainModelByIdQuery<Customer> query)
+        protected override QueryHandler<GetDomainModelByIdQuery<Customer>> GetQueryHandler()
         {
-            return await Task.FromResult(true);
+            return async query =>
+            {
+                return await Task.FromResult(true);
+            };
         }
-
     }
 }

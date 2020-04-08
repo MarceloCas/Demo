@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces
 {
+    public delegate Task<bool> QueryHandler<TQuery>(TQuery query) where TQuery : QueryBase;
+
     public interface IQueryHandler<TQuery>
         : IHandler<TQuery>
         where TQuery : QueryBase
     {
-        Task<bool> HandleAsync(TQuery query);
+        QueryHandler<TQuery> QueryHandler { get; }
     }
 }

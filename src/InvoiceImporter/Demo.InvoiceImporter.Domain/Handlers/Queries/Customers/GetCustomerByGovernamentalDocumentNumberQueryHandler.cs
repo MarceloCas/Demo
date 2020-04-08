@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.Handlers.Queries;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Queries.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers;
 using System;
@@ -12,9 +13,12 @@ namespace Demo.InvoiceImporter.Domain.Handlers.Queries.Customers
         : QueryHandlerBase<GetCustomerByGovernamentalDocumentNumberQuery>,
         IGetCustomerByGovernamentalDocumentNumberQueryHandler
     {
-        public override async Task<bool> HandleAsync(GetCustomerByGovernamentalDocumentNumberQuery query)
+        protected override QueryHandler<GetCustomerByGovernamentalDocumentNumberQuery> GetQueryHandler()
         {
-            return await Task.FromResult(false);
+            return async query =>
+            {
+                return await Task.FromResult(true);
+            };
         }
     }
 }

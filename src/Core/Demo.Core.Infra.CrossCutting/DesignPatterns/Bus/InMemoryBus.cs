@@ -138,78 +138,75 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
             {
                 // 3º step - Get a instance of HandlerType and handle query
                 var handler = _serviceProvider.GetService(handlerRegistration.HandlerType);
-
-                var handleAsyncMethodInfo = handlerRegistration.HandlerType
-                    .GetMethod(nameof(IQueryHandler<TQuery>.HandleAsync));
-
-                if (handleAsyncMethodInfo.ContainsGenericParameters)
-                    handleAsyncMethodInfo = handleAsyncMethodInfo.MakeGenericMethod(queryType);
+                var queryHanlerProperty = handler.GetType().GetProperty(nameof(IQueryHandler<TQuery>.QueryHandler));
+                var queryHandlerDelegate = queryHanlerProperty.GetValue(handler);
+                var queryHandlerDelegateInvokeMethodInfo = queryHandlerDelegate.GetType().GetMethod(nameof(QueryHandler<TQuery>.Invoke));
 
                 if (handlerRegistration.IsAsync)
                 {
-                    _ = Task.Run(() => { 
-                        var handlerReturnTask = (Task<bool>) handleAsyncMethodInfo.Invoke(handler, new object[] { query });
+                    _ = Task.Run(() => {
+                        var handlerReturnTask = (Task<bool>)queryHandlerDelegateInvokeMethodInfo.Invoke(queryHandlerDelegate, new[] { query });
                         handlerReturnTask.Wait();
                     });
                 }
                 else
                 {
-                    var handlerReturnTask = handleAsyncMethodInfo.Invoke(handler, new object[] { query });
-                    //handlerReturnTask.Wait();
+                    var handlerReturnTask = (Task<bool>)queryHandlerDelegateInvokeMethodInfo.Invoke(queryHandlerDelegate, new[] { query });
+                    handlerReturnTask.Wait();
 
-                    //if (!handlerReturnTask.Result && handlerRegistration.StopOnError)
-                    //    break;
-                }
-            }
-
-            var registeredTypesCollection = new List<object>();
-            var handleMethodInfo = typeof(IQueryHandler<>).GetMethod(nameof(IQueryHandler<TQuery>.HandleAsync)).MakeGenericMethod(queryType);
-
-
-            if (handlerRegistrationsCollection?.Any() == false)
-                return processResult;
-
-            var registrationsCollection = new List<(HandlerRegistration handleRegistration, object handle)>();
-
-            foreach (var handlerRegistration in handlerRegistrationsCollection)
-            {
-                var handlerTypeInterfacesCollection = handlerRegistration.HandlerType.GetInterfaces().ToList();
-                handlerTypeInterfacesCollection = handlerTypeInterfacesCollection.Where(q => q.IsGenericType).ToList();
-                handlerTypeInterfacesCollection = handlerTypeInterfacesCollection.Where(q => q.GetGenericTypeDefinition() == typeof(IQueryHandler<>)).ToList();
-                handlerTypeInterfacesCollection = handlerTypeInterfacesCollection.Where(q => q.GetGenericArguments().Any(q1 => q1 == queryType)).ToList();
-
-                if (handlerTypeInterfacesCollection.Any(q => 
-                        q.IsGenericType == true
-                        && q.GetGenericTypeDefinition() == typeof(IQueryHandler<>)
-                        && q.GetGenericArguments().Any(q1 => q1 == queryType)))
-                    foreach (var interfaceType in handlerRegistration.HandlerType.GetInterfaces())
-                        foreach (var queryHandler in _serviceProvider.GetServices(interfaceType)
-                            .Where(q => q.GetType() == handlerRegistration.HandlerType))
-                            if (!registrationsCollection.Any(q => q.handle.GetType() == queryHandler.GetType()))
-                                registrationsCollection.Add(
-                                    (handlerRegistration, queryHandler));
-
-            }
-            foreach (var (handleRegistration, handle) in registrationsCollection.OrderBy(q => q.handleRegistration.Order))
-            {
-                if (handleRegistration.IsAsync)
-                {
-                    _ = Task.Run(() =>
-                    {
-                        var task =  (Task<TQuery>)handleMethodInfo.Invoke(handle, new object[]{ query });
-                        task.Wait();
-                        //await handle.HandleAsync(query);
-                    });
-                }
-                else
-                {
-                    var task = (Task<bool>)handleMethodInfo.Invoke(handle, new object[] { query });
-                    task.Wait();
-
-                    if (!task.Result && handleRegistration.StopOnError)
+                    if (!handlerReturnTask.Result && handlerRegistration.StopOnError)
                         break;
                 }
             }
+
+            //var registeredTypesCollection = new List<object>();
+            //var handleMethodInfo = typeof(IQueryHandler<>).GetMethod(nameof(IQueryHandler<TQuery>.HandleAsync)).MakeGenericMethod(queryType);
+
+
+            //if (handlerRegistrationsCollection?.Any() == false)
+            //    return processResult;
+
+            //var registrationsCollection = new List<(HandlerRegistration handleRegistration, object handle)>();
+
+            //foreach (var handlerRegistration in handlerRegistrationsCollection)
+            //{
+            //    var handlerTypeInterfacesCollection = handlerRegistration.HandlerType.GetInterfaces().ToList();
+            //    handlerTypeInterfacesCollection = handlerTypeInterfacesCollection.Where(q => q.IsGenericType).ToList();
+            //    handlerTypeInterfacesCollection = handlerTypeInterfacesCollection.Where(q => q.GetGenericTypeDefinition() == typeof(IQueryHandler<>)).ToList();
+            //    handlerTypeInterfacesCollection = handlerTypeInterfacesCollection.Where(q => q.GetGenericArguments().Any(q1 => q1 == queryType)).ToList();
+
+            //    if (handlerTypeInterfacesCollection.Any(q => 
+            //            q.IsGenericType == true
+            //            && q.GetGenericTypeDefinition() == typeof(IQueryHandler<>)
+            //            && q.GetGenericArguments().Any(q1 => q1 == queryType)))
+            //        foreach (var interfaceType in handlerRegistration.HandlerType.GetInterfaces())
+            //            foreach (var queryHandler in _serviceProvider.GetServices(interfaceType)
+            //                .Where(q => q.GetType() == handlerRegistration.HandlerType))
+            //                if (!registrationsCollection.Any(q => q.handle.GetType() == queryHandler.GetType()))
+            //                    registrationsCollection.Add(
+            //                        (handlerRegistration, queryHandler));
+
+            //}
+            //foreach (var (handleRegistration, handle) in registrationsCollection.OrderBy(q => q.handleRegistration.Order))
+            //{
+            //    if (handleRegistration.IsAsync)
+            //    {
+            //        _ = Task.Run(() =>
+            //        {
+            //            var task =  (Task<TQuery>)handleMethodInfo.Invoke(handle, new object[]{ query });
+            //            task.Wait();
+            //            //await handle.HandleAsync(query);
+            //        });
+            //    }
+            //    else
+            //    {
+            //        var task = (Task<bool>)handleMethodInfo.Invoke(handle, new object[] { query });
+            //        task.Wait();
+
+            //        if (!task.Result && handleRegistration.StopOnError)
+            //            break;
+            //    }
+            //}
 
             return await Task.FromResult(query);
         }

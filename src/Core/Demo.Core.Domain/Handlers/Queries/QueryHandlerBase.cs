@@ -11,7 +11,17 @@ namespace Demo.Core.Domain.Handlers.Queries
         : IQueryHandler<TQuery>
         where TQuery : QueryBase
     {
-        public abstract Task<bool> HandleAsync(TQuery query);
+        // Properties
+        public QueryHandler<TQuery> QueryHandler { get; protected set; }
+
+        // Constructors
+        protected QueryHandlerBase()
+        {
+            QueryHandler = GetQueryHandler();
+        }
+
+        // Abstract Methods
+        protected abstract QueryHandler<TQuery> GetQueryHandler();
 
         #region IDisposable Support
         private bool disposedValue = false;
