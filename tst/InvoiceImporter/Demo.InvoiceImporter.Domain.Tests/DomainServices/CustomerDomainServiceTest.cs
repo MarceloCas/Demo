@@ -36,18 +36,6 @@ namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
         [Trait(nameof(CustomerDomainService), "ImportCustomer_Success")]
         public async Task ImportCustomer_Success()
         {
-            //await RunWithTelemetry(async () =>
-            //{
-            //    var bus = ServiceProvider.GetService<IBus>();
-
-            //    await bus.SendCommandAsync(new ImportInvoiceCommand());
-
-            //    bus.Dispose();
-
-            //    return true;
-            //},
-            //10_000);
-
             await RunWithTelemetry(async () =>
             {
                 var customerDomainService = Bootstrapper.GetService<ICustomerDomainService>();

@@ -159,55 +159,6 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
                 }
             }
 
-            //var registeredTypesCollection = new List<object>();
-            //var handleMethodInfo = typeof(IQueryHandler<>).GetMethod(nameof(IQueryHandler<TQuery>.HandleAsync)).MakeGenericMethod(queryType);
-
-
-            //if (handlerRegistrationsCollection?.Any() == false)
-            //    return processResult;
-
-            //var registrationsCollection = new List<(HandlerRegistration handleRegistration, object handle)>();
-
-            //foreach (var handlerRegistration in handlerRegistrationsCollection)
-            //{
-            //    var handlerTypeInterfacesCollection = handlerRegistration.HandlerType.GetInterfaces().ToList();
-            //    handlerTypeInterfacesCollection = handlerTypeInterfacesCollection.Where(q => q.IsGenericType).ToList();
-            //    handlerTypeInterfacesCollection = handlerTypeInterfacesCollection.Where(q => q.GetGenericTypeDefinition() == typeof(IQueryHandler<>)).ToList();
-            //    handlerTypeInterfacesCollection = handlerTypeInterfacesCollection.Where(q => q.GetGenericArguments().Any(q1 => q1 == queryType)).ToList();
-
-            //    if (handlerTypeInterfacesCollection.Any(q => 
-            //            q.IsGenericType == true
-            //            && q.GetGenericTypeDefinition() == typeof(IQueryHandler<>)
-            //            && q.GetGenericArguments().Any(q1 => q1 == queryType)))
-            //        foreach (var interfaceType in handlerRegistration.HandlerType.GetInterfaces())
-            //            foreach (var queryHandler in _serviceProvider.GetServices(interfaceType)
-            //                .Where(q => q.GetType() == handlerRegistration.HandlerType))
-            //                if (!registrationsCollection.Any(q => q.handle.GetType() == queryHandler.GetType()))
-            //                    registrationsCollection.Add(
-            //                        (handlerRegistration, queryHandler));
-
-            //}
-            //foreach (var (handleRegistration, handle) in registrationsCollection.OrderBy(q => q.handleRegistration.Order))
-            //{
-            //    if (handleRegistration.IsAsync)
-            //    {
-            //        _ = Task.Run(() =>
-            //        {
-            //            var task =  (Task<TQuery>)handleMethodInfo.Invoke(handle, new object[]{ query });
-            //            task.Wait();
-            //            //await handle.HandleAsync(query);
-            //        });
-            //    }
-            //    else
-            //    {
-            //        var task = (Task<bool>)handleMethodInfo.Invoke(handle, new object[] { query });
-            //        task.Wait();
-
-            //        if (!task.Result && handleRegistration.StopOnError)
-            //            break;
-            //    }
-            //}
-
             return await Task.FromResult(query);
         }
 
