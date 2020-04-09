@@ -1,15 +1,11 @@
 ﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Models;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Demo.Core.Infra.CrossCutting.IoC.Models;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
@@ -31,48 +27,44 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
             _handlerRegistrationManager = (IHandlerRegistrationManager)_serviceProvider.GetService(typeof(IHandlerRegistrationManager));
             _typeRegistrationCollection = typeRegistrationCollection;
         }
+
         // Public Methods
         public async Task<bool> SendDomainNotificationAsync<TDomainNotification>(TDomainNotification domainNotification) where TDomainNotification : DomainNotification
         {
             var processResult = true;
+            var domainNotificationType = domainNotification.GetType();
 
-            var registeredTypesCollection = new List<object>();
+            // 1º step - Get all registration for this domainNotification ordered by Order property
+            var handlerRegistrationsCollection = _handlerRegistrationManager?.DomainNotificationHandlerRegistrationsCollection
+                .Where(registration => registration.MessageType == domainNotificationType)
+                .OrderBy(q => q.Order);
 
-            var handlerRegistrationsCollection = _handlerRegistrationManager?.DomainNotificationHandlerRegistrationsCollection.Where(registration =>
-                registration.MessageType == typeof(TDomainNotification))
-                .ToList();
-            if (handlerRegistrationsCollection?.Any() == false)
-                return false;
-
-            var registrationsCollection = new List<(HandlerRegistration handleRegistration, IDomainNotificationHandler<TDomainNotification> handle)>();
-
+            // 2º step - Handle each handlerRegistration
             foreach (var handlerRegistration in handlerRegistrationsCollection)
-                if (handlerRegistration.HandlerType.GetInterfaces()
-                    .Any(q => q == typeof(IDomainNotificationHandler<TDomainNotification>)))
-                    foreach (var interfaceType in handlerRegistration.HandlerType.GetInterfaces())
-                        foreach (IDomainNotificationHandler<TDomainNotification> domainNotificationHandler in _serviceProvider.GetServices(interfaceType)
-                            .Where(q => q.GetType() == handlerRegistration.HandlerType))
-                            if (!registrationsCollection.Any(q => q.handle.GetType() == domainNotificationHandler.GetType()))
-                                registrationsCollection.Add(
-                                    (handlerRegistration, domainNotificationHandler));
-
-            foreach (var (handleRegistration, handle) in registrationsCollection.OrderBy(q => q.handleRegistration.Order))
             {
-                if (handleRegistration.IsAsync)
+                // 3º step - Get a instance of HandlerType and handle domainNotification
+                var handler = _serviceProvider.GetService(handlerRegistration.HandlerType);
+                var domainNotificationHanlerProperty = handler.GetType().GetProperty(nameof(IDomainNotificationHandler<TDomainNotification>.DomainNotificationHandler));
+                var domainNotificationHandlerDelegate = domainNotificationHanlerProperty.GetValue(handler);
+                var domainNotificationHandlerDelegateInvokeMethodInfo = domainNotificationHandlerDelegate.GetType().GetMethod(nameof(DomainNotificationHandler<TDomainNotification>.Invoke));
+
+                // 4º step - Call handler
+                if (handlerRegistration.IsAsync)
                 {
-                    _ = Task.Run(async () =>
-                    {
-                        await handle.HandleAsync(domainNotification);
+                    _ = Task.Run(() => {
+                        var handlerReturnTask = (Task<bool>)domainNotificationHandlerDelegateInvokeMethodInfo.Invoke(domainNotificationHandlerDelegate, new[] { domainNotification });
+                        handlerReturnTask.Wait();
                     });
                 }
                 else
                 {
-                    var commandReturn = await handle.HandleAsync(domainNotification);
-                    if (!commandReturn && handleRegistration.StopOnError)
-                    {
-                        processResult = false;
+                    var handlerReturnTask = (Task<bool>)domainNotificationHandlerDelegateInvokeMethodInfo.Invoke(domainNotificationHandlerDelegate, new[] { domainNotification });
+                    handlerReturnTask.Wait();
+
+                    processResult = handlerReturnTask.Result;
+
+                    if (processResult && handlerRegistration.StopOnError)
                         break;
-                    }
                 }
             }
 
@@ -81,46 +73,42 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
         public async Task<bool> SendCommandAsync<TCommand>(TCommand command) where TCommand : Command
         {
             var processResult = true;
+            var commandType = command.GetType();
 
-            var registeredTypesCollection = new List<object>();
+            // 1º step - Get all registration for this command ordered by Order property
+            var handlerRegistrationsCollection = _handlerRegistrationManager?.CommandHandlerRegistrationsCollection
+                .Where(registration => registration.MessageType == commandType)
+                .OrderBy(q => q.Order);
 
-            var handlerRegistrationsCollection = _handlerRegistrationManager?.CommandHandlerRegistrationsCollection.Where(registration =>
-                registration.MessageType == typeof(TCommand))
-                .ToList();
-            if (handlerRegistrationsCollection?.Any() == false)
-                return false;
-
-            var registrationsCollection = new List<(HandlerRegistration handleRegistration, ICommandHandler<TCommand> handle)>();
-
+            // 2º step - Handle each handlerRegistration
             foreach (var handlerRegistration in handlerRegistrationsCollection)
-                if (handlerRegistration.HandlerType.GetInterfaces()
-                    .Any(q => q == typeof(ICommandHandler<TCommand>)))
-                    foreach (var interfaceType in handlerRegistration.HandlerType.GetInterfaces())
-                        foreach (ICommandHandler<TCommand> commandHandler in _serviceProvider.GetServices(interfaceType)
-                            .Where(q => q.GetType() == handlerRegistration.HandlerType))
-                            if (!registrationsCollection.Any(q => q.handle.GetType() == commandHandler.GetType()))
-                                registrationsCollection.Add(
-                                    (handlerRegistration, commandHandler));
-
-            foreach (var (handleRegistration, handle) in registrationsCollection.OrderBy(q => q.handleRegistration.Order))
             {
-                if (handleRegistration.IsAsync)
+                // 3º step - Get a instance of HandlerType and handle command
+                var handler = _serviceProvider.GetService(handlerRegistration.HandlerType);
+                var commandHanlerProperty = handler.GetType().GetProperty(nameof(ICommandHandler<TCommand>.CommandHandler));
+                var commandHandlerDelegate = commandHanlerProperty.GetValue(handler);
+                var commandHandlerDelegateInvokeMethodInfo = commandHandlerDelegate.GetType().GetMethod(nameof(CommandHandler<TCommand>.Invoke));
+
+                // 4º step - Call handler
+                if (handlerRegistration.IsAsync)
                 {
-                    _ = Task.Run(async () =>
-                    {
-                        await handle.HandleAsync(command);
+                    _ = Task.Run(() => {
+                        var handlerReturnTask = (Task<bool>)commandHandlerDelegateInvokeMethodInfo.Invoke(commandHandlerDelegate, new[] { command });
+                        handlerReturnTask.Wait();
                     });
                 }
                 else
                 {
-                    var commandReturn = await handle.HandleAsync(command);
-                    if (!commandReturn && handleRegistration.StopOnError)
-                    {
-                        processResult = false;
+                    var handlerReturnTask = (Task<bool>)commandHandlerDelegateInvokeMethodInfo.Invoke(commandHandlerDelegate, new[] { command });
+                    handlerReturnTask.Wait();
+
+                    processResult = handlerReturnTask.Result;
+
+                    if (processResult && handlerRegistration.StopOnError)
                         break;
-                    }
                 }
             }
+
             return await Task.FromResult(processResult);
         }
         public async Task<TQuery> SendQueryAsync<TQuery>(TQuery query) where TQuery : QueryBase
@@ -142,6 +130,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
                 var queryHandlerDelegate = queryHanlerProperty.GetValue(handler);
                 var queryHandlerDelegateInvokeMethodInfo = queryHandlerDelegate.GetType().GetMethod(nameof(QueryHandler<TQuery>.Invoke));
 
+                // 4º step - Call handler
                 if (handlerRegistration.IsAsync)
                 {
                     _ = Task.Run(() => {

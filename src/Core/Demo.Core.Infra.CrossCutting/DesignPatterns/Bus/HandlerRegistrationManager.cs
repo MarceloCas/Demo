@@ -1,13 +1,9 @@
 ﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Models;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS.Base;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
 {

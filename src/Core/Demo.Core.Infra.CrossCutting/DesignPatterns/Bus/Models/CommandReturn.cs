@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Models
+﻿namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Models
 {
     public class CommandReturn
     {

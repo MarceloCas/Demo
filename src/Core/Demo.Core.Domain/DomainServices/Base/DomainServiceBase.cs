@@ -1,13 +1,8 @@
-﻿using Demo.Core.Domain.DomainModels.Base;
-using Demo.Core.Domain.DomainModels.Base.Interfaces;
+﻿using Demo.Core.Domain.DomainModels.Base.Interfaces;
 using Demo.Core.Domain.DomainServices.Base.Interfaces;
-using Demo.Core.Domain.Repositories.Base;
-using Demo.Core.Domain.Repositories.Base.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Demo.Core.Domain.DomainServices.Base
 {

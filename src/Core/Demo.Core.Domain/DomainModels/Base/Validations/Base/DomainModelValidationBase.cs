@@ -1,9 +1,6 @@
 ﻿using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels.Interfaces;
 using Demo.Core.Domain.Queries.DomainModelsBase;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Demo.Core.Domain.DomainModels.Base.Validations.Base
 {

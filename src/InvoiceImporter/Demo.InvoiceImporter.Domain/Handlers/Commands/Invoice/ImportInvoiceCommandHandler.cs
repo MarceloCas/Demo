@@ -1,10 +1,8 @@
 ﻿using Demo.Core.Domain.Handlers.Commands;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.InvoiceImporter.Domain.Commands.Invoices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice
@@ -29,10 +27,13 @@ namespace Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice
             _invoiceDomainService = invoiceDomainService;
         }
 
-        // Public Methods
-        public override async Task<bool> HandleAsync(ImportInvoiceCommand command)
+        // Protected Methods
+        protected override CommandHandler<ImportInvoiceCommand> GetCommandHandler()
         {
-            return await Task.FromResult(true);
+            return async command =>
+            {
+                return await Task.FromResult(true);
+            };
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Demo.Core.Infra.CrossCutting.IoC.Models.Enums
+﻿namespace Demo.Core.Infra.CrossCutting.IoC.Models.Enums
 {
     public enum RegistrationLifeTimeEnum
     {

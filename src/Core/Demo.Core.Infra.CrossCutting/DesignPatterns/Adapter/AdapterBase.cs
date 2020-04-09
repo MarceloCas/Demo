@@ -1,7 +1,4 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Adapter.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Adapter
 {

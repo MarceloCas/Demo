@@ -1,9 +1,7 @@
 ﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace Demo.Core.Infra.CrossCutting.Globalization
 {

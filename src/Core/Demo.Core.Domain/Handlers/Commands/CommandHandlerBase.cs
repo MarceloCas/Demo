@@ -1,9 +1,6 @@
 ﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.Core.Domain.Handlers.Commands
 {
@@ -11,10 +8,20 @@ namespace Demo.Core.Domain.Handlers.Commands
         : ICommandHandler<TCommand>
         where TCommand : Command
     {
-        public abstract Task<bool> HandleAsync(TCommand command);
+        public CommandHandler<TCommand> CommandHandler { get; protected set; }
+
+        // Constructors
+        protected CommandHandlerBase()
+        {
+            CommandHandler = GetCommandHandler();
+        }
+
+        // Abstract Methods
+        protected abstract CommandHandler<TCommand> GetCommandHandler();
 
         #region IDisposable Support
         private bool disposedValue = false;
+
 
         protected virtual void Dispose(bool disposing)
         {

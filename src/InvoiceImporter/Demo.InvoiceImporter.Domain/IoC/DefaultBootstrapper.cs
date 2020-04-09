@@ -1,4 +1,6 @@
-﻿using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
+using Demo.Core.Infra.CrossCutting.Globalization;
 using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.Core.Infra.CrossCutting.IoC;
@@ -11,14 +13,11 @@ using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
-using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Factories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using static Demo.InvoiceImporter.Domain.DomainModels.Customer;
 using static Demo.InvoiceImporter.Domain.DomainModels.Customer.BrazilianCustomer;
 using static Demo.InvoiceImporter.Domain.DomainModels.Invoice;
@@ -51,7 +50,18 @@ namespace Demo.InvoiceImporter.Domain.IoC
                 new TypeRegistration(typeof(ICustomerMustHaveNameWithValidLengthSpecification), typeof(CustomerMustHaveNameWithValidLengthSpecification)),
                 new TypeRegistration(typeof(ICustomerMustHaveGovernamentalDocumentNumberSpecification), typeof(CustomerMustHaveGovernamentalDocumentNumberSpecification)),
                 new TypeRegistration(typeof(ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification), typeof(CustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification)),
-                new TypeRegistration(typeof(ICustomerMustHaveValidGovernamentalDocumentNumberSpecification), typeof(CustomerMustHaveValidGovernamentalDocumentNumberSpecification))
+                new TypeRegistration(typeof(ICustomerMustHaveValidGovernamentalDocumentNumberSpecification), typeof(CustomerMustHaveValidGovernamentalDocumentNumberSpecification)),
+                new TypeRegistration(
+                    typeof(IGlobalizationConfig),
+                    serviceProvider =>
+                    {
+                        return new GlobalizationConfig(CultureName, Localization);
+                    }
+                ),
+                new TypeRegistration(
+                    typeof(IInMemoryDefaultDomainNotificationHandler),
+                    typeof(InMemoryDefaultDomainNotificationHandler)
+                )
             };
         }
         private TypeRegistration[] RegisterDomainModelsValidations()
@@ -87,6 +97,12 @@ namespace Demo.InvoiceImporter.Domain.IoC
                 new TypeRegistration(typeof(IProductDomainService), typeof(ProductDomainService))
             };
         }
+        private TypeRegistration[] RegisterDomainNotificationHandlers()
+        {
+            return new[] {
+                new TypeRegistration(typeof(InMemoryDefaultDomainNotificationHandler))
+            };
+        }
         private TypeRegistration[] RegisterCommandHandlers()
         {
             return new[] {
@@ -115,6 +131,7 @@ namespace Demo.InvoiceImporter.Domain.IoC
             typeRegistrationCollection.AddRange(RegisterFactories());
             typeRegistrationCollection.AddRange(RegisterDomainServices());
 
+            typeRegistrationCollection.AddRange(RegisterDomainNotificationHandlers());
             typeRegistrationCollection.AddRange(RegisterCommandHandlers());
             typeRegistrationCollection.AddRange(RegisterQueryHandlers());
 

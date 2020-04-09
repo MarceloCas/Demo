@@ -4,8 +4,6 @@ using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers

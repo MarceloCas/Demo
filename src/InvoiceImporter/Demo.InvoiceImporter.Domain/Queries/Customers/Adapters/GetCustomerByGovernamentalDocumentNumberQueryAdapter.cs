@@ -1,12 +1,7 @@
 ﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Adapter;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
-using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Factories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.Queries.Customers.Adapters

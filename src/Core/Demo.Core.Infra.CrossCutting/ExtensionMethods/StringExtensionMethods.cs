@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Demo.Core.Infra.CrossCutting.ExtensionMethods
+﻿namespace Demo.Core.Infra.CrossCutting.ExtensionMethods
 {
     public static class StringExtensionMethods
     {

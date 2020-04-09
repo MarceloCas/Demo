@@ -1,15 +1,15 @@
-﻿using Demo.Core.Domain.DomainModels.Base;
-using Demo.Core.Domain.Queries.DomainModelsBase;
+﻿using Demo.Core.Domain.Queries.DomainModelsBase;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
 using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.IoC;
 using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Demo.InvoiceImporter.Domain.Commands.Invoices;
 using Demo.InvoiceImporter.Domain.DomainModels;
+using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Demo.InvoiceImporter.Domain.Queries.Customers;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +45,16 @@ namespace Demo.InvoiceImporter.Infra.IoC
             typeRegistrationCollection.AddRange(new Domain.IoC.DefaultBootstrapper(Services, TenantCode, CultureName, Localization).TypeRegistrationCollection);
             typeRegistrationCollection.AddRange(new Data.IoC.DefaultBootstrapper(Services, TenantCode, CultureName, Localization).TypeRegistrationCollection);
             typeRegistrationCollection.AddRange(ConfigureRegistrationPipeline());
+            /*
+             * In memory Bus need all type registrations. because this, the IBus must be the last registration
+             */
+            typeRegistrationCollection.Add(new TypeRegistration(
+                    typeof(IBus),
+                    serviceProvider =>
+                    {
+                        return new InMemoryBus(serviceProvider, typeRegistrationCollection.ToArray());
+                    }
+                ));
 
             return typeRegistrationCollection.ToArray();
         }

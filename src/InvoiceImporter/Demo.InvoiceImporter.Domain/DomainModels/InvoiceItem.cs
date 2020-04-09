@@ -1,12 +1,9 @@
 ﻿using Demo.Core.Domain.DomainModels.Base;
 using Demo.Core.Domain.DomainModels.Interfaces;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels

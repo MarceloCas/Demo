@@ -1,6 +1,5 @@
 ﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
 using Demo.Core.Infra.CrossCutting.Globalization;
 using Demo.Core.Infra.CrossCutting.Globalization.Enums;
@@ -9,9 +8,7 @@ using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace Demo.Core.Infra.CrossCutting.IoC
 {
@@ -78,7 +75,11 @@ namespace Demo.Core.Infra.CrossCutting.IoC
             _cultureName = cultureName;
             _localization = localization;
 
-            _typeRegistrationCollection = GetTypeRegistrationCollection();
+            var typeRegistrationCollection = new List<TypeRegistration>();
+
+            typeRegistrationCollection.AddRange(GetTypeRegistrationCollection());
+            _typeRegistrationCollection = typeRegistrationCollection.ToArray();
+
             if (_typeRegistrationCollection?.Any() == true)
             {
                 foreach (var typeRegistration in _typeRegistrationCollection)
@@ -142,23 +143,7 @@ namespace Demo.Core.Infra.CrossCutting.IoC
                 }
             }
 
-            RegisterLocalTypes(services, _typeRegistrationCollection);
-
             _serviceProvider = services.BuildServiceProvider();
-        }
-
-        // Private methods
-        private void RegisterLocalTypes(IServiceCollection services, TypeRegistration[] typeRegistrationCollection)
-        {
-            services.AddScoped<IGlobalizationConfig>(serviceProvider =>
-            {
-                return new GlobalizationConfig(CultureName, Localization);
-            });
-            services.AddScoped<IInMemoryDefaultDomainNotificationHandler, InMemoryDefaultDomainNotificationHandler>();
-
-            services.AddScoped<IBus>(serviceProvider => {
-                return new InMemoryBus(serviceProvider, _typeRegistrationCollection);
-            });
         }
 
         // Abstract Methods

@@ -2,9 +2,6 @@
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Queries.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.Handlers.Queries.Customers

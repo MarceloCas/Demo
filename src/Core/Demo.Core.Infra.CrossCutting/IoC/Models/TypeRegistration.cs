@@ -1,7 +1,5 @@
 ﻿using Demo.Core.Infra.CrossCutting.IoC.Models.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Demo.Core.Infra.CrossCutting.IoC.Models
 {

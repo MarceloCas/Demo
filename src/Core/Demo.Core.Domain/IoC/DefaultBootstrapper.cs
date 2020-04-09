@@ -1,5 +1,4 @@
-﻿using Demo.Core.Domain.DomainModels.Base;
-using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels;
+﻿using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels;
 using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels.Interfaces;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers.Factories.Interfaces;
@@ -7,11 +6,9 @@ using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.Core.Infra.CrossCutting.IoC;
 using Demo.Core.Infra.CrossCutting.IoC.Models;
-using Demo.Core.Infra.CrossCutting.IoC.Models.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using static Demo.Core.Domain.ValueObjects.CNPJs.CNPJValueObject;
 using static Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers.GovernamentalDocumentNumberValueObject;
 using static Demo.Core.Domain.ValueObjects.TenantInfoValueObject;

@@ -1,8 +1,4 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS.Base;
 using System.Threading.Tasks;
 
 namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces
