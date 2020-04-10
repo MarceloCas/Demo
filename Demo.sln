@@ -101,6 +101,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Infra.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.InvoiceImporter.Infra.IoC.WebApi.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Infra.IoC.WebApi.WebApp\Demo.InvoiceImporter.Infra.IoC.WebApi.WebApp.csproj", "{9F81B99C-5123-429D-8835-3E6C5457679C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Presentation.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Presentation.WebApp\Demo.InvoiceImporter.Presentation.WebApp.csproj", "{BCAC5CC5-07BD-4BA1-BE5D-3D3A85CCE059}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Core.Infra.IoC.WebApp", "src\Core\Demo.Core.Infra.IoC.WebApp\Demo.Core.Infra.IoC.WebApp.csproj", "{CAC5156B-DF0F-494D-984E-2E7EAB7D0A64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Core.Application.WebApp", "src\Core\Demo.Core.Application.WebApp\Demo.Core.Application.WebApp.csproj", "{C52819B0-7401-4A18-8669-9F039A8AAD1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Core.Service.WebApp", "src\Core\Demo.Core.Service.WebApp\Demo.Core.Service.WebApp.csproj", "{70FCD782-4816-4981-94F3-5F8218478957}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -231,6 +239,22 @@ Global
 		{9F81B99C-5123-429D-8835-3E6C5457679C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F81B99C-5123-429D-8835-3E6C5457679C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F81B99C-5123-429D-8835-3E6C5457679C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCAC5CC5-07BD-4BA1-BE5D-3D3A85CCE059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCAC5CC5-07BD-4BA1-BE5D-3D3A85CCE059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCAC5CC5-07BD-4BA1-BE5D-3D3A85CCE059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCAC5CC5-07BD-4BA1-BE5D-3D3A85CCE059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAC5156B-DF0F-494D-984E-2E7EAB7D0A64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC5156B-DF0F-494D-984E-2E7EAB7D0A64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC5156B-DF0F-494D-984E-2E7EAB7D0A64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC5156B-DF0F-494D-984E-2E7EAB7D0A64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C52819B0-7401-4A18-8669-9F039A8AAD1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C52819B0-7401-4A18-8669-9F039A8AAD1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52819B0-7401-4A18-8669-9F039A8AAD1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C52819B0-7401-4A18-8669-9F039A8AAD1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70FCD782-4816-4981-94F3-5F8218478957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70FCD782-4816-4981-94F3-5F8218478957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70FCD782-4816-4981-94F3-5F8218478957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70FCD782-4816-4981-94F3-5F8218478957}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -283,6 +307,10 @@ Global
 		{EF451FAC-05FF-48E1-8E2C-8BE7B64040EA} = {CF94231A-6131-44CF-BAD8-825C680E3C37}
 		{4589722B-EF99-4264-9356-2520182E5ECC} = {CF94231A-6131-44CF-BAD8-825C680E3C37}
 		{9F81B99C-5123-429D-8835-3E6C5457679C} = {CF94231A-6131-44CF-BAD8-825C680E3C37}
+		{BCAC5CC5-07BD-4BA1-BE5D-3D3A85CCE059} = {FBE1BA08-5C21-4622-BA34-7BA169F343D4}
+		{CAC5156B-DF0F-494D-984E-2E7EAB7D0A64} = {A4F0D595-C8E7-4505-BA96-60BE10B856A1}
+		{C52819B0-7401-4A18-8669-9F039A8AAD1B} = {C6711D89-60A9-4C3E-9591-DF8553EEE3E4}
+		{70FCD782-4816-4981-94F3-5F8218478957} = {2F044CC9-D8F9-4AC7-BA2C-827AD39783E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FDA9F813-C3B3-4C0A-90DF-A2015176C880}

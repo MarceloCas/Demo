@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <ProjectReference Include="..\Demo.Core.Application.WebApi\Demo.Core.Application.WebApi.csproj" />
+    <ProjectReference Include="..\Demo.Core.Application.WebApp\Demo.Core.Application.WebApp.csproj" />
     <ProjectReference Include="..\Demo.Core.Application\Demo.Core.Application.csproj" />
     <ProjectReference Include="..\Demo.Core.Infra.CrossCutting\Demo.Core.Infra.CrossCutting.csproj" />
   </ItemGroup>

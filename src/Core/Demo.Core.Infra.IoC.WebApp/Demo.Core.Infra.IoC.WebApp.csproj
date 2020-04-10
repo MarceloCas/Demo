@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -7,7 +7,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Demo.Core.Application.WebApi\Demo.Core.Application.WebApi.csproj" />
     <ProjectReference Include="..\Demo.Core.Application\Demo.Core.Application.csproj" />
+    <ProjectReference Include="..\Demo.Core.Domain\Demo.Core.Domain.csproj" />
     <ProjectReference Include="..\Demo.Core.Infra.CrossCutting\Demo.Core.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\Demo.Core.Infra.Data\Demo.Core.Infra.Data.csproj" />
+    <ProjectReference Include="..\Demo.Core.Infra.IoC\Demo.Core.Infra.IoC.csproj" />
   </ItemGroup>
 
 </Project>
