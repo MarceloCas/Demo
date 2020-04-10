@@ -1,5 +1,6 @@
 ﻿using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels.Interfaces;
 using Demo.Core.Domain.DomainModels.Base.Validations.Base;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 
@@ -10,17 +11,28 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers
         ICustomerIsValidForImportValidation
     {
         public CustomerIsValidForImportValidation(
-            IDomainModelMustHaveIdSpecification domainModelMustHaveIdSpecification,
             IDomainModelMustExistsSpecification domainModelMustExistsSpecification,
+            IDomainModelMustHaveCreationDateSpecification domainModelMustHaveCreationDateSpecification,
+            IDomainModelMustHaveCreationUserSpecification domainModelMustHaveCreationUserSpecification,
+            IDomainModelMustHaveIdSpecification domainModelMustHaveIdSpecification,
+            IDomainModelMustHaveModificationDateGreaterThanCreationDateSpecification domainModelMustHaveModificationDateGreaterThanCreationDateSpecification,
+            IDomainModelMustHaveModificationDateSpecification domainModelMustHaveModificationDateSpecification,
+            IDomainModelMustHaveModificationUserSpecification domainModelMustHaveModificationUserSpecification,
+            IDomainModelMustHaveTenantCodeSpecification domainModelMustHaveTenantCodeSpecification,
+            IDomainModelMustHaveTenantCodeWithValidLengthSpecification domainModelMustHaveTenantCodeWithValidLengthSpecification,
+            IDomainModelMustNotExistsSpecification domainModelMustNotExistsSpecification,
+
+
             ICustomerGovernamentalDocumentNumberMustBeUniqueSpecification customerGovernamentalDocumentNumberMustBeUniqueSpecification,
             ICustomerMustHaveGovernamentalDocumentNumberSpecification customerMustHaveGovernamentalDocumentNumberSpecification,
             ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification customerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification,
             ICustomerMustHaveNameSpecification customerMustHaveNameSpecification,
-            ICustomerMustHaveNameWithValidLengthSpecification customerMustHaveNameWithValidLengthSpecification)
-            : base(domainModelMustHaveIdSpecification, domainModelMustExistsSpecification)
+            ICustomerMustHaveNameWithValidLengthSpecification customerMustHaveNameWithValidLengthSpecification
+            ) 
+            : base(domainModelMustExistsSpecification, domainModelMustHaveCreationDateSpecification, domainModelMustHaveCreationUserSpecification, domainModelMustHaveIdSpecification, domainModelMustHaveModificationDateGreaterThanCreationDateSpecification, domainModelMustHaveModificationDateSpecification, domainModelMustHaveModificationUserSpecification, domainModelMustHaveTenantCodeSpecification, domainModelMustHaveTenantCodeWithValidLengthSpecification, domainModelMustNotExistsSpecification)
         {
-            AddMustHaveIdSpecification();
-            AddMustExistsSpecification();
+            AddMustHaveTenantCodeSpecification();
+            AddMustHaveTenantCodeWithValidLengthSpecification();
 
             AddSpecification(customerGovernamentalDocumentNumberMustBeUniqueSpecification);
             AddSpecification(customerMustHaveGovernamentalDocumentNumberSpecification);

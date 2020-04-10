@@ -51,8 +51,16 @@ namespace Demo.Core.Domain.IoC
         private TypeRegistration[] RegisterDomainModelSpecifications()
         {
             return new[] {
+                new TypeRegistration (typeof(IDomainModelMustExistsSpecification), typeof(DomainModelMustExistsSpecification)),
+                new TypeRegistration (typeof(IDomainModelMustHaveCreationDateSpecification), typeof(DomainModelMustHaveCreationDateSpecification)),
+                new TypeRegistration (typeof(IDomainModelMustHaveCreationUserSpecification), typeof(DomainModelMustHaveCreationUserSpecification)),
                 new TypeRegistration (typeof(IDomainModelMustHaveIdSpecification), typeof(DomainModelMustHaveIdSpecification)),
-                new TypeRegistration (typeof(IDomainModelMustExistsSpecification), typeof(DomainModelMustExistsSpecification))
+                new TypeRegistration (typeof(IDomainModelMustHaveModificationDateGreaterThanCreationDateSpecification), typeof(DomainModelMustHaveModificationDateGreaterThanCreationDateSpecification)),
+                new TypeRegistration (typeof(IDomainModelMustHaveModificationDateSpecification), typeof(DomainModelMustHaveModificationDateSpecification)),
+                new TypeRegistration (typeof(IDomainModelMustHaveModificationUserSpecification), typeof(DomainModelMustHaveModificationUserSpecification)),
+                new TypeRegistration (typeof(IDomainModelMustHaveTenantCodeSpecification), typeof(DomainModelMustHaveTenantCodeSpecification)),
+                new TypeRegistration (typeof(IDomainModelMustHaveTenantCodeWithValidLengthSpecification), typeof(DomainModelMustHaveTenantCodeWithValidLengthSpecification)),
+                new TypeRegistration (typeof(IDomainModelMustNotExistsSpecification), typeof(DomainModelMustNotExistsSpecification))
             };
         }
 
