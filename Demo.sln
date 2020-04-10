@@ -107,6 +107,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Core.Application.WebAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Core.Service.WebApp", "src\Core\Demo.Core.Service.WebApp\Demo.Core.Service.WebApp.csproj", "{70FCD782-4816-4981-94F3-5F8218478957}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.InvoiceImporter.Presentation.WebApp", "src\InvoiceImporter\Demo.InvoiceImporter.Presentation.WebApp\Demo.InvoiceImporter.Presentation.WebApp.csproj", "{D8005544-0C6F-4374-845D-BE6BA8C248E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -249,6 +251,10 @@ Global
 		{70FCD782-4816-4981-94F3-5F8218478957}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70FCD782-4816-4981-94F3-5F8218478957}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70FCD782-4816-4981-94F3-5F8218478957}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8005544-0C6F-4374-845D-BE6BA8C248E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8005544-0C6F-4374-845D-BE6BA8C248E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8005544-0C6F-4374-845D-BE6BA8C248E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8005544-0C6F-4374-845D-BE6BA8C248E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -304,6 +310,7 @@ Global
 		{CAC5156B-DF0F-494D-984E-2E7EAB7D0A64} = {A4F0D595-C8E7-4505-BA96-60BE10B856A1}
 		{C52819B0-7401-4A18-8669-9F039A8AAD1B} = {C6711D89-60A9-4C3E-9591-DF8553EEE3E4}
 		{70FCD782-4816-4981-94F3-5F8218478957} = {2F044CC9-D8F9-4AC7-BA2C-827AD39783E0}
+		{D8005544-0C6F-4374-845D-BE6BA8C248E2} = {FBE1BA08-5C21-4622-BA34-7BA169F343D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FDA9F813-C3B3-4C0A-90DF-A2015176C880}
