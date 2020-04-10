@@ -60,7 +60,19 @@ namespace Demo.InvoiceImporter.Domain.IoC
                 ),
                 new TypeRegistration(
                     typeof(IInMemoryDefaultDomainNotificationHandler),
-                    typeof(InMemoryDefaultDomainNotificationHandler)
+                    serviceProvider => {
+
+                        /*
+                         * All Handlers (Domain Notifications, Command, Query and Events)
+                         * are registered without a interface type because HandlerRegistration.
+                         * because this, a IInMemoryDefaultDomainNotificationHandler interface
+                         * must be registered with a existing InMemoryDefaultDomainNotificationHandler
+                         * instance
+                         */
+
+                        return (InMemoryDefaultDomainNotificationHandler)
+                            serviceProvider.GetService(typeof(InMemoryDefaultDomainNotificationHandler));
+                    }
                 )
             };
         }
