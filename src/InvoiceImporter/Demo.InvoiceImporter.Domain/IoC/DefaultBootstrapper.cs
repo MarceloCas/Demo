@@ -13,6 +13,8 @@ using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Events.Customers.Factories.Interfaces;
+using Demo.InvoiceImporter.Domain.Events.Invoices.Factories.Interfaces;
+using Demo.InvoiceImporter.Domain.Events.Products.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
@@ -25,6 +27,10 @@ using static Demo.InvoiceImporter.Domain.DomainModels.Invoice;
 using static Demo.InvoiceImporter.Domain.DomainModels.InvoiceItem;
 using static Demo.InvoiceImporter.Domain.DomainModels.Product;
 using static Demo.InvoiceImporter.Domain.Events.Customers.CustomerWasImportedEvent;
+using static Demo.InvoiceImporter.Domain.Events.Customers.CustomerWasUpdatedEvent;
+using static Demo.InvoiceImporter.Domain.Events.Invoices.InvoiceWasImportedEvent;
+using static Demo.InvoiceImporter.Domain.Events.Products.ProductWasImportedEvent;
+using static Demo.InvoiceImporter.Domain.Events.Products.ProductWasUpdatedEvent;
 using static Demo.InvoiceImporter.Domain.Queries.Customers.GetCustomerByGovernamentalDocumentNumberQuery;
 
 namespace Demo.InvoiceImporter.Domain.IoC
@@ -102,7 +108,11 @@ namespace Demo.InvoiceImporter.Domain.IoC
                 // Queries
                 new TypeRegistration(typeof(IGetCustomerByGovernamentalDocumentNumberQueryFactory), typeof(GetCustomerByGovernamentalDocumentNumberQueryFactory)),
                 // Events
-                new TypeRegistration(typeof(ICustomerWasImportedEventFactory), typeof(CustomerWasImportedEventFactory))
+                new TypeRegistration(typeof(ICustomerWasImportedEventFactory), typeof(CustomerWasImportedEventFactory)),
+                new TypeRegistration(typeof(ICustomerWasUpdatedEventFactory), typeof(CustomerWasUpdatedEventFactory)),
+                new TypeRegistration(typeof(IInvoiceWasImportedEventFactory), typeof(InvoiceWasImportedEventFactory)),
+                new TypeRegistration(typeof(IProductWasImportedEventFactory), typeof(ProductWasImportedEventFactory)),
+                new TypeRegistration(typeof(IProductWasUpdatedEventFactory), typeof(ProductWasUpdatedEventFactory))
             };
         }
         private TypeRegistration[] RegisterDomainServices()

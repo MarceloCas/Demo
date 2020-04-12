@@ -13,15 +13,18 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
         IProductDomainService
     {
         private readonly IProductWasImportedEventFactory _productWasImportedEventFactory;
+        private readonly IProductWasUpdatedEventFactory _productWasUpdatedEventFactory;
 
         public ProductDomainService(
             IBus bus,
             IProductFactory productFactory,
-            IProductWasImportedEventFactory productWasImportedEventFactory
+            IProductWasImportedEventFactory productWasImportedEventFactory,
+            IProductWasUpdatedEventFactory productWasUpdatedEventFactory
             ) 
             : base(bus, productFactory)
         {
             _productWasImportedEventFactory = productWasImportedEventFactory;
+            _productWasUpdatedEventFactory = productWasUpdatedEventFactory;
         }
 
         public async Task<Product> ImportProductAsync(string tenantCode, string creationUser, Product productToImport)
