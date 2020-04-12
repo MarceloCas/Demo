@@ -1,22 +1,22 @@
 ﻿using Demo.Core.Domain.DomainModels.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Demo.Core.Domain.Queries.DomainModelsBase
 {
-    public class GetDomainModelByIdQuery<TDomainModel>
+    public class GetDomainModelCollectionByModificationUserQuery<TDomainModel>
         : Query<IEnumerable<TDomainModel>>
         where TDomainModel : DomainModelBase
     {
         // Properties
-        public Guid DomainModelId { get; protected set; }
+        public string ModificationUser { get; protected set; }
 
-        // Public methods
-        public GetDomainModelByIdQuery<TDomainModel> SetDomainModelId(Guid id)
+        // Public Methods
+        public GetDomainModelCollectionByModificationUserQuery<TDomainModel> SetModificationUser(string modificationUser)
         {
-            DomainModelId = id;
+            ModificationUser = modificationUser;
 
             return this;
         }
