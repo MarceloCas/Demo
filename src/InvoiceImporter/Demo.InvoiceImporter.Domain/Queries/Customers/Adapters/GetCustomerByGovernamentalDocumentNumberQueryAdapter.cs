@@ -10,22 +10,11 @@ namespace Demo.InvoiceImporter.Domain.Queries.Customers.Adapters
         : AdapterBase,
         IGetCustomerByGovernamentalDocumentNumberQueryAdapter
     {
-        // Attributes
-        private readonly IGetCustomerByGovernamentalDocumentNumberQueryFactory _getCustomerByGovernamentalDocumentNumberQueryFactory;
-
-        // Constructors
-        public GetCustomerByGovernamentalDocumentNumberQueryAdapter(
-            IGetCustomerByGovernamentalDocumentNumberQueryFactory getCustomerByGovernamentalDocumentNumberQueryFactory)
+        public async Task<GetCustomerByGovernamentalDocumentNumberQuery> AdapteeAsync(Customer source, GetCustomerByGovernamentalDocumentNumberQuery to)
         {
-            _getCustomerByGovernamentalDocumentNumberQueryFactory = getCustomerByGovernamentalDocumentNumberQueryFactory;
-        }
+            to.SetGovernamentalDocumentNumber(source.GovernamentalDocumentNumber);
 
-        public async Task<GetCustomerByGovernamentalDocumentNumberQuery> AdapteeAsync(Customer source)
-        {
-            var query = await _getCustomerByGovernamentalDocumentNumberQueryFactory.CreateAsync();
-            query.SetGovernamentalDocumentNumber(source.GovernamentalDocumentNumber);
-
-            return query;
+            return to;
         }
     }
 }
