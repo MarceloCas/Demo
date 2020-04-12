@@ -113,19 +113,19 @@ Have Custom Validator: {2}
                         $"\t\tG1: {minGen1}\n" +
                         $"\t\tG2: {minGen2}\n" +
                         $"\t\tTotalMemory (Kb): {minTotalMemory / 1024.0}\n" +
-                        $"\t\tElapsedTime: {minElapsedTime.ToString()}\n" +
+                        $"\t\tElapsedTime: {minElapsedTime}\n" +
                         $"\tMAX:\n" +
                         $"\t\tG0: {maxGen0}\n" +
                         $"\t\tG1: {maxGen1}\n" +
                         $"\t\tG2: {maxGen2}\n" +
                         $"\t\tTotalMemory (Kb): {maxTotalMemory / 1024.0}\n" +
-                        $"\t\tElapsedTime: {maxElapsedTime.ToString()}\n" +
+                        $"\t\tElapsedTime: {maxElapsedTime}\n" +
                         $"\tMEDIAN:\n" +
                         $"\t\tG0: {medianGen0}\n" +
                         $"\t\tG1: {medianGen1}\n" +
                         $"\t\tG2: {medianGen2}\n" +
                         $"\t\tTotalMemory (Kb): {medianTotalMemory / 1024.0}\n" +
-                        $"\t\tElapsedTime: {medianElapsedTime.ToString()}";
+                        $"\t\tElapsedTime: {medianElapsedTime}";
                 });
 
             var writeAllTelemetriesFunction = new Func<ICollection<Telemetry>, string>(

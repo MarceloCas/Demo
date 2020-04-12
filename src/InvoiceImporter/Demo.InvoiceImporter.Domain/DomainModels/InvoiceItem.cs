@@ -15,6 +15,7 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         // Properties
         public Invoice Invoice { get; protected set; }
         public Product Product { get; protected set; }
+        public int Sequence { get; protected set; }
         public double Quantity { get; protected set; }
         public double UnitPrice { get; protected set; }
 
@@ -22,14 +23,14 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         protected InvoiceItem() { }
         
         // Private methods
-        private InvoiceItem GenerateNewId()
-        {
-            Id = Guid.NewGuid();
-            return this;
-        }
         private InvoiceItem SetProduct(Product product)
         {
             Product = product;
+            return this;
+        }
+        private InvoiceItem SetSequence(int sequence)
+        {
+            Sequence = sequence;
             return this;
         }
         private InvoiceItem SetQuantity(double quantity)
@@ -52,16 +53,21 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         }
         public InvoiceItem ImportInvoiceItem(
             string tenantCode, 
-            Product product, 
+            Invoice invoice,
+            Product product,
+            int sequence,
             double quantity, 
             double unitPrice, 
             string creationUser)
         {
             GenerateNewId();
+            SetTenantCode(tenantCode);
+            SetInvoice(invoice);
             SetProduct(product);
+            SetSequence(sequence);
             SetQuantity(quantity);
             SetUnitPrice(unitPrice);
-            SetCreationInfo(tenantCode, creationUser);
+            SetCreationInfo(creationUser);
 
             return this;
         }

@@ -24,11 +24,6 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         protected Invoice() { }
 
         // Private Methods
-        private Invoice GenerateNewId()
-        {
-            Id = Guid.NewGuid();
-            return this;
-        }
         private Invoice SetCode(string code)
         {
             Code = code;
@@ -48,8 +43,16 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         {
             if (!InvoiceItemCollection.Any(q => q.Product.Code.Equals(invoiceItem.Product.Code)))
             {
-                invoiceItem.SetInvoice(this);
-                InvoiceItemCollection.Add(invoiceItem);
+                var importedInvoiceItem = invoiceItem.ImportInvoiceItem(
+                    TenantCode,
+                    this,
+                    invoiceItem.Product,
+                    invoiceItem.Sequence,
+                    invoiceItem.Quantity,
+                    invoiceItem.UnitPrice,
+                    CreationUser);
+
+                InvoiceItemCollection.Add(importedInvoiceItem);
             }
 
             return this;
@@ -91,9 +94,12 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
 
             public InvoiceFactory(
                 ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
-                IGlobalizationConfig globalizationConfig) 
+                IGlobalizationConfig globalizationConfig,
+                ICustomerFactory customerFactory
+                ) 
                 : base(tenantInfoValueObjectFactory, globalizationConfig)
             {
+                _customerFactory = customerFactory;
             }
 
             public override async Task<Invoice> CreateAsync()

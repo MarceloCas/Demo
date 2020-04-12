@@ -20,11 +20,6 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         protected Product() { }
 
         // Private Methods
-        private Product GenerateNewId()
-        {
-            Id = Guid.NewGuid();
-            return this;
-        }
         private Product SetName(string name)
         {
             Name = name;
