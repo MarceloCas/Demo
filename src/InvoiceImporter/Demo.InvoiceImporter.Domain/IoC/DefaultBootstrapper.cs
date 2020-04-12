@@ -23,6 +23,9 @@ using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Factories.Interfaces;
+using Demo.InvoiceImporter.Domain.Queries.Products.Adapters;
+using Demo.InvoiceImporter.Domain.Queries.Products.Adapters.Interfaces;
+using Demo.InvoiceImporter.Domain.Queries.Products.Factories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using static Demo.InvoiceImporter.Domain.DomainModels.Customer;
@@ -36,6 +39,7 @@ using static Demo.InvoiceImporter.Domain.Events.Invoices.InvoiceWasImportedEvent
 using static Demo.InvoiceImporter.Domain.Events.Products.ProductWasImportedEvent;
 using static Demo.InvoiceImporter.Domain.Events.Products.ProductWasUpdatedEvent;
 using static Demo.InvoiceImporter.Domain.Queries.Customers.GetCustomerByGovernamentalDocumentNumberQuery;
+using static Demo.InvoiceImporter.Domain.Queries.Products.GetProductByCodeQuery;
 
 namespace Demo.InvoiceImporter.Domain.IoC
 {
@@ -99,7 +103,8 @@ namespace Demo.InvoiceImporter.Domain.IoC
         private TypeRegistration[] RegisterAdapters()
         {
             return new[] {
-                new TypeRegistration(typeof(IGetCustomerByGovernamentalDocumentNumberQueryAdapter), typeof(GetCustomerByGovernamentalDocumentNumberQueryAdapter))
+                new TypeRegistration(typeof(IGetCustomerByGovernamentalDocumentNumberQueryAdapter), typeof(GetCustomerByGovernamentalDocumentNumberQueryAdapter)),
+                new TypeRegistration(typeof(IGetProductByCodeQueryAdapter), typeof(GetProductByCodeQueryAdapter))
             };
         }
         private TypeRegistration[] RegisterFactories()
@@ -113,6 +118,7 @@ namespace Demo.InvoiceImporter.Domain.IoC
                 new TypeRegistration(typeof(IInvoiceFactory), typeof(InvoiceFactory)),
                 // Queries
                 new TypeRegistration(typeof(IGetCustomerByGovernamentalDocumentNumberQueryFactory), typeof(GetCustomerByGovernamentalDocumentNumberQueryFactory)),
+                new TypeRegistration(typeof(IGetProductByCodeQueryFactory), typeof(GetProductByCodeQueryFactory)),
                 // Events
                 new TypeRegistration(typeof(ICustomerWasImportedEventFactory), typeof(CustomerWasImportedEventFactory)),
                 new TypeRegistration(typeof(ICustomerWasUpdatedEventFactory), typeof(CustomerWasUpdatedEventFactory)),

@@ -14,7 +14,7 @@ namespace Demo.InvoiceImporter.Domain.Queries.Customers.Adapters
         {
             to.SetGovernamentalDocumentNumber(source.GovernamentalDocumentNumber);
 
-            return to;
+            return await Task.FromResult(to);
         }
     }
 }

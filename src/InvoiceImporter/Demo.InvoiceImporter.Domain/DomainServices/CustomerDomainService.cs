@@ -5,6 +5,7 @@ using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices.Base;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Events.Customers.Factories.Interfaces;
+using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Factories.Interfaces;
 using System;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
         private readonly ICustomerIsValidForImportValidation _customerIsValidForImportValidation;
 
         private readonly IGetCustomerByGovernamentalDocumentNumberQueryFactory _getCustomerByGovernamentalDocumentNumberQueryFactory;
+        private readonly IGetCustomerByGovernamentalDocumentNumberQueryAdapter _getCustomerByGovernamentalDocumentNumberQueryAdapter;
 
         private readonly ICustomerWasImportedEventFactory _customerWasImportedEventFactory;
         private readonly ICustomerWasUpdatedEventFactory _customerWasUpdatedEventFactory;
@@ -27,12 +29,14 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
             ICustomerFactory factory,
             ICustomerIsValidForImportValidation customerIsValidForImportValidation,
             IGetCustomerByGovernamentalDocumentNumberQueryFactory getCustomerByGovernamentalDocumentNumberQueryFactory,
+            IGetCustomerByGovernamentalDocumentNumberQueryAdapter getCustomerByGovernamentalDocumentNumberQueryAdapter,
             ICustomerWasImportedEventFactory customerWasImportedEventFactory,
             ICustomerWasUpdatedEventFactory customerWasUpdatedEventFactory
             ) : base(bus, factory)
         {
             _customerIsValidForImportValidation = customerIsValidForImportValidation;
             _customerWasImportedEventFactory = customerWasImportedEventFactory;
+            _getCustomerByGovernamentalDocumentNumberQueryAdapter = getCustomerByGovernamentalDocumentNumberQueryAdapter;
             _getCustomerByGovernamentalDocumentNumberQueryFactory = getCustomerByGovernamentalDocumentNumberQueryFactory;
             _customerWasUpdatedEventFactory = customerWasUpdatedEventFactory;
         }
@@ -53,8 +57,9 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
                 creationUser);
 
             // 2º Step - Check and get a existing customer by governamental document number
-            var getCustomerByGovernamentalDocumentNumberQuery = await _getCustomerByGovernamentalDocumentNumberQueryFactory.CreateAsync();
-            getCustomerByGovernamentalDocumentNumberQuery.SetGovernamentalDocumentNumber(importedCustomer.GovernamentalDocumentNumber);
+            var getCustomerByGovernamentalDocumentNumberQuery = await _getCustomerByGovernamentalDocumentNumberQueryAdapter.AdapteeAsync(
+                importedCustomer,
+                await _getCustomerByGovernamentalDocumentNumberQueryFactory.CreateAsync());
             var existingCustomer = await Bus.SendQueryAsync(getCustomerByGovernamentalDocumentNumberQuery);
 
             // 3º Step - Change Id if customer existing
