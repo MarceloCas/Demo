@@ -8,6 +8,8 @@ using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Products;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Products.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices;
@@ -61,35 +63,20 @@ namespace Demo.InvoiceImporter.Domain.IoC
         private TypeRegistration[] RegisterDomainModelsSpecifications()
         {
             return new[] {
+                // Customers
                 new TypeRegistration(typeof(ICustomerGovernamentalDocumentNumberMustBeUniqueSpecification), typeof(CustomerGovernamentalDocumentNumberMustBeUniqueSpecification)),
                 new TypeRegistration(typeof(ICustomerMustHaveNameSpecification), typeof(CustomerMustHaveNameSpecification)),
                 new TypeRegistration(typeof(ICustomerMustHaveNameWithValidLengthSpecification), typeof(CustomerMustHaveNameWithValidLengthSpecification)),
                 new TypeRegistration(typeof(ICustomerMustHaveGovernamentalDocumentNumberSpecification), typeof(CustomerMustHaveGovernamentalDocumentNumberSpecification)),
                 new TypeRegistration(typeof(ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification), typeof(CustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification)),
                 new TypeRegistration(typeof(ICustomerMustHaveValidGovernamentalDocumentNumberSpecification), typeof(CustomerMustHaveValidGovernamentalDocumentNumberSpecification)),
-                new TypeRegistration(
-                    typeof(IGlobalizationConfig),
-                    serviceProvider =>
-                    {
-                        return new GlobalizationConfig(CultureName, Localization);
-                    }
-                ),
-                new TypeRegistration(
-                    typeof(IInMemoryDefaultDomainNotificationHandler),
-                    serviceProvider => {
 
-                        /*
-                         * All Handlers (Domain Notifications, Command, Query and Events)
-                         * are registered without a interface type because HandlerRegistration.
-                         * because this, a IInMemoryDefaultDomainNotificationHandler interface
-                         * must be registered with a existing InMemoryDefaultDomainNotificationHandler
-                         * instance
-                         */
+                // Products
+                new TypeRegistration(typeof(IProductMustHaveCodeSpecification), typeof(ProductMustHaveCodeSpecification)),
+                new TypeRegistration(typeof(IProductMustHaveCodeWithValidLengthSpecification), typeof(ProductMustHaveCodeWithValidLengthSpecification)),
+                new TypeRegistration(typeof(IProductMustHaveNameSpecification), typeof(ProductMustHaveNameSpecification)),
+                new TypeRegistration(typeof(IProductMustHaveNameWithValidLengthSpecification), typeof(ProductMustHaveNameWithValidLengthSpecification))
 
-                        return (InMemoryDefaultDomainNotificationHandler)
-                            serviceProvider.GetService(typeof(InMemoryDefaultDomainNotificationHandler));
-                    }
-                )
             };
         }
         private TypeRegistration[] RegisterDomainModelsValidations()
@@ -172,6 +159,32 @@ namespace Demo.InvoiceImporter.Domain.IoC
             typeRegistrationCollection.AddRange(RegisterDomainNotificationHandlers());
             typeRegistrationCollection.AddRange(RegisterCommandHandlers());
             typeRegistrationCollection.AddRange(RegisterQueryHandlers());
+
+            typeRegistrationCollection.AddRange(new[] {
+                new TypeRegistration(
+                    typeof(IGlobalizationConfig),
+                    serviceProvider =>
+                    {
+                        return new GlobalizationConfig(CultureName, Localization);
+                    }
+                ),
+                new TypeRegistration(
+                    typeof(IInMemoryDefaultDomainNotificationHandler),
+                    serviceProvider => {
+
+                        /*
+                         * All Handlers (Domain Notifications, Command, Query and Events)
+                         * are registered without a interface type because HandlerRegistration.
+                         * because this, a IInMemoryDefaultDomainNotificationHandler interface
+                         * must be registered with a existing InMemoryDefaultDomainNotificationHandler
+                         * instance
+                         */
+
+                        return (InMemoryDefaultDomainNotificationHandler)
+                            serviceProvider.GetService(typeof(InMemoryDefaultDomainNotificationHandler));
+                    }
+                )
+            });
 
             return typeRegistrationCollection.ToArray();
         }
