@@ -48,7 +48,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
             return value;
         }
 
-        protected abstract Task ExecutePostValidateAsync(TEntity entity, ValidationResult validationResult);
+        protected abstract Task<bool> ExecutePostValidateAsync(TEntity entity, ValidationResult validationResult);
     }
 }
 

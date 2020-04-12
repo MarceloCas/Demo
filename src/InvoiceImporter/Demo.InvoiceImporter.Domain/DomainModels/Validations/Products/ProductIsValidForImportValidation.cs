@@ -40,9 +40,9 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Products
             AddSpecification(productMustHaveNameWithValidLengthSpecification);
         }
 
-        protected override Task ExecutePostValidateAsync(Product entity, ValidationResult validationResult)
+        protected override async Task<bool> ExecutePostValidateAsync(Product entity, ValidationResult validationResult)
         {
-            return Task.CompletedTask;
+            return await Task.FromResult(true);
         }
     }
 }

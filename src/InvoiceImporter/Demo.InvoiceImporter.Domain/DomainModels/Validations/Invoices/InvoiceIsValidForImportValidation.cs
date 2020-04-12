@@ -1,7 +1,9 @@
 ﻿using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels.Interfaces;
 using Demo.Core.Domain.DomainModels.Base.Validations.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.InvoiceItems.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Invoices.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.InvoiceItems.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,8 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices
         : DomainModelValidatorBase<Invoice>,
         IInvoiceIsValidForImportValidation
     {
+        private readonly IInvoiceItemIsValidForImportValidation _invoiceItemIsValidForImportValidation;
+
         public InvoiceIsValidForImportValidation(
             IDomainModelMustExistsSpecification domainModelMustExistsSpecification,
             IDomainModelMustHaveCreationDateSpecification domainModelMustHaveCreationDateSpecification,
@@ -26,13 +30,19 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices
             IDomainModelMustHaveTenantCodeWithValidLengthSpecification domainModelMustHaveTenantCodeWithValidLengthSpecification,
             IDomainModelMustNotExistsSpecification domainModelMustNotExistsSpecification,
 
+            // Invoices
             IInvoiceMustHaveCodeSpecification invoiceMustHaveCodeSpecification,
             IInvoiceMustHaveCodeWithValidLengthSpecification invoiceMustHaveCodeWithValidLengthSpecification,
             IInvoiceMustHaveCustomerSpecification invoiceMustHaveCustomerSpecification,
             IInvoiceMustHaveItensSpecification invoiceMustHaveItensSpecification,
-            IInvoiceMustHaveValidDateSpecification invoiceMustHaveValidDateSpecification
+            IInvoiceMustHaveValidDateSpecification invoiceMustHaveValidDateSpecification,
+
+            // InvoiceItem
+            IInvoiceItemIsValidForImportValidation invoiceItemIsValidForImportValidation
             ) : base(domainModelMustExistsSpecification, domainModelMustHaveCreationDateSpecification, domainModelMustHaveCreationUserSpecification, domainModelMustHaveIdSpecification, domainModelMustHaveModificationDateGreaterThanCreationDateSpecification, domainModelMustHaveModificationDateSpecification, domainModelMustHaveModificationUserSpecification, domainModelMustHaveTenantCodeSpecification, domainModelMustHaveTenantCodeWithValidLengthSpecification, domainModelMustNotExistsSpecification)
         {
+            _invoiceItemIsValidForImportValidation = invoiceItemIsValidForImportValidation;
+
             AddMustHaveTenantCodeSpecification();
             AddMustHaveTenantCodeWithValidLengthSpecification();
 
@@ -43,9 +53,16 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices
             AddSpecification(invoiceMustHaveValidDateSpecification);
         }
 
-        protected override Task ExecutePostValidateAsync(Invoice entity, ValidationResult validationResult)
+        protected override async Task<bool> ExecutePostValidateAsync(Invoice entity, ValidationResult validationResult)
         {
-            return Task.CompletedTask;
+            foreach (var invoiceItem in entity?.InvoiceItemCollection)
+            {
+                var invoiceItemValdiationResult = await _invoiceItemIsValidForImportValidation.ValidateAsync(invoiceItem);
+                if (!invoiceItemValdiationResult.IsValid)
+                    validationResult.AddFromAnotherValidationResult(invoiceItemValdiationResult);
+            }
+
+            return await Task.FromResult(true);
         }
     }
 }

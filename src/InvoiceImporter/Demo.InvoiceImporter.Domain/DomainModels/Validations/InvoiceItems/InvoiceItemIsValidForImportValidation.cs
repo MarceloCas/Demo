@@ -1,17 +1,20 @@
 ﻿using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels.Interfaces;
 using Demo.Core.Domain.DomainModels.Base.Validations.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
-using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
-using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.InvoiceItems.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.InvoiceItems.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers
+namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.InvoiceItems
 {
-    public class CustomerIsValidForImportValidation
-        : DomainModelValidatorBase<Customer>,
-        ICustomerIsValidForImportValidation
+    public class InvoiceItemIsValidForImportValidation
+        : DomainModelValidatorBase<InvoiceItem>,
+        IInvoiceItemIsValidForImportValidation
     {
-        public CustomerIsValidForImportValidation(
+        public InvoiceItemIsValidForImportValidation(
             IDomainModelMustExistsSpecification domainModelMustExistsSpecification,
             IDomainModelMustHaveCreationDateSpecification domainModelMustHaveCreationDateSpecification,
             IDomainModelMustHaveCreationUserSpecification domainModelMustHaveCreationUserSpecification,
@@ -23,28 +26,25 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers
             IDomainModelMustHaveTenantCodeWithValidLengthSpecification domainModelMustHaveTenantCodeWithValidLengthSpecification,
             IDomainModelMustNotExistsSpecification domainModelMustNotExistsSpecification,
 
-            ICustomerGovernamentalDocumentNumberMustBeUniqueSpecification customerGovernamentalDocumentNumberMustBeUniqueSpecification,
-            ICustomerMustHaveGovernamentalDocumentNumberSpecification customerMustHaveGovernamentalDocumentNumberSpecification,
-            ICustomerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification customerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification,
-            ICustomerMustHaveNameSpecification customerMustHaveNameSpecification,
-            ICustomerMustHaveNameWithValidLengthSpecification customerMustHaveNameWithValidLengthSpecification,
-            ICustomerMustHaveValidGovernamentalDocumentNumberSpecification customerMustHaveValidGovernamentalDocumentNumberSpecification
+            // InvoiceItens
+            IInvoiceItemMustHaveInvoiceSpecification invoiceItemMustHaveInvoiceSpecification,
+            IInvoiceItemMustHaveProductSpecification invoiceItemMustHaveProductSpecification,
+            IInvoiceItemMustHaveQuatityWithValidLengthSpecification invoiceItemMustHaveQuatityWithValidLengthSpecification,
+            IInvoiceItemMustHaveUnitPriceWithValidLengthSpecification invoiceItemMustHaveUnitPriceWithValidLengthSpecification
             ) : base(domainModelMustExistsSpecification, domainModelMustHaveCreationDateSpecification, domainModelMustHaveCreationUserSpecification, domainModelMustHaveIdSpecification, domainModelMustHaveModificationDateGreaterThanCreationDateSpecification, domainModelMustHaveModificationDateSpecification, domainModelMustHaveModificationUserSpecification, domainModelMustHaveTenantCodeSpecification, domainModelMustHaveTenantCodeWithValidLengthSpecification, domainModelMustNotExistsSpecification)
         {
             AddMustHaveTenantCodeSpecification();
             AddMustHaveTenantCodeWithValidLengthSpecification();
 
-            AddSpecification(customerGovernamentalDocumentNumberMustBeUniqueSpecification);
-            AddSpecification(customerMustHaveGovernamentalDocumentNumberSpecification);
-            AddSpecification(customerMustHaveGovernamentalDocumentNumberWithValidLengthSpecification);
-            AddSpecification(customerMustHaveNameSpecification);
-            AddSpecification(customerMustHaveNameWithValidLengthSpecification);
-            AddSpecification(customerMustHaveValidGovernamentalDocumentNumberSpecification);
+            AddSpecification(invoiceItemMustHaveInvoiceSpecification);
+            AddSpecification(invoiceItemMustHaveProductSpecification);
+            AddSpecification(invoiceItemMustHaveQuatityWithValidLengthSpecification);
+            AddSpecification(invoiceItemMustHaveUnitPriceWithValidLengthSpecification);
         }
 
-        protected override async Task<bool> ExecutePostValidateAsync(Customer entity, ValidationResult validationResult)
+        protected override Task<bool> ExecutePostValidateAsync(InvoiceItem entity, ValidationResult validationResult)
         {
-            return await Task.FromResult(true);
+            throw new NotImplementedException();
         }
     }
 }

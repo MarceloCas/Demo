@@ -16,6 +16,8 @@ using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Products;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Products.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.InvoiceItems;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.InvoiceItems.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Products;
@@ -100,6 +102,7 @@ namespace Demo.InvoiceImporter.Domain.IoC
         {
             return new[] {
                 new TypeRegistration(typeof(ICustomerIsValidForImportValidation), typeof(CustomerIsValidForImportValidation)),
+                new TypeRegistration(typeof(IInvoiceItemIsValidForImportValidation), typeof(InvoiceItemIsValidForImportValidation)),
                 new TypeRegistration(typeof(IInvoiceIsValidForImportValidation), typeof(InvoiceIsValidForImportValidation)),
                 new TypeRegistration(typeof(IProductIsValidForImportValidation), typeof(ProductIsValidForImportValidation))
             };
