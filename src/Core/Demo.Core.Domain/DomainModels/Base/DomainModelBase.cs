@@ -38,28 +38,28 @@ namespace Demo.Core.Domain.DomainModels.Base
 
         }
 
-        // Public Methods
-        protected void SetModificationInfo(
-            string modificationUser)
+        // Protected Methods
+        protected void GenerateNewId()
+        {
+            Id = Guid.NewGuid();
+        }
+        protected void SetTenantCode(string tenantCode)
+        {
+            TenantCode = tenantCode;
+        }
+        protected void SetModificationInfo(string modificationUser)
         {
             ModificationUser = modificationUser;
             ModificationDate = DateTime.UtcNow;
         }
         protected void SetCreationInfo(
-            string tenantCode,
             string creationUser,
             string modificationUser = null)
         {
-            TenantCode = tenantCode;
             CreationUser = creationUser;
 
             if (!string.IsNullOrWhiteSpace(modificationUser))
                 SetModificationInfo(modificationUser);
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
 
         #region Factories
@@ -82,6 +82,23 @@ namespace Demo.Core.Domain.DomainModels.Base
                 domainModelBase._tenantInfo = await _tenantInfoValueObjectFactory.CreateAsync();
                 return domainModelBase;
             }
+        }
+        #endregion
+
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }

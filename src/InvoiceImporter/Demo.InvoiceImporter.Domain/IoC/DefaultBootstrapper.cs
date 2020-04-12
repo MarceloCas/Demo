@@ -12,6 +12,7 @@ using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
+using Demo.InvoiceImporter.Domain.Events.Customers.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters;
 using Demo.InvoiceImporter.Domain.Queries.Customers.Adapters.Interfaces;
@@ -23,6 +24,7 @@ using static Demo.InvoiceImporter.Domain.DomainModels.Customer.BrazilianCustomer
 using static Demo.InvoiceImporter.Domain.DomainModels.Invoice;
 using static Demo.InvoiceImporter.Domain.DomainModels.InvoiceItem;
 using static Demo.InvoiceImporter.Domain.DomainModels.Product;
+using static Demo.InvoiceImporter.Domain.Events.Customers.CustomerWasImportedEvent;
 using static Demo.InvoiceImporter.Domain.Queries.Customers.GetCustomerByGovernamentalDocumentNumberQuery;
 
 namespace Demo.InvoiceImporter.Domain.IoC
@@ -98,7 +100,9 @@ namespace Demo.InvoiceImporter.Domain.IoC
                 new TypeRegistration(typeof(IInvoicetItemFactory), typeof(InvoicetItemFactory)),
                 new TypeRegistration(typeof(IInvoiceFactory), typeof(InvoiceFactory)),
                 // Queries
-                new TypeRegistration(typeof(IGetCustomerByGovernamentalDocumentNumberQueryFactory), typeof(GetCustomerByGovernamentalDocumentNumberQueryFactory))
+                new TypeRegistration(typeof(IGetCustomerByGovernamentalDocumentNumberQueryFactory), typeof(GetCustomerByGovernamentalDocumentNumberQueryFactory)),
+                // Events
+                new TypeRegistration(typeof(ICustomerWasImportedEventFactory), typeof(CustomerWasImportedEventFactory))
             };
         }
         private TypeRegistration[] RegisterDomainServices()

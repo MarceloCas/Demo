@@ -15,5 +15,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces
             where TCommand : Command;
         Task<TQuery> SendQueryAsync<TQuery>(TQuery query)
             where TQuery : QueryBase;
+        Task<bool> SendEventAsync<TEvent>(TEvent @event)
+            where TEvent : Event;
     }
 }

@@ -9,8 +9,8 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Base
         : DomainModelBase,
         ICustomer
     {
+        // Attributes
         private readonly GovernamentalDocumentNumberValueObject _governamentalDocumentNumberValueObject;
-
 
         // Properties
         public string Name { get; protected set; }
@@ -27,9 +27,10 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Base
         }
 
         // Private Methods
-        protected virtual CustomerBase GenerateNewId()
+        protected virtual CustomerBase SetName(string name)
         {
-            Id = Guid.NewGuid();
+            Name = name;
+
             return this;
         }
         protected virtual CustomerBase SetGovernamentalDocumentNumber(string documentNumber)
@@ -43,8 +44,10 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Base
             where TCustomer : CustomerBase
         {
             GenerateNewId();
+            SetTenantCode(tenantCode);
+            SetName(name);
             SetGovernamentalDocumentNumber(governamentalNumber);
-            SetCreationInfo(tenantCode, creationUser);
+            SetCreationInfo(creationUser);
 
             return (TCustomer)this;
         }
