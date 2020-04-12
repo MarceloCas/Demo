@@ -20,6 +20,8 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
                 }
             }
 
+            await ExecutePostValidateAsync(entity, validationResult);
+
             return await Task.FromResult(validationResult);
         }
 
@@ -45,6 +47,8 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
             _validations.TryGetValue(name, out var value);
             return value;
         }
+
+        protected abstract Task ExecutePostValidateAsync(TEntity entity, ValidationResult validationResult);
     }
 }
 
