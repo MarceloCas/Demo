@@ -4,7 +4,7 @@ using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
 
 namespace Demo.Core.Domain.DomainModels.Base.Validations.Base
 {
-    public abstract class DomainModelValidationBase<TDomainModel>
+    public abstract class DomainModelValidatorBase<TDomainModel>
         : Validator<TDomainModel>
         where TDomainModel : DomainModelBase
     {
@@ -19,7 +19,7 @@ namespace Demo.Core.Domain.DomainModels.Base.Validations.Base
         private readonly IDomainModelMustHaveTenantCodeWithValidLengthSpecification _domainModelMustHaveTenantCodeWithValidLengthSpecification;
         private readonly IDomainModelMustNotExistsSpecification _domainModelMustNotExistsSpecification;
 
-        protected DomainModelValidationBase(
+        protected DomainModelValidatorBase(
             IDomainModelMustExistsSpecification domainModelMustExistsSpecification,
             IDomainModelMustHaveCreationDateSpecification domainModelMustHaveCreationDateSpecification,
             IDomainModelMustHaveCreationUserSpecification domainModelMustHaveCreationUserSpecification,

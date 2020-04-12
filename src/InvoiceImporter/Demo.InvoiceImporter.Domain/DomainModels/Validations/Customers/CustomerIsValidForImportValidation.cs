@@ -6,7 +6,7 @@ using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers
 {
     public class CustomerIsValidForImportValidation
-        : DomainModelValidationBase<Customer>,
+        : DomainModelValidatorBase<Customer>,
         ICustomerIsValidForImportValidation
     {
         public CustomerIsValidForImportValidation(

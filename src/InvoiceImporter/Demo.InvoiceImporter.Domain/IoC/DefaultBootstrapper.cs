@@ -10,6 +10,10 @@ using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.Products;
+using Demo.InvoiceImporter.Domain.DomainModels.Validations.Products.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Events.Customers.Factories.Interfaces;
@@ -87,7 +91,9 @@ namespace Demo.InvoiceImporter.Domain.IoC
         private TypeRegistration[] RegisterDomainModelsValidations()
         {
             return new[] {
-                new TypeRegistration(typeof(ICustomerIsValidForImportValidation), typeof(CustomerIsValidForImportValidation))
+                new TypeRegistration(typeof(ICustomerIsValidForImportValidation), typeof(CustomerIsValidForImportValidation)),
+                new TypeRegistration(typeof(IInvoiceIsValidForImportValidation), typeof(InvoiceIsValidForImportValidation)),
+                new TypeRegistration(typeof(IProductIsValidForImportValidation), typeof(ProductIsValidForImportValidation))
             };
         }
         private TypeRegistration[] RegisterAdapters()
