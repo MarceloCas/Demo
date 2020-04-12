@@ -8,6 +8,8 @@ using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.InvoiceItems;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.InvoiceItems.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Invoices;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Invoices.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Products;
@@ -84,7 +86,13 @@ namespace Demo.InvoiceImporter.Domain.IoC
                 new TypeRegistration(typeof(IInvoiceMustHaveCodeWithValidLengthSpecification), typeof(InvoiceMustHaveCodeWithValidLengthSpecification)),
                 new TypeRegistration(typeof(IInvoiceMustHaveCustomerSpecification), typeof(InvoiceMustHaveCustomerSpecification)),
                 new TypeRegistration(typeof(IInvoiceMustHaveItensSpecification), typeof(InvoiceMustHaveItensSpecification)),
-                new TypeRegistration(typeof(IInvoiceMustHaveValidDateSpecification), typeof(InvoiceMustHaveValidDateSpecification))
+                new TypeRegistration(typeof(IInvoiceMustHaveValidDateSpecification), typeof(InvoiceMustHaveValidDateSpecification)),
+
+                // InvoiceItems
+                new TypeRegistration(typeof(IInvoiceItemMustHaveInvoiceSpecification), typeof(InvoiceItemMustHaveInvoiceSpecification)),
+                new TypeRegistration(typeof(IInvoiceItemMustHaveProductSpecification), typeof(InvoiceItemMustHaveProductSpecification)),
+                new TypeRegistration(typeof(IInvoiceItemMustHaveQuatityWithValidLengthSpecification), typeof(InvoiceItemMustHaveQuatityWithValidLengthSpecification)),
+                new TypeRegistration(typeof(IInvoiceItemMustHaveUnitPriceWithValidLengthSpecification), typeof(InvoiceItemMustHaveUnitPriceWithValidLengthSpecification))
 
             };
         }
