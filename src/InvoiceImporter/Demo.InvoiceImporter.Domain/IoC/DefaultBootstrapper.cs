@@ -8,6 +8,8 @@ using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Invoices;
+using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Invoices.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Products;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Products.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers;
@@ -75,7 +77,14 @@ namespace Demo.InvoiceImporter.Domain.IoC
                 new TypeRegistration(typeof(IProductMustHaveCodeSpecification), typeof(ProductMustHaveCodeSpecification)),
                 new TypeRegistration(typeof(IProductMustHaveCodeWithValidLengthSpecification), typeof(ProductMustHaveCodeWithValidLengthSpecification)),
                 new TypeRegistration(typeof(IProductMustHaveNameSpecification), typeof(ProductMustHaveNameSpecification)),
-                new TypeRegistration(typeof(IProductMustHaveNameWithValidLengthSpecification), typeof(ProductMustHaveNameWithValidLengthSpecification))
+                new TypeRegistration(typeof(IProductMustHaveNameWithValidLengthSpecification), typeof(ProductMustHaveNameWithValidLengthSpecification)),
+
+                // Invoices
+                new TypeRegistration(typeof(IInvoiceMustHaveCodeSpecification), typeof(InvoiceMustHaveCodeSpecification)),
+                new TypeRegistration(typeof(IInvoiceMustHaveCodeWithValidLengthSpecification), typeof(InvoiceMustHaveCodeWithValidLengthSpecification)),
+                new TypeRegistration(typeof(IInvoiceMustHaveCustomerSpecification), typeof(InvoiceMustHaveCustomerSpecification)),
+                new TypeRegistration(typeof(IInvoiceMustHaveItensSpecification), typeof(InvoiceMustHaveItensSpecification)),
+                new TypeRegistration(typeof(IInvoiceMustHaveValidDateSpecification), typeof(InvoiceMustHaveValidDateSpecification))
 
             };
         }
