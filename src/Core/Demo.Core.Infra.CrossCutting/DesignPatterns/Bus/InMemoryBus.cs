@@ -150,6 +150,47 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
 
             return await Task.FromResult(query);
         }
+        public async Task<bool> SendEventAsync<TEvent>(TEvent @event) where TEvent : Event
+        {
+            var processResult = true;
+            var eventType = @event.GetType();
+
+            // 1º step - Get all registration for this @event ordered by Order property
+            var handlerRegistrationsCollection = _handlerRegistrationManager?.EventHandlerRegistrationsCollection
+                .Where(registration => registration.MessageType == eventType)
+                .OrderBy(q => q.Order);
+
+            // 2º step - Handle each handlerRegistration
+            foreach (var handlerRegistration in handlerRegistrationsCollection)
+            {
+                // 3º step - Get a instance of HandlerType and handle @event
+                var handler = _serviceProvider.GetService(handlerRegistration.HandlerType);
+                var @eventHanlerProperty = handler.GetType().GetProperty(nameof(IEventHandler<TEvent>.EventHandler));
+                var @eventHandlerDelegate = @eventHanlerProperty.GetValue(handler);
+                var @eventHandlerDelegateInvokeMethodInfo = @eventHandlerDelegate.GetType().GetMethod(nameof(CustomEventHandler<TEvent>.Invoke));
+
+                // 4º step - Call handler
+                if (handlerRegistration.IsAsync)
+                {
+                    _ = Task.Run(() => {
+                        var handlerReturnTask = (Task<bool>)@eventHandlerDelegateInvokeMethodInfo.Invoke(@eventHandlerDelegate, new[] { @event });
+                        handlerReturnTask.Wait();
+                    });
+                }
+                else
+                {
+                    var handlerReturnTask = (Task<bool>)@eventHandlerDelegateInvokeMethodInfo.Invoke(@eventHandlerDelegate, new[] { @event });
+                    handlerReturnTask.Wait();
+
+                    processResult = handlerReturnTask.Result;
+
+                    if (processResult && handlerRegistration.StopOnError)
+                        break;
+                }
+            }
+
+            return await Task.FromResult(processResult);
+        }
 
         #region IDisposable Support
         private bool disposedValue = false;
