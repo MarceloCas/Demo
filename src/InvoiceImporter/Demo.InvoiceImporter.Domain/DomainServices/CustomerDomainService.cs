@@ -5,6 +5,8 @@ using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainServices.Base;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Events.Customers.Factories.Interfaces;
+using Demo.InvoiceImporter.Domain.Queries.Customers.Factories.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainServices
@@ -14,34 +16,57 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
         ICustomerDomainService
     {
         private readonly ICustomerIsValidForImportValidation _customerIsValidForImportValidation;
+
+        private readonly IGetCustomerByGovernamentalDocumentNumberQueryFactory _getCustomerByGovernamentalDocumentNumberQueryFactory;
+
         private readonly ICustomerWasImportedEventFactory _customerWasImportedEventFactory;
+        private readonly ICustomerWasUpdatedEventFactory _customerWasUpdatedEventFactory;
 
         public CustomerDomainService(
             IBus bus,
             ICustomerFactory factory,
             ICustomerIsValidForImportValidation customerIsValidForImportValidation,
-            ICustomerWasImportedEventFactory customerWasImportedEventFactory
+            IGetCustomerByGovernamentalDocumentNumberQueryFactory getCustomerByGovernamentalDocumentNumberQueryFactory,
+            ICustomerWasImportedEventFactory customerWasImportedEventFactory,
+            ICustomerWasUpdatedEventFactory customerWasUpdatedEventFactory
             ) : base(bus, factory)
         {
             _customerIsValidForImportValidation = customerIsValidForImportValidation;
             _customerWasImportedEventFactory = customerWasImportedEventFactory;
+            _getCustomerByGovernamentalDocumentNumberQueryFactory = getCustomerByGovernamentalDocumentNumberQueryFactory;
+            _customerWasUpdatedEventFactory = customerWasUpdatedEventFactory;
         }
 
         public async Task<Customer> ImportCustomerAsync(string tenantCode, string creationUser, Customer customerToImport)
         {
-            // Validate
+            /* Validate */
             if (await ValidateAsync(customerToImport, _customerIsValidForImportValidation) == false)
                 return customerToImport;
 
-            // Process
+            /* Process */
+
+            // 1º Step - Import customer
             var importedCustomer = (await Factory.CreateAsync()).ImportCustomer<Customer>(
                 tenantCode,
                 customerToImport.Name,
                 customerToImport.GovernamentalDocumentNumber,
                 creationUser);
 
-            // Notify
-            _ = await Bus.SendEventAsync(await _customerWasImportedEventFactory.CreateAsync(importedCustomer));
+            // 2º Step - Check and get a existing customer by governamental document number
+            var getCustomerByGovernamentalDocumentNumberQuery = await _getCustomerByGovernamentalDocumentNumberQueryFactory.CreateAsync();
+            getCustomerByGovernamentalDocumentNumberQuery.SetGovernamentalDocumentNumber(importedCustomer.GovernamentalDocumentNumber);
+            var existingCustomer = await Bus.SendQueryAsync(getCustomerByGovernamentalDocumentNumberQuery);
+
+            // 3º Step - Change Id if customer existing
+            var hasExistingCustomer = (existingCustomer?.Id ?? Guid.Empty) != Guid.Empty;
+            if (hasExistingCustomer)
+                importedCustomer.ChangeId(existingCustomer.Id);
+
+            /* Notify */
+            if (!hasExistingCustomer)
+                _ = await Bus.SendEventAsync(await _customerWasImportedEventFactory.CreateAsync(importedCustomer));
+            else
+                _ = await Bus.SendEventAsync(await _customerWasUpdatedEventFactory.CreateAsync(importedCustomer));
 
             return importedCustomer;
         }

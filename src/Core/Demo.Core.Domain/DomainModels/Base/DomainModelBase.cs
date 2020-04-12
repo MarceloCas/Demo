@@ -38,21 +38,25 @@ namespace Demo.Core.Domain.DomainModels.Base
 
         }
 
-        // Protected Methods
-        protected void GenerateNewId()
+        // Public Methods
+        public void GenerateNewId()
         {
             Id = Guid.NewGuid();
         }
-        protected void SetTenantCode(string tenantCode)
+        public void ChangeId(Guid newId)
+        {
+            Id = newId;
+        }
+        public void SetTenantCode(string tenantCode)
         {
             TenantCode = tenantCode;
         }
-        protected void SetModificationInfo(string modificationUser)
+        public void SetModificationInfo(string modificationUser)
         {
             ModificationUser = modificationUser;
             ModificationDate = DateTime.UtcNow;
         }
-        protected void SetCreationInfo(
+        public void SetCreationInfo(
             string creationUser,
             string modificationUser = null)
         {
