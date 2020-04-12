@@ -1,6 +1,5 @@
 ﻿using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels.Interfaces;
 using Demo.Core.Domain.DomainModels.Base.Validations.Base;
-using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Customers.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Customers.Interfaces;
 

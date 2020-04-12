@@ -1,5 +1,4 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Enums;
+﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Enums;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Enums;

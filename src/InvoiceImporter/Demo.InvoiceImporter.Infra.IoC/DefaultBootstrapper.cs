@@ -8,8 +8,6 @@ using Demo.Core.Infra.CrossCutting.IoC;
 using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Demo.InvoiceImporter.Domain.Commands.Invoices;
 using Demo.InvoiceImporter.Domain.DomainModels;
-using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
-using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Demo.InvoiceImporter.Domain.Queries.Customers;
 using Microsoft.Extensions.DependencyInjection;

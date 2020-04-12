@@ -1,9 +1,4 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
-using Demo.Core.Infra.CrossCutting.Globalization;
-using Demo.Core.Infra.CrossCutting.Globalization.Enums;
-using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
+﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;

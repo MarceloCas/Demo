@@ -1,7 +1,6 @@
 ﻿using Demo.Core.Domain.DomainModels.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Demo.Core.Domain.Queries.DomainModelsBase
