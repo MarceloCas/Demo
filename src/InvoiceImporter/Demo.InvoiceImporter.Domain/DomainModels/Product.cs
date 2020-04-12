@@ -42,7 +42,8 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             GenerateNewId();
             SetName(name);
             SetCode(code);
-            SetCreationInfo(tenantCode, creationUser);
+            SetTenantCode(tenantCode);
+            SetCreationInfo(creationUser);
 
             return this;
         }

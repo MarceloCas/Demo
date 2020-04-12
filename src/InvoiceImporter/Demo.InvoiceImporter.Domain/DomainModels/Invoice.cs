@@ -76,7 +76,8 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             SetDate(date);
             SetCustomer(customer);
             AddInvoiceItemRange(invoiceItemCollection);
-            SetCreationInfo(tenantCode, creationUser);
+            SetTenantCode(tenantCode);
+            SetCreationInfo(creationUser);
 
             return this;
         }
