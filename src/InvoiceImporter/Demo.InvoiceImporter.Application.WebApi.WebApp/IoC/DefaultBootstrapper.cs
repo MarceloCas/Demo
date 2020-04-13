@@ -1,32 +1,32 @@
 ﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
+using Demo.Core.Infra.CrossCutting.IoC;
 using Demo.Core.Infra.CrossCutting.IoC.Models;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Demo.InvoiceImporter.Infra.IoC.WebApi.WebApp
+namespace Demo.InvoiceImporter.Application.WebApi.WebApp.IoC
 {
     public class DefaultBootstrapper
-        : IoC.DefaultBootstrapper
+        : BootstrapperBase
     {
         public DefaultBootstrapper(
-            IServiceCollection services,
-            string tenantCode,
-            string cultureName,
+            IServiceCollection services, 
+            string tenantCode, 
+            string cultureName, 
             LocalizationsEnum localization
             ) : base(services, tenantCode, cultureName, localization)
         {
-
         }
 
         public override TypeRegistration[] GetTypeRegistrationCollection()
         {
-            var typeRegistrationCollection = base.GetTypeRegistrationCollection().ToList();
-
-            typeRegistrationCollection.AddRange(new Application.WebApi.WebApp.IoC.DefaultBootstrapper(Services, TenantCode, CultureName, Localization).TypeRegistrationCollection);
-
-            return typeRegistrationCollection.ToArray();
+            return new[] {
+                new TypeRegistration(typeof(IImportInvoiceAppService), typeof(ImportInvoiceAppService))
+            };
         }
     }
 }

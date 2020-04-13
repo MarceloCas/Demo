@@ -35,7 +35,7 @@ namespace Demo.InvoiceImporter.Infra.IoC
             return RegisterServices();
         }
 
-        public TypeRegistration[] RegisterServices()
+        public virtual TypeRegistration[] RegisterServices()
         {
             var typeRegistrationCollection = new List<TypeRegistration>();
 
