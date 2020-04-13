@@ -1,8 +1,11 @@
 ﻿using Demo.Core.Application.AppServices.Base;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromCSVFile;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromXMLFile;
+using Demo.InvoiceImporter.Domain.Commands.Invoices;
+using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,14 +17,23 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
         : AppServiceBase,
         IImportInvoiceAppService
     {
-        public Task<ValidationResult> ImportInvoiceFromCSV(ImportInvoiceFromCSVFileViewModel viewModel)
+        public ImportInvoiceAppService(IBus bus) 
+            : base(bus)
+        {
+        }
+
+        public Task<bool> ImportInvoiceFromCSV(ImportInvoiceFromCSVFileViewModel viewModel)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ValidationResult> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel)
+        public async Task<bool> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var importInvoiceCommand = new ImportInvoiceCommand();
+
+            var commandReturn = await Bus.SendCommandAsync(importInvoiceCommand);
+
+            return await Task.FromResult(commandReturn);
         }
     }
 }

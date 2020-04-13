@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 namespace Demo.InvoiceImporter.Domain.Tests.DomainServices
 {
     public class CustomerDomainServiceTest
-        : TestBase<CustomerDomainService>
+        : TestBase<CustomerDomainServiceTest>
     {
         public CustomerDomainServiceTest(
             ITestOutputHelper output,

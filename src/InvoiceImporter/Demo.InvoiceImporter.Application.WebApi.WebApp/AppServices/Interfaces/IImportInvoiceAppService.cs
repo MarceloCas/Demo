@@ -12,7 +12,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces
     public interface IImportInvoiceAppService
         : IAppService
     {
-        Task<ValidationResult> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel);
-        Task<ValidationResult> ImportInvoiceFromCSV(ImportInvoiceFromCSVFileViewModel viewModel);
+        Task<bool> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel);
+        Task<bool> ImportInvoiceFromCSV(ImportInvoiceFromCSVFileViewModel viewModel);
     }
 }
