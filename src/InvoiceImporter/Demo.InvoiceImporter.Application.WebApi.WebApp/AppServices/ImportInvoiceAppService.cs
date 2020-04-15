@@ -1,14 +1,10 @@
 ﻿using Demo.Core.Application.AppServices.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
-using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromCSVFile;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromXMLFile;
-using Demo.InvoiceImporter.Domain.Commands.Invoices;
-using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
+using Demo.InvoiceImporter.Domain.Commands.Invoices.ImportInvoice;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices

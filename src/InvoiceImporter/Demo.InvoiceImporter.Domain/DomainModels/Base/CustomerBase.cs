@@ -1,7 +1,6 @@
 ﻿using Demo.Core.Domain.DomainModels.Base;
 using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers;
 using Demo.InvoiceImporter.Domain.DomainModels.Interfaces;
-using System;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels.Base
 {
@@ -13,7 +12,7 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Base
         private readonly GovernamentalDocumentNumberValueObject _governamentalDocumentNumberValueObject;
 
         // Properties
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
         public string GovernamentalDocumentNumber
         {
             get { return _governamentalDocumentNumberValueObject.DocumentNumber; }

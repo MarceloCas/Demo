@@ -2,6 +2,7 @@
 using Demo.Core.Domain.DomainModels.Interfaces;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
+using Demo.InvoiceImporter.Domain.Commands.Invoices.ImportInvoice;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,10 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         IInvoice<Customer, Product, InvoiceItem>
     {
         // Properties
-        public string Code { get; protected set; }
-        public DateTime Date { get; protected set; }
-        public Customer Customer { get; protected set; }
-        public ICollection<InvoiceItem> InvoiceItemCollection { get; protected set; }
+        public string Code { get; private set; }
+        public DateTime Date { get; private set; }
+        public Customer Customer { get; private set; }
+        public ICollection<InvoiceItem> InvoiceItemCollection { get; private set; }
 
         // Constructors
         protected Invoice() { }
@@ -91,15 +92,21 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             IInvoiceFactory
         {
             private readonly ICustomerFactory _customerFactory;
+            private readonly IInvoiceItemFactory _invoiceItemFactory;
+            private readonly IProductFactory _productFactory;
 
             public InvoiceFactory(
                 ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
                 IGlobalizationConfig globalizationConfig,
-                ICustomerFactory customerFactory
+                ICustomerFactory customerFactory,
+                IInvoiceItemFactory invoiceItemFactory,
+                IProductFactory productFactory
                 ) 
                 : base(tenantInfoValueObjectFactory, globalizationConfig)
             {
                 _customerFactory = customerFactory;
+                _invoiceItemFactory = invoiceItemFactory;
+                _productFactory = productFactory;
             }
 
             public override async Task<Invoice> CreateAsync()
@@ -109,6 +116,38 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
                     Customer = await _customerFactory.CreateAsync(),
                     InvoiceItemCollection = new List<InvoiceItem>()
                 });
+            }
+
+            public async Task<Invoice> CreateAsync(ImportInvoiceCommand parameter)
+            {
+                var importedInvoice = await CreateAsync();
+                importedInvoice = importedInvoice.ImportInvoice(
+                    importedInvoice.TenantCode,
+                    parameter?.Code,
+                    parameter?.Date ?? DateTime.MinValue,
+                    await _customerFactory.CreateAsync(parameter),
+                    null,
+                    parameter.RequestUser
+                );
+
+                foreach (var invoiceItem in parameter.InvoiceItemCollection)
+                {
+                    var newInvoiceItem = await _invoiceItemFactory.CreateAsync();
+
+                    newInvoiceItem = newInvoiceItem.ImportInvoiceItem(
+                            newInvoiceItem.TenantCode,
+                            importedInvoice,
+                            await _productFactory.CreateAsync(invoiceItem.Product),
+                            invoiceItem.Sequence,
+                            invoiceItem.Quantity,
+                            invoiceItem.UnitPrice,
+                            parameter.RequestUser
+                    );
+
+                    importedInvoice.AddInvoiceItem(newInvoiceItem);
+                }
+
+                return importedInvoice;
             }
         }
         #endregion

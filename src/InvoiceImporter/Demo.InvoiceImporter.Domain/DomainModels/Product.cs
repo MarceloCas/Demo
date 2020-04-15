@@ -3,7 +3,6 @@ using Demo.Core.Domain.DomainModels.Interfaces;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
-using System;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels
@@ -13,8 +12,8 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         IProduct
     {
         // Properties
-        public string Name { get; protected set; }
-        public string Code { get; protected set; }
+        public string Name { get; private set; }
+        public string Code { get; private set; }
 
         // Constructors
         protected Product() { }
@@ -59,6 +58,16 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             public override async Task<Product> CreateAsync()
             {
                 return await RegisterBaseTypesAsync(new Product());
+            }
+
+            public async Task<Product> CreateAsync(Commands.Invoices.ImportInvoice.Product parameter)
+            {
+                var product = await CreateAsync();
+
+                product.SetCode(parameter?.Code);
+                product.SetName(parameter?.Name);
+
+                return product;
             }
         }
         #endregion

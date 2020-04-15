@@ -6,13 +6,14 @@ using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers;
 using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.IoC;
 using Demo.Core.Infra.CrossCutting.IoC.Models;
-using Demo.InvoiceImporter.Domain.Commands.Invoices;
+using Demo.InvoiceImporter.Domain.Commands.Invoices.ImportInvoice;
 using Demo.InvoiceImporter.Domain.DomainModels;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice;
 using Demo.InvoiceImporter.Domain.Queries.Customers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using Customer = Demo.InvoiceImporter.Domain.DomainModels.Customer;
 
 namespace Demo.InvoiceImporter.Infra.IoC
 {

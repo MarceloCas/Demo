@@ -121,7 +121,7 @@ namespace Demo.InvoiceImporter.Domain.IoC
                 new TypeRegistration(typeof(ICustomerFactory), typeof(CustomerFactory)),
                 new TypeRegistration(typeof(IBrazilianCustomerFactory), typeof(BrazilianCustomerFactory)),
                 new TypeRegistration(typeof(IProductFactory), typeof(ProductFactory)),
-                new TypeRegistration(typeof(IInvoicetItemFactory), typeof(InvoicetItemFactory)),
+                new TypeRegistration(typeof(IInvoiceItemFactory), typeof(InvoiceItemFactory)),
                 new TypeRegistration(typeof(IInvoiceFactory), typeof(InvoiceFactory)),
                 // Queries
                 new TypeRegistration(typeof(IGetCustomerByGovernamentalDocumentNumberQueryFactory), typeof(GetCustomerByGovernamentalDocumentNumberQueryFactory)),

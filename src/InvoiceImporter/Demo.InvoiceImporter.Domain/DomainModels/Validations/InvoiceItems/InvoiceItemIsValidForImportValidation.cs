@@ -4,8 +4,6 @@ using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.InvoiceItems.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.InvoiceItems.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.InvoiceItems

@@ -5,7 +5,6 @@ using Demo.InvoiceImporter.Application.WebApi.WebApp.Tests.Base;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromXMLFile;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -42,7 +41,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Tests.AppServices
                         {
                             Code = "INVOICE_001",
                             Date = DateTime.UtcNow,
-                            Customer = new CustomerViewModel{ Code = "CUSTOMER_001", Name = "CUSTOMER 1", GovernamentalDocumentNumber = "123" },
+                            Customer = new CustomerViewModel{ Name = "CUSTOMER 1", GovernamentalDocumentNumber = "123" },
                             InvoiceItemCollection = new List<InvoiceItemViewModel>
                             {
                                 new InvoiceItemViewModel
@@ -65,7 +64,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Tests.AppServices
                         {
                             Code = "INVOICE_002",
                             Date = DateTime.UtcNow,
-                            Customer = new CustomerViewModel{ Code = "CUSTOMER_001", Name = "CUSTOMER 1", GovernamentalDocumentNumber = "123" },
+                            Customer = new CustomerViewModel{ Name = "CUSTOMER 1", GovernamentalDocumentNumber = "123" },
                             InvoiceItemCollection = new List<InvoiceItemViewModel>
                             {
                                 new InvoiceItemViewModel

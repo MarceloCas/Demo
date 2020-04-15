@@ -1,7 +1,5 @@
 ﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.IoC.Models;
-using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices;
-using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 

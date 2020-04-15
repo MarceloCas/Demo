@@ -1,13 +1,9 @@
 ﻿using Demo.Core.Domain.DomainModels.Base.Specifications.DomainModels.Interfaces;
 using Demo.Core.Domain.DomainModels.Base.Validations.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
-using Demo.InvoiceImporter.Domain.DomainModels.Specifications.InvoiceItems.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Invoices.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.InvoiceItems.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Invoices

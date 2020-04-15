@@ -3,7 +3,8 @@
 namespace Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces
 {
     public interface IProductFactory
-        : IFactory<Product>
+        : IFactory<Product>,
+        IFactoryWithParameters<Product, Commands.Invoices.ImportInvoice.Product>
     {
     }
 }

@@ -3,9 +3,6 @@ using Demo.Core.Domain.DomainModels.Base.Validations.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification;
 using Demo.InvoiceImporter.Domain.DomainModels.Specifications.Products.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Validations.Products.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.Products

@@ -1,9 +1,6 @@
 ﻿using Demo.Core.Infra.CrossCutting.Globalization.Enums;
 using Demo.Core.Infra.CrossCutting.IoC;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit.Abstractions;
 
 namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Tests.Base

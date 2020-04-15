@@ -3,7 +3,6 @@ using Demo.Core.Domain.DomainModels.Interfaces;
 using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
-using System;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.DomainModels
@@ -13,11 +12,11 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         IInvoiceItem<Product>
     {
         // Properties
-        public Invoice Invoice { get; protected set; }
-        public Product Product { get; protected set; }
-        public int Sequence { get; protected set; }
-        public double Quantity { get; protected set; }
-        public double UnitPrice { get; protected set; }
+        public Invoice Invoice { get; private set; }
+        public Product Product { get; private set; }
+        public int Sequence { get; private set; }
+        public double Quantity { get; private set; }
+        public double UnitPrice { get; private set; }
 
         // Constructors
         protected InvoiceItem() { }
@@ -73,13 +72,13 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         }
 
         #region Factories
-        public class InvoicetItemFactory
+        public class InvoiceItemFactory
             : DomainModelBaseFactory<InvoiceItem>,
-            IInvoicetItemFactory
+            IInvoiceItemFactory
         {
             private readonly IProductFactory _productFactory;
 
-            public InvoicetItemFactory(
+            public InvoiceItemFactory(
                 IProductFactory productFactory,
                 ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
                 IGlobalizationConfig globalizationConfig)
@@ -94,6 +93,17 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
                 {
                     Product = await _productFactory.CreateAsync()
                 });
+            }
+
+            public async Task<InvoiceItem> CreateAsync(Commands.Invoices.ImportInvoice.InvoiceItem parameter)
+            {
+                var invoiceItem = await CreateAsync();
+
+                invoiceItem.SetSequence(parameter?.Sequence ?? -1);
+                invoiceItem.SetQuantity(parameter?.Quantity ?? -1);
+                invoiceItem.SetUnitPrice(parameter?.UnitPrice ?? -1);
+
+                return invoiceItem;
             }
         }
         #endregion

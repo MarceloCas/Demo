@@ -3,9 +3,6 @@ using Demo.Core.Infra.CrossCutting.DesignPatterns.Factory.Base;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Domain.DomainModels;
 using Demo.InvoiceImporter.Domain.Events.Customers.Factories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Domain.Events.Customers

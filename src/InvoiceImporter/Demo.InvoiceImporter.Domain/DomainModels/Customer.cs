@@ -3,6 +3,7 @@ using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers;
 using Demo.Core.Domain.ValueObjects.GovernamentalDocumentNumbers.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
+using Demo.InvoiceImporter.Domain.Commands.Invoices.ImportInvoice;
 using Demo.InvoiceImporter.Domain.DomainModels.Base;
 using Demo.InvoiceImporter.Domain.DomainModels.Factories.Interfaces;
 using System.Threading.Tasks;
@@ -93,6 +94,16 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
                     Core.Infra.CrossCutting.Globalization.Enums.LocalizationsEnum.Brazil => await RegisterBaseTypesAsync(await _brazilianCustomerFactory.CreateAsync()),
                     _ => await RegisterBaseTypesAsync(new Customer(await _governamentalDocumentNumberValueObjectFactory.CreateAsync())),
                 };
+            }
+
+            public async Task<Customer> CreateAsync(ImportInvoiceCommand parameter)
+            {
+                var customer = await CreateAsync();
+
+                customer.SetName(parameter?.Customer?.Name);
+                customer.SetGovernamentalDocumentNumber(parameter?.Customer?.GovernamentalDocumentNumber);
+
+                return customer;
             }
         }
         #endregion

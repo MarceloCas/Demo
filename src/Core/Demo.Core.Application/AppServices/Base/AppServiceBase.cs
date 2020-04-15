@@ -1,8 +1,6 @@
 ﻿using Demo.Core.Application.AppServices.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Demo.Core.Application.AppServices.Base
 {

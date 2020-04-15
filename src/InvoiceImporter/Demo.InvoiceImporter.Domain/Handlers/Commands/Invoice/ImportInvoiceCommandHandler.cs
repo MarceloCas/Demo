@@ -1,6 +1,6 @@
 ﻿using Demo.Core.Domain.Handlers.Commands;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
-using Demo.InvoiceImporter.Domain.Commands.Invoices;
+using Demo.InvoiceImporter.Domain.Commands.Invoices.ImportInvoice;
 using Demo.InvoiceImporter.Domain.DomainServices.Interfaces;
 using Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice.Interfaces;
 using System.Threading.Tasks;
@@ -32,6 +32,8 @@ namespace Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice
         {
             return async command =>
             {
+
+
                 return await Task.FromResult(true);
             };
         }
