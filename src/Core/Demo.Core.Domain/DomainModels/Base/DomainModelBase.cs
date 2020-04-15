@@ -60,6 +60,7 @@ namespace Demo.Core.Domain.DomainModels.Base
             string creationUser,
             string modificationUser = null)
         {
+            CreationDate = DateTime.Now;
             CreationUser = creationUser;
 
             if (!string.IsNullOrWhiteSpace(modificationUser))

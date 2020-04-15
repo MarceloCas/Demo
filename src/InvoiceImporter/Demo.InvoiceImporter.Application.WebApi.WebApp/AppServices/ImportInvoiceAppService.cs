@@ -1,5 +1,6 @@
 ﻿using Demo.Core.Application.AppServices.Base;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromCSVFile;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromXMLFile;
@@ -13,9 +14,14 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
         : AppServiceBase,
         IImportInvoiceAppService
     {
-        public ImportInvoiceAppService(IBus bus) 
+        private readonly IImportInvoiceCommandAdapter _importInvoiceCommandAdapter;
+
+        public ImportInvoiceAppService(
+            IBus bus,
+            IImportInvoiceCommandAdapter importInvoiceCommandAdapter) 
             : base(bus)
         {
+            _importInvoiceCommandAdapter = importInvoiceCommandAdapter;
         }
 
         public Task<bool> ImportInvoiceFromCSV(ImportInvoiceFromCSVFileViewModel viewModel)
@@ -25,11 +31,15 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
 
         public async Task<bool> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel)
         {
-            var importInvoiceCommand = new ImportInvoiceCommand();
+            foreach (var invoiceViewModel in viewModel.InvoiceViewModelCollection)
+            {
+                var importInvoiceCommand = await _importInvoiceCommandAdapter.AdapteeAsync(
+                    invoiceViewModel, new ImportInvoiceCommand());
 
-            var commandReturn = await Bus.SendCommandAsync(importInvoiceCommand);
+                await Bus.SendCommandAsync(importInvoiceCommand);
+            }
 
-            return await Task.FromResult(commandReturn);
+            return await Task.FromResult(true);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Demo.InvoiceImporter.Domain.DomainServices
             var getProductByCodeQuery = await _getProductByCodeQueryAdapter.AdapteeAsync(
                 importedProduct,
                 await _getProductByCodeQueryFactory.CreateAsync());
-            var existingProduct = await Bus.SendQueryAsync(getProductByCodeQuery);
+            var existingProduct = (await Bus.SendQueryAsync(getProductByCodeQuery)).QueryReturn;
 
             // 3º Step - Change Id if product existing
             var hasExistingProduct = (existingProduct?.Id ?? Guid.Empty) != Guid.Empty;

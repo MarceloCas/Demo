@@ -1,5 +1,8 @@
-﻿using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
+﻿using Demo.Core.Domain.ValueObjects;
+using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.CQRS;
+using Demo.Core.Infra.CrossCutting.DesignPatterns.DomainNotifications.Handlers.Interface;
 using System;
 
 namespace Demo.Core.Domain.Handlers.Commands
@@ -8,11 +11,20 @@ namespace Demo.Core.Domain.Handlers.Commands
         : ICommandHandler<TCommand>
         where TCommand : Command
     {
+
+        // Properties
         public CommandHandler<TCommand> CommandHandler { get; protected set; }
+        public TenantInfoValueObject TenantInfoValueObject { get; }
+        public IInMemoryDefaultDomainNotificationHandler InMemoryDefaultDomainNotificationHandler { get; }
 
         // Constructors
-        protected CommandHandlerBase()
+        protected CommandHandlerBase(
+            ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
+            IInMemoryDefaultDomainNotificationHandler inMemoryDefaultDomainNotificationHandler
+            )
         {
+            TenantInfoValueObject = tenantInfoValueObjectFactory.CreateAsync().Result;
+            InMemoryDefaultDomainNotificationHandler = inMemoryDefaultDomainNotificationHandler;
             CommandHandler = GetCommandHandler();
         }
 

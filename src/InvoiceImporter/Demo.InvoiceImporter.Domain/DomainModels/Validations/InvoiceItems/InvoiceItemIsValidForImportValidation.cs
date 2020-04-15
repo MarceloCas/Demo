@@ -40,9 +40,9 @@ namespace Demo.InvoiceImporter.Domain.DomainModels.Validations.InvoiceItems
             AddSpecification(invoiceItemMustHaveUnitPriceWithValidLengthSpecification);
         }
 
-        protected override Task<bool> ExecutePostValidateAsync(InvoiceItem entity, ValidationResult validationResult)
+        protected override async Task<bool> ExecutePostValidateAsync(InvoiceItem entity, ValidationResult validationResult)
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(true);
         }
     }
 }

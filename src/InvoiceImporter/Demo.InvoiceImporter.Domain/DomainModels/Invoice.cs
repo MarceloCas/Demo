@@ -35,11 +35,6 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             Date = datetime;
             return this;
         }
-        private Invoice SetCustomer(Customer customer)
-        {
-            Customer = customer;
-            return this;
-        }
         private Invoice AddInvoiceItem(InvoiceItem invoiceItem)
         {
             if (!InvoiceItemCollection.Any(q => q.Product.Code.Equals(invoiceItem.Product.Code)))
@@ -60,13 +55,19 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         }
         private Invoice AddInvoiceItemRange(ICollection<InvoiceItem> invoiceItemCollection)
         {
-            foreach (var invoiceItem in invoiceItemCollection)
-                AddInvoiceItem(invoiceItem);
+            if (invoiceItemCollection != null)
+                foreach (var invoiceItem in invoiceItemCollection)
+                    AddInvoiceItem(invoiceItem);
 
             return this;
         }
 
         // Public Methods
+        public Invoice SetCustomer(Customer customer)
+        {
+            Customer = customer;
+            return this;
+        }
         public Invoice ImportInvoice(
             string tenantCode,
             string code,
@@ -101,7 +102,7 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
                 ICustomerFactory customerFactory,
                 IInvoiceItemFactory invoiceItemFactory,
                 IProductFactory productFactory
-                ) 
+                )
                 : base(tenantInfoValueObjectFactory, globalizationConfig)
             {
                 _customerFactory = customerFactory;

@@ -22,11 +22,6 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         protected InvoiceItem() { }
         
         // Private methods
-        private InvoiceItem SetProduct(Product product)
-        {
-            Product = product;
-            return this;
-        }
         private InvoiceItem SetSequence(int sequence)
         {
             Sequence = sequence;
@@ -44,6 +39,11 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         }
 
         // Public methods
+        public InvoiceItem SetProduct(Product product)
+        {
+            Product = product;
+            return this;
+        }
         public InvoiceItem SetInvoice(Invoice invoice)
         {
             Invoice = invoice;
