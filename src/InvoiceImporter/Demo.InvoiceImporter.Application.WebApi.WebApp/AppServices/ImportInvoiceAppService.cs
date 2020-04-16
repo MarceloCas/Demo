@@ -34,7 +34,8 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
             foreach (var invoiceViewModel in viewModel.InvoiceViewModelCollection)
             {
                 var importInvoiceCommand = await _importInvoiceCommandAdapter.AdapteeAsync(
-                    invoiceViewModel, new ImportInvoiceCommand());
+                    invoiceViewModel, 
+                    new ImportInvoiceCommand());
 
                 await Bus.SendCommandAsync(importInvoiceCommand);
             }
