@@ -16,7 +16,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Specification
                 var rule = _validations[key];
                 if (await rule.ValidateAsync(entity) == false)
                 {
-                    validationResult.Add(new ValidationMessage(rule.Code, rule.DefaultDescription));
+                    validationResult.Add(new ValidationMessage(entity.ToString(), rule.Code, rule.DefaultDescription));
                 }
             }
 
