@@ -38,6 +38,12 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             return this;
         }
 
+        // Protected Methods
+        protected override string GetSummary()
+        {
+            return $"InvoiceItem: {Invoice?.Code} - {Sequence}";
+        }
+
         // Public methods
         public InvoiceItem SetProduct(Product product)
         {

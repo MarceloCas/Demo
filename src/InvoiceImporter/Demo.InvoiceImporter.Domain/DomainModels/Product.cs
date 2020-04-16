@@ -30,7 +30,13 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             return this;
         }
 
-        // Public methods
+        // Protected Methods
+        protected override string GetSummary()
+        {
+            return $"Product: {Code}";
+        }
+
+        // Public Methods
         public Product ImportProduct(string tenantCode, string name, string code, string creationUser)
         {
             GenerateNewId();

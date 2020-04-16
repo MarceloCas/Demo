@@ -62,6 +62,12 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
             return this;
         }
 
+        // Protected Methods
+        protected override string GetSummary()
+        {
+            return $"Invoice: {Code}";
+        }
+
         // Public Methods
         public Invoice SetCustomer(Customer customer)
         {

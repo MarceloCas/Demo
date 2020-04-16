@@ -18,6 +18,13 @@ namespace Demo.InvoiceImporter.Domain.DomainModels
         {
         }
 
+        // Protected Methods
+
+        protected override string GetSummary()
+        {
+            return $"Customer: {Name} ({GovernamentalDocumentNumber})";
+        }
+
         // Public Methods
         public override Customer ImportCustomer<Customer>(string tenantCode, string name, string governamentalNumber, string creationUser)
         {

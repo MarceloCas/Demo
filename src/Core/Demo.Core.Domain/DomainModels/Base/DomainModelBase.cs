@@ -38,6 +38,9 @@ namespace Demo.Core.Domain.DomainModels.Base
 
         }
 
+        // Protected Methods
+        protected abstract string GetSummary();
+
         // Public Methods
         public void GenerateNewId()
         {
@@ -65,6 +68,11 @@ namespace Demo.Core.Domain.DomainModels.Base
 
             if (!string.IsNullOrWhiteSpace(modificationUser))
                 SetModificationInfo(modificationUser);
+        }
+
+        public override string ToString()
+        {
+            return GetSummary();
         }
 
         #region Factories
