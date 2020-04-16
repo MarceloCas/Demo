@@ -59,9 +59,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
                 else
                 {
                     var handlerReturnTask = (Task<bool>)domainNotificationHandlerDelegateInvokeMethodInfo.Invoke(domainNotificationHandlerDelegate, new[] { domainNotification });
-                    handlerReturnTask.Wait();
-
-                    processResult = handlerReturnTask.Result;
+                    processResult = handlerReturnTask.GetAwaiter().GetResult();
 
                     if (processResult && handlerRegistration.StopOnError)
                         break;
@@ -100,9 +98,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
                 else
                 {
                     var handlerReturnTask = (Task<bool>)commandHandlerDelegateInvokeMethodInfo.Invoke(commandHandlerDelegate, new[] { command });
-                    handlerReturnTask.Wait();
-
-                    processResult = handlerReturnTask.Result;
+                    processResult = handlerReturnTask.GetAwaiter().GetResult();
 
                     if (processResult && handlerRegistration.StopOnError)
                         break;
@@ -180,9 +176,7 @@ namespace Demo.Core.Infra.CrossCutting.DesignPatterns.Bus
                 else
                 {
                     var handlerReturnTask = (Task<bool>)@eventHandlerDelegateInvokeMethodInfo.Invoke(@eventHandlerDelegate, new[] { @event });
-                    handlerReturnTask.Wait();
-
-                    processResult = handlerReturnTask.Result;
+                    processResult = handlerReturnTask.GetAwaiter().GetResult();
 
                     if (processResult && handlerRegistration.StopOnError)
                         break;

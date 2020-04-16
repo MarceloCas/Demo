@@ -23,7 +23,7 @@ namespace Demo.Core.Domain.Handlers.Commands
             IInMemoryDefaultDomainNotificationHandler inMemoryDefaultDomainNotificationHandler
             )
         {
-            TenantInfoValueObject = tenantInfoValueObjectFactory.CreateAsync().Result;
+            TenantInfoValueObject = tenantInfoValueObjectFactory.CreateAsync().GetAwaiter().GetResult();
             InMemoryDefaultDomainNotificationHandler = inMemoryDefaultDomainNotificationHandler;
             CommandHandler = GetCommandHandler();
         }
@@ -33,7 +33,6 @@ namespace Demo.Core.Domain.Handlers.Commands
 
         #region IDisposable Support
         private bool disposedValue = false;
-
 
         protected virtual void Dispose(bool disposing)
         {
