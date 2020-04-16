@@ -48,7 +48,9 @@ namespace Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice
                 var invoiceToImport = await _invoiceFactory.CreateAsync(command);
                 var importedProductsCollection = new List<DomainModels.Product>();
 
-                var productCollection = invoiceToImport.InvoiceItemCollection.Select(invoiceItem => invoiceItem.Product);
+                // Get all products and product codes
+                var productCollection = invoiceToImport.InvoiceItemCollection.Select(invoiceItem => invoiceItem?.Product).Where(q => q != null);
+                var productCodeCollection = productCollection.Select(q => q.Code).Where(q => q != null).Distinct();
 
                 // Import customer
                 invoiceToImport.SetCustomer(await _customerDomainService.ImportCustomerAsync(
@@ -57,12 +59,12 @@ namespace Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice
                     invoiceToImport.Customer));
 
                 // Import all products
-                foreach (var product in productCollection)
+                foreach (var productCode in productCodeCollection)
                 {
                     importedProductsCollection.Add(await _productDomainService.ImportProductAsync(
                         TenantInfoValueObject.TenantCode,
                         command.RequestUser,
-                        product)
+                        productCollection.FirstOrDefault(q => q?.Code == productCode))
                     );
                 }
 
