@@ -35,16 +35,19 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
 
         public async Task<bool> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel)
         {
+            var result = true;
+
             foreach (var invoiceViewModel in viewModel.InvoiceViewModelCollection)
             {
                 var importInvoiceCommand = await _importInvoiceCommandAdapter.AdapteeAsync(
                     invoiceViewModel, 
                     new ImportInvoiceCommand());
 
-                await Bus.SendCommandAsync(importInvoiceCommand);
+                if (!(await Bus.SendCommandAsync(importInvoiceCommand)))
+                    result = false;
             }
 
-            return await Task.FromResult(true);
+            return await Task.FromResult(result);
         }
     }
 }
