@@ -1,5 +1,8 @@
 ﻿using Demo.Core.Application.AppServices.Interfaces;
+using Demo.Core.Domain.ValueObjects;
+using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
+using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using System;
 
 namespace Demo.Core.Application.AppServices.Base
@@ -7,24 +10,22 @@ namespace Demo.Core.Application.AppServices.Base
     public abstract class AppServiceBase
         : IAppService
     {
-        // Attributes
-        private readonly IBus _bus;
-
         // Properties
-        public IBus Bus
-        {
-            get
-            {
-                return _bus;
-            }
-        }
+        protected IBus Bus { get; }
+        protected IGlobalizationConfig GlobalizationConfig { get; }
+        protected TenantInfoValueObject TenantInfoValueObject { get; }
+
 
         // Constructors
         protected AppServiceBase(
-            IBus bus
+            IBus bus,
+            IGlobalizationConfig globalizationConfig,
+            ITenantInfoValueObjectFactory tenantInfoValueObjectFactory
             )
         {
-            _bus = bus;
+            Bus = bus;
+            GlobalizationConfig = globalizationConfig;
+            TenantInfoValueObject = tenantInfoValueObjectFactory.CreateAsync().GetAwaiter().GetResult();
         }
 
         #region IDisposable Support

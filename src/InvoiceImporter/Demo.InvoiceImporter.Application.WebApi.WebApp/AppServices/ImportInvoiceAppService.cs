@@ -1,5 +1,7 @@
 ﻿using Demo.Core.Application.AppServices.Base;
+using Demo.Core.Domain.ValueObjects.Factories.Interfaces;
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Bus.Interfaces;
+using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromCSVFile;
@@ -18,8 +20,10 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
 
         public ImportInvoiceAppService(
             IBus bus,
-            IImportInvoiceCommandAdapter importInvoiceCommandAdapter) 
-            : base(bus)
+            IGlobalizationConfig globalizationConfig,
+            ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
+            IImportInvoiceCommandAdapter importInvoiceCommandAdapter
+            ) : base(bus, globalizationConfig, tenantInfoValueObjectFactory)
         {
             _importInvoiceCommandAdapter = importInvoiceCommandAdapter;
         }
