@@ -6,6 +6,8 @@ using Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands.Interface
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromCSVFile;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromXMLFile;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromCSVFiles.Interfaces;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFile.Interfaces;
 using Demo.InvoiceImporter.Domain.Commands.Invoices.ImportInvoice;
 using System;
 using System.Collections.Generic;
@@ -17,20 +19,32 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
         : AppServiceBase,
         IImportInvoiceAppService
     {
+        private readonly IImportInvoiceFromXMLFileViewModelIsValidToImportValidation _importInvoiceFromXMLFileViewModelIsValidToImportValidation;
+        private readonly IImportInvoiceFromCSVFileViewModelIsValidToImportValidation _importInvoiceFromCSVFileViewModelIsValidToImportValidation;
+
         private readonly IImportInvoiceCommandAdapter _importInvoiceCommandAdapter;
 
         public ImportInvoiceAppService(
             IBus bus,
             IGlobalizationConfig globalizationConfig,
             ITenantInfoValueObjectFactory tenantInfoValueObjectFactory,
-            IImportInvoiceCommandAdapter importInvoiceCommandAdapter
+            IImportInvoiceCommandAdapter importInvoiceCommandAdapter,
+            IImportInvoiceFromXMLFileViewModelIsValidToImportValidation importInvoiceFromXMLFileViewModelIsValidToImportValidation,
+            IImportInvoiceFromCSVFileViewModelIsValidToImportValidation importInvoiceFromCSVFileViewModelIsValidToImportValidation
             ) : base(bus, globalizationConfig, tenantInfoValueObjectFactory)
         {
+            _importInvoiceFromXMLFileViewModelIsValidToImportValidation = importInvoiceFromXMLFileViewModelIsValidToImportValidation;
+            _importInvoiceFromCSVFileViewModelIsValidToImportValidation = importInvoiceFromCSVFileViewModelIsValidToImportValidation;
+
             _importInvoiceCommandAdapter = importInvoiceCommandAdapter;
         }
 
-        public async Task<bool> ImportInvoiceFromCSV(ImportInvoiceFromCSVFileViewModel viewModel)
+        public async Task<bool> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel)
         {
+            /* Validate */
+            if (await ValidateAsync(viewModel, _importInvoiceFromXMLFileViewModelIsValidToImportValidation) == false)
+                return await Task.FromResult(true);
+
             var result = true;
 
             var importInvoiceCommandCollection = await _importInvoiceCommandAdapter.AdapteeAsync(
@@ -45,9 +59,13 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
 
             return await Task.FromResult(result);
         }
-
-        public async Task<bool> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel)
+        public async Task<bool> ImportInvoiceFromCSV(ImportInvoiceFromCSVFileViewModel viewModel)
         {
+            /* Validate */
+            if (await ValidateAsync(viewModel, _importInvoiceFromCSVFileViewModelIsValidToImportValidation) == false)
+                return await Task.FromResult(true);
+
+            /* Process */
             var result = true;
 
             var importInvoiceCommandCollection = await _importInvoiceCommandAdapter.AdapteeAsync(

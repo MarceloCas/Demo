@@ -5,6 +5,10 @@ using Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromCSVFiles;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromCSVFiles.Interfaces;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFile;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFile.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Demo.InvoiceImporter.Application.WebApi.WebApp.IoC
@@ -25,7 +29,9 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.IoC
         {
             return new[] {
                 new TypeRegistration(typeof(IImportInvoiceAppService), typeof(ImportInvoiceAppService)),
-                new TypeRegistration(typeof(IImportInvoiceCommandAdapter), typeof(ImportInvoiceCommandAdapter))
+                new TypeRegistration(typeof(IImportInvoiceCommandAdapter), typeof(ImportInvoiceCommandAdapter)),
+                new TypeRegistration(typeof(IImportInvoiceFromXMLFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromXMLFileViewModelIsValidToImportValidation)),
+                new TypeRegistration(typeof(IImportInvoiceFromCSVFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromCSVFileViewModelIsValidToImportValidation))
             };
         }
     }
