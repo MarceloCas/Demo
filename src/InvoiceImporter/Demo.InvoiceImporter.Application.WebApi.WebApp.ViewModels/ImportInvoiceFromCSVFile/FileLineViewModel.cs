@@ -2,7 +2,6 @@
 {
     public class FileLineViewModel
     {
-        public string CustomerCode { get; set; }
         public string CustomerName { get; set; }
         public string CustomerGovernamentalDocumentNumber { get; set; }
         public string InvoiceCode { get; set; }

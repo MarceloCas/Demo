@@ -8,6 +8,7 @@ using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFro
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromXMLFile;
 using Demo.InvoiceImporter.Domain.Commands.Invoices.ImportInvoice;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
@@ -28,21 +29,33 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
             _importInvoiceCommandAdapter = importInvoiceCommandAdapter;
         }
 
-        public Task<bool> ImportInvoiceFromCSV(ImportInvoiceFromCSVFileViewModel viewModel)
+        public async Task<bool> ImportInvoiceFromCSV(ImportInvoiceFromCSVFileViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var result = true;
+
+            var importInvoiceCommandCollection = await _importInvoiceCommandAdapter.AdapteeAsync(
+                viewModel,
+                new List<ImportInvoiceCommand>());
+
+            foreach (var importInvoiceCommand in importInvoiceCommandCollection)
+            {
+                if (!(await Bus.SendCommandAsync(importInvoiceCommand)))
+                    result = false;
+            }
+
+            return await Task.FromResult(result);
         }
 
         public async Task<bool> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel)
         {
             var result = true;
 
-            foreach (var invoiceViewModel in viewModel.InvoiceViewModelCollection)
-            {
-                var importInvoiceCommand = await _importInvoiceCommandAdapter.AdapteeAsync(
-                    invoiceViewModel, 
-                    new ImportInvoiceCommand());
+            var importInvoiceCommandCollection = await _importInvoiceCommandAdapter.AdapteeAsync(
+                viewModel,
+                new List<ImportInvoiceCommand>());
 
+            foreach (var importInvoiceCommand in importInvoiceCommandCollection)
+            {
                 if (!(await Bus.SendCommandAsync(importInvoiceCommand)))
                     result = false;
             }
