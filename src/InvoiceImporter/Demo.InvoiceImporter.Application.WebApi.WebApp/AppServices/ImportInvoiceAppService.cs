@@ -43,8 +43,9 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
         {
             /* Validate */
             if (await ValidateAsync(viewModel, _importInvoiceFromXMLFileViewModelIsValidToImportValidation) == false)
-                return await Task.FromResult(true);
+                return await Task.FromResult(false);
 
+            /* Process */
             var result = true;
 
             var importInvoiceCommandCollection = await _importInvoiceCommandAdapter.AdapteeAsync(
@@ -63,7 +64,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
         {
             /* Validate */
             if (await ValidateAsync(viewModel, _importInvoiceFromCSVFileViewModelIsValidToImportValidation) == false)
-                return await Task.FromResult(true);
+                return await Task.FromResult(false);
 
             /* Process */
             var result = true;
