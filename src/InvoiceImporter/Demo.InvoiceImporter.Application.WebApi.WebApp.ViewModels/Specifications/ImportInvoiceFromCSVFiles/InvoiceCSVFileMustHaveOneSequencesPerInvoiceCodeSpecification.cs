@@ -35,15 +35,23 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Specificatio
                 var invoiceCodeCollection = entity.FileLineCollection.Select(q => q.InvoiceCode).Distinct();
                 foreach (var invoiceCode in invoiceCodeCollection)
                 {
-                    if (entity.FileLineCollection
+                    var sequenceCollection = entity.FileLineCollection
                         .Where(q => q.InvoiceCode == invoiceCode)
                         .Select(q => q.InvoiceItemSequence)
-                        .Distinct()
-                        .Count() > 1
-                        )
+                        .Distinct();
+
+                    foreach (var sequence in sequenceCollection)
                     {
-                        isSatisfied = false;
-                        break;
+                        if (entity.FileLineCollection
+                            .Where(q => 
+                                q.InvoiceCode == invoiceCode
+                                && q.InvoiceItemSequence == sequence
+                            ).Count() > 1
+                            )
+                        {
+                            isSatisfied = false;
+                            break;
+                        }
                     }
                 }
             }
