@@ -2,6 +2,7 @@
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.Tests.Base;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromCSVFile;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromXMLFile;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Tests.AppServices
         }
 
         [Fact]
-        [Trait(nameof(ImportInvoiceAppService), "ImportCustomer_Success")]
+        [Trait(nameof(ImportInvoiceAppService), "ImportInvoiceFromXML_Success")]
         public async Task ImportInvoiceFromXML_Success()
         {
             await RunWithTelemetry(async () =>
@@ -92,5 +93,49 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Tests.AppServices
 
         }
 
+        [Fact]
+        [Trait(nameof(ImportInvoiceAppService), "ImportInvoiceFromCSV_Success")]
+        public async Task ImportInvoiceFromCSV_Success()
+        {
+            await RunWithTelemetry(async () =>
+            {
+                var importInvoiceAppService = Bootstrapper.GetService<IImportInvoiceAppService>();
+
+                var importInvoiceFromCSVFileViewModel = new ImportInvoiceFromCSVFileViewModel();
+                for (int invoiceIndex = 1; invoiceIndex <= 10; invoiceIndex++)
+                {
+                    var invoiceCode = invoiceIndex.ToString();
+                    var invoiceDate = DateTime.UtcNow.AddDays(invoiceIndex).ToString("yyyy-MM-dd");
+
+                    var customerGovernamentalDocumentNumber = invoiceIndex.ToString();
+                    var customerName = $"Customer {customerGovernamentalDocumentNumber}";
+
+                    var productCode = invoiceIndex.ToString();
+                    var productName = $"Product {productCode}";
+
+                    for (int lineIndex = 1; lineIndex <= 3; lineIndex++)
+                    {
+                        importInvoiceFromCSVFileViewModel.FileLineCollection.Add(new FileLineViewModel
+                        {
+                            InvoiceCode = invoiceCode,
+                            InvoiceDate = invoiceDate,
+                            CustomerGovernamentalDocumentNumber = customerGovernamentalDocumentNumber,
+                            CustomerName = customerName,
+                            ProductCode = productCode,
+                            ProductName = productName,
+                            InvoiceItemQuantity = "1",
+                            InvoiceItemSequence = lineIndex.ToString(),
+                            InvoiceItemUnitPrice = "1.00"
+                        });
+                    }
+                }
+
+                await importInvoiceAppService.ImportInvoiceFromCSV(importInvoiceFromCSVFileViewModel);
+
+                return true;
+            },
+            1);
+
+        }
     }
 }

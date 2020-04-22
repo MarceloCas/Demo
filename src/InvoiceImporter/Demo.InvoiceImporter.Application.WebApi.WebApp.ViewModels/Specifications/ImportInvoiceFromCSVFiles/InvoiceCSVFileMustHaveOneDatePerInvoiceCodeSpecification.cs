@@ -2,7 +2,6 @@
 using Demo.Core.Infra.CrossCutting.DesignPatterns.Specification.Base;
 using Demo.Core.Infra.CrossCutting.Globalization.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromCSVFile;
-using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromXMLFile;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Specifications.ImportInvoiceFromCSVFiles.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Specifications.ImportInvoiceFromCSVFiles
 {
-    public class InvoiceCSVFileMustHaveOneClientPerInvoiceCodeSpecification
+    public class InvoiceCSVFileMustHaveOneDatePerInvoiceCodeSpecification
         : SpecificationBase<ImportInvoiceFromCSVFileViewModel>,
-        IInvoiceCSVFileMustHaveOneClientPerInvoiceCodeSpecification
+        IInvoiceCSVFileMustHaveOneDatePerInvoiceCodeSpecification
     {
-        public InvoiceCSVFileMustHaveOneClientPerInvoiceCodeSpecification(
+        public InvoiceCSVFileMustHaveOneDatePerInvoiceCodeSpecification(
             IBus bus,
             IGlobalizationConfig globalizationConfig
             ) : base(bus, globalizationConfig)
@@ -38,7 +37,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Specificatio
                 {
                     if (entity.FileLineCollection
                         .Where(q => q.InvoiceCode == invoiceCode)
-                        .Select(q => q.CustomerGovernamentalDocumentNumber)
+                        .Select(q => q.InvoiceDate)
                         .Distinct()
                         .Count() > 1
                         )

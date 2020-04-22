@@ -32,7 +32,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Specificatio
             }
             else
             {
-                var invoiceCodeCollection = entity.FileLineCollection.Select(q => q.InvoiceCode);
+                var invoiceCodeCollection = entity.FileLineCollection.Select(q => q.InvoiceCode).Distinct();
                 foreach (var invoiceCode in invoiceCodeCollection)
                 {
                     if (entity.FileLineCollection

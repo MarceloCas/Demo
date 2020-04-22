@@ -34,8 +34,10 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.IoC
                 new TypeRegistration(typeof(IImportInvoiceCommandAdapter), typeof(ImportInvoiceCommandAdapter)),
                 new TypeRegistration(typeof(IImportInvoiceFromXMLFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromXMLFileViewModelIsValidToImportValidation)),
                 new TypeRegistration(typeof(IImportInvoiceFromCSVFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromCSVFileViewModelIsValidToImportValidation)),
+                new TypeRegistration(typeof(IFileLineViewModelIsValidToImportValidation), typeof(FileLineViewModelIsValidToImportValidation)),
 
                 new TypeRegistration(typeof(IInvoiceCSVFileMustHaveOneClientPerInvoiceCodeSpecification), typeof(InvoiceCSVFileMustHaveOneClientPerInvoiceCodeSpecification)),
+                new TypeRegistration(typeof(IInvoiceCSVFileMustHaveOneDatePerInvoiceCodeSpecification), typeof(InvoiceCSVFileMustHaveOneDatePerInvoiceCodeSpecification)),
                 new TypeRegistration(typeof(IInvoiceCSVFileMustHaveOneProductPerInvoiceCodeSpecification), typeof(InvoiceCSVFileMustHaveOneProductPerInvoiceCodeSpecification)),
                 new TypeRegistration(typeof(IInvoiceCSVFileMustHaveOneSequencesPerInvoiceCodeSpecification), typeof(InvoiceCSVFileMustHaveOneSequencesPerInvoiceCodeSpecification)),
                 new TypeRegistration(typeof(IInvoiceCSVLineMustHaveCustomerGovernamentalDocumentNumberSpecification), typeof(InvoiceCSVLineMustHaveCustomerGovernamentalDocumentNumberSpecification)),
