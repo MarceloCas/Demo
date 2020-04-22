@@ -5,10 +5,12 @@ using Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Specifications.ImportInvoiceFromCSVFiles;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Specifications.ImportInvoiceFromCSVFiles.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromCSVFiles;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromCSVFiles.Interfaces;
-using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFile;
-using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFile.Interfaces;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFiles;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFiles.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Demo.InvoiceImporter.Application.WebApi.WebApp.IoC
@@ -31,7 +33,16 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.IoC
                 new TypeRegistration(typeof(IImportInvoiceAppService), typeof(ImportInvoiceAppService)),
                 new TypeRegistration(typeof(IImportInvoiceCommandAdapter), typeof(ImportInvoiceCommandAdapter)),
                 new TypeRegistration(typeof(IImportInvoiceFromXMLFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromXMLFileViewModelIsValidToImportValidation)),
-                new TypeRegistration(typeof(IImportInvoiceFromCSVFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromCSVFileViewModelIsValidToImportValidation))
+                new TypeRegistration(typeof(IImportInvoiceFromCSVFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromCSVFileViewModelIsValidToImportValidation)),
+
+                new TypeRegistration(typeof(IInvoiceCSVFileMustHaveOneClientPerInvoiceCodeSpecification), typeof(InvoiceCSVFileMustHaveOneClientPerInvoiceCodeSpecification)),
+                new TypeRegistration(typeof(IInvoiceCSVFileMustHaveOneProductPerInvoiceCodeSpecification), typeof(InvoiceCSVFileMustHaveOneProductPerInvoiceCodeSpecification)),
+                new TypeRegistration(typeof(IInvoiceCSVFileMustHaveOneSequencesPerInvoiceCodeSpecification), typeof(InvoiceCSVFileMustHaveOneSequencesPerInvoiceCodeSpecification)),
+                new TypeRegistration(typeof(IInvoiceCSVLineMustHaveCustomerGovernamentalDocumentNumberSpecification), typeof(InvoiceCSVLineMustHaveCustomerGovernamentalDocumentNumberSpecification)),
+                new TypeRegistration(typeof(IInvoiceCSVLineMustHaveCustomerNameSpecification), typeof(InvoiceCSVLineMustHaveCustomerNameSpecification)),
+                new TypeRegistration(typeof(IInvoiceCSVLineMustHaveInvoiceCodeSpecification), typeof(InvoiceCSVLineMustHaveInvoiceCodeSpecification)),
+                new TypeRegistration(typeof(IInvoiceCSVLineMustHaveProductCodeSpecification), typeof(InvoiceCSVLineMustHaveProductCodeSpecification)),
+                new TypeRegistration(typeof(IInvoiceCSVLineMustHaveProductNameSpecification), typeof(InvoiceCSVLineMustHaveProductNameSpecification))
             };
         }
     }

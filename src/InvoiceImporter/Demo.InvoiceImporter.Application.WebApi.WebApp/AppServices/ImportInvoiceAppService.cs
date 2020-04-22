@@ -7,7 +7,7 @@ using Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices.Interfaces;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromCSVFile;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.ImportInvoiceFromXMLFile;
 using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromCSVFiles.Interfaces;
-using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFile.Interfaces;
+using Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFiles.Interfaces;
 using Demo.InvoiceImporter.Domain.Commands.Invoices.ImportInvoice;
 using System;
 using System.Collections.Generic;
