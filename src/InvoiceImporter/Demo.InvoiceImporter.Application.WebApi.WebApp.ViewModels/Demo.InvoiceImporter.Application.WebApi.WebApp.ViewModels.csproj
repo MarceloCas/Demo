@@ -11,8 +11,4 @@
     <ProjectReference Include="..\Demo.InvoiceImporter.Infra.CrossCutting\Demo.InvoiceImporter.Infra.CrossCutting.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Specifications\ImportInvoiceFromXMLFiles\" />
-  </ItemGroup>
-
 </Project>

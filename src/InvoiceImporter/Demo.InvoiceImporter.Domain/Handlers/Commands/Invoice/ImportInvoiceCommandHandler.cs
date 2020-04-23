@@ -45,6 +45,7 @@ namespace Demo.InvoiceImporter.Domain.Handlers.Commands.Invoice
         {
             return async command =>
             {
+
                 var invoiceToImport = await _invoiceFactory.CreateAsync(command);
                 var importedProductsCollection = new List<DomainModels.Product>();
 
