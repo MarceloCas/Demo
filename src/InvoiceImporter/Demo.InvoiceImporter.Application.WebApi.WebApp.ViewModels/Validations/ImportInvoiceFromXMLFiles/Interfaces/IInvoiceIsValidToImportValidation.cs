@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Specifications.ImportInvoiceFromXMLFiles.Interfaces
+namespace Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Validations.ImportInvoiceFromXMLFiles.Interfaces
 {
-    public interface IInvoiceLineMustHaveQuantitySpecification
-        : ISpecification<InvoiceItemViewModel>
+    public interface IInvoiceIsValidToImportValidation
+        : IValidator<InvoiceViewModel>
     {
     }
 }

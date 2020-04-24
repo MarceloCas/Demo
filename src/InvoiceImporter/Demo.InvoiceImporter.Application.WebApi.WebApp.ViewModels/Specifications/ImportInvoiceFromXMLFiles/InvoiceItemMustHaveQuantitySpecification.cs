@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Demo.InvoiceImporter.Application.WebApi.WebApp.ViewModels.Specifications.ImportInvoiceFromXMLFiles
 {
-    public class InvoiceLineMustHaveQuantitySpecification
+    public class InvoiceItemMustHaveQuantitySpecification
         : SpecificationBase<InvoiceItemViewModel>,
-        IInvoiceLineMustHaveQuantitySpecification
+        IInvoiceItemMustHaveQuantitySpecification
     {
-        public InvoiceLineMustHaveQuantitySpecification(
+        public InvoiceItemMustHaveQuantitySpecification(
             IBus bus,
             IGlobalizationConfig globalizationConfig
             ) : base(bus, globalizationConfig)

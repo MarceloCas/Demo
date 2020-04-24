@@ -37,6 +37,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.IoC
                 new TypeRegistration(typeof(IImportInvoiceFromXMLFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromXMLFileViewModelIsValidToImportValidation)),
                 new TypeRegistration(typeof(IImportInvoiceFromCSVFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromCSVFileViewModelIsValidToImportValidation)),
                 new TypeRegistration(typeof(IFileLineViewModelIsValidToImportValidation), typeof(FileLineViewModelIsValidToImportValidation)),
+                new TypeRegistration(typeof(IImportInvoiceFromCSVFileViewModelIsValidToImportValidation), typeof(ImportInvoiceFromCSVFileViewModelIsValidToImportValidation)),
 
                 new TypeRegistration(typeof(IInvoiceCSVFileMustHaveOneClientPerInvoiceCodeSpecification), typeof(InvoiceCSVFileMustHaveOneClientPerInvoiceCodeSpecification)),
                 new TypeRegistration(typeof(IInvoiceCSVFileMustHaveOneDatePerInvoiceCodeSpecification), typeof(InvoiceCSVFileMustHaveOneDatePerInvoiceCodeSpecification)),
@@ -51,13 +52,12 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.IoC
                 new TypeRegistration(typeof(IInvoiceItemMustHaveProductSpecification), typeof(InvoiceItemMustHaveProductSpecification)),
                 new TypeRegistration(typeof(IInvoiceItemMustHaveSequenceSpecification), typeof(InvoiceItemMustHaveSequenceSpecification)),
                 new TypeRegistration(typeof(IInvoiceItemMustHaveUnitPriceSpecification), typeof(InvoiceItemMustHaveUnitPriceSpecification)),
-                new TypeRegistration(typeof(IInvoiceLineMustHaveQuantitySpecification), typeof(InvoiceLineMustHaveQuantitySpecification)),
+                new TypeRegistration(typeof(IInvoiceItemMustHaveQuantitySpecification), typeof(InvoiceItemMustHaveQuantitySpecification)),
                 new TypeRegistration(typeof(IInvoiceMustHaveCodeSpecification), typeof(InvoiceMustHaveCodeSpecification)),
                 new TypeRegistration(typeof(IInvoiceMustHaveCustomerSpecification), typeof(InvoiceMustHaveCustomerSpecification)),
                 new TypeRegistration(typeof(IInvoiceMustHaveDateSpecification), typeof(InvoiceMustHaveDateSpecification)),
                 new TypeRegistration(typeof(IInvoiceMustHaveItensSpecification), typeof(InvoiceMustHaveItensSpecification)),
                 new TypeRegistration(typeof(IInvoiceMustHaveUniqueSequencesSpecification), typeof(InvoiceMustHaveUniqueSequencesSpecification))
-
             };
         }
     }
