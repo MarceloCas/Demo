@@ -17,13 +17,16 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands
         : AdapterBase,
         IImportInvoiceCommandAdapter
     {
-        public TenantInfoValueObject TenantInfoValueObject { get; private set; }
+        // Attributes
+        private readonly TenantInfoValueObject _tenantInfoValueObject;
 
+        // Constructors
         public ImportInvoiceCommandAdapter(ITenantInfoValueObjectFactory tenantInfoValueObjectFactory)
         {
-            TenantInfoValueObject = tenantInfoValueObjectFactory.CreateAsync().Result;
+            _tenantInfoValueObject = tenantInfoValueObjectFactory.CreateAsync().Result;
         }
 
+        // Public methods
         public async Task<List<ImportInvoiceCommand>> AdapteeAsync(ImportInvoiceFromXMLFileViewModel source, List<ImportInvoiceCommand> to)
         {
             foreach (var invoiceViewModel in source.InvoiceViewModelCollection)
@@ -38,7 +41,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands
                     Name = importInvoiceCommand.Customer.Name
                 };
                 importInvoiceCommand.Date = invoiceViewModel.Date;
-                importInvoiceCommand.RequestUser = TenantInfoValueObject.TenantCode;
+                importInvoiceCommand.RequestUser = _tenantInfoValueObject.TenantCode;
 
                 importInvoiceCommand.InvoiceItemCollection = new List<InvoiceItem>();
 
@@ -58,7 +61,6 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands
 
             return await Task.FromResult(to);
         }
-
         public async Task<List<ImportInvoiceCommand>> AdapteeAsync(ImportInvoiceFromCSVFileViewModel source, List<ImportInvoiceCommand> to)
         {
             var invoiceCodeCollection = source.FileLineCollection?.Select(q => q.InvoiceCode).Where(q => !string.IsNullOrEmpty(q)).Distinct();
@@ -77,7 +79,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Adapters.Commands
                         Name = firstLine.CustomerName
                     },
                     Date = DateTime.Parse(firstLine.InvoiceDate),
-                    RequestUser = TenantInfoValueObject.TenantCode,
+                    RequestUser = _tenantInfoValueObject.TenantCode,
 
                     InvoiceItemCollection = new List<InvoiceItem>()
                 };

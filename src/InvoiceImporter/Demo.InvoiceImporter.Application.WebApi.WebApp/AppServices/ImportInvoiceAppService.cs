@@ -19,11 +19,12 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
         : AppServiceBase,
         IImportInvoiceAppService
     {
+        // Attributes
         private readonly IImportInvoiceFromXMLFileViewModelIsValidToImportValidation _importInvoiceFromXMLFileViewModelIsValidToImportValidation;
         private readonly IImportInvoiceFromCSVFileViewModelIsValidToImportValidation _importInvoiceFromCSVFileViewModelIsValidToImportValidation;
-
         private readonly IImportInvoiceCommandAdapter _importInvoiceCommandAdapter;
 
+        // Constructors
         public ImportInvoiceAppService(
             IBus bus,
             IGlobalizationConfig globalizationConfig,
@@ -35,10 +36,10 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.AppServices
         {
             _importInvoiceFromXMLFileViewModelIsValidToImportValidation = importInvoiceFromXMLFileViewModelIsValidToImportValidation;
             _importInvoiceFromCSVFileViewModelIsValidToImportValidation = importInvoiceFromCSVFileViewModelIsValidToImportValidation;
-
             _importInvoiceCommandAdapter = importInvoiceCommandAdapter;
         }
 
+        // Public methods
         public async Task<bool> ImportInvoiceFromXML(ImportInvoiceFromXMLFileViewModel viewModel)
         {
             /* Validate */
