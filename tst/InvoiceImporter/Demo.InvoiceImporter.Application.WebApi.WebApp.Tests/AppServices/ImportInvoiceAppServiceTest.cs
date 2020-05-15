@@ -134,7 +134,7 @@ namespace Demo.InvoiceImporter.Application.WebApi.WebApp.Tests.AppServices
 
                 return true;
             },
-            1);
+            1000);
 
         }
     }
